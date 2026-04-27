@@ -4,13 +4,13 @@ const servicios = [
     numero: '01',
     titulo: 'Producción & Edición de Video',
     descripcion: 'Corto, documental, reel o pieza institucional. Storytelling que conecta desde la preproducción hasta la entrega final.',
-    tags: ['Producción', 'Edición', 'Color', 'Sonido'],
+    tags: ['Producción', 'Edición', 'Motiongraphics', 'Sonido'],
   },
   {
     numero: '02',
     titulo: 'Imagen & Video Generativo con IA',
     descripcion: 'Conceptos visuales, assets y piezas audiovisuales generadas con herramientas de inteligencia artificial.',
-    tags: ['Midjourney', 'Runway', 'IA Generativa'],
+    tags: ['Midjourney', 'ComfyUI', 'IA Generativa'],
   },
   {
     numero: '03',
@@ -45,8 +45,9 @@ const servicios = [
     <div class="linea-acento fade-up"></div>
 
     <div class="servicios__grid">
-      {servicios.map((s) => (
-        <article class="servicio fade-up">
+      {servicios.map((s, i) => (
+        <article class="servicio" data-index={i}>
+          <div class="servicio__spotlight" aria-hidden="true"></div>
           <span class="servicio__numero" aria-hidden="true">{s.numero}</span>
           <h3 class="servicio__titulo">{s.titulo}</h3>
           <p class="servicio__desc">{s.descripcion}</p>
@@ -77,47 +78,94 @@ const servicios = [
   }
 
   @media (min-width: 640px) {
-    .servicios__grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
+    .servicios__grid { grid-template-columns: repeat(2, 1fr); }
   }
 
   @media (min-width: 1024px) {
-    .servicios__grid {
-      grid-template-columns: repeat(3, 1fr);
-    }
+    .servicios__grid { grid-template-columns: repeat(3, 1fr); }
   }
 
+  /* Tarjeta */
   .servicio {
+    position: relative;
+    overflow: hidden;
     background: var(--color-fondo);
     padding: 2rem;
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
-    transition: background 0.2s;
+    transition: background 0.3s;
+  }
+
+  /* Borde izquierdo que crece al hover */
+  .servicio::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 2px;
+    height: 0;
+    background: var(--color-acento);
+    transition: height 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  .servicio:hover::before {
+    height: 100%;
   }
 
   .servicio:hover {
     background: var(--color-superficie);
   }
 
-  .servicio__numero {
-    font-family: var(--fuente-titulo);
-    font-size: 2rem;
-    font-weight: 700;
-    color: var(--color-acento);
-    opacity: 0.3;
-    line-height: 1;
+  /* Spotlight de cursor */
+  .servicio__spotlight {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      circle at var(--mx, 50%) var(--my, 50%),
+      rgba(139, 92, 246, 0.1) 0%,
+      transparent 60%
+    );
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
   }
 
+  .servicio:hover .servicio__spotlight {
+    opacity: 1;
+  }
+
+  /* Número */
+  .servicio__numero {
+    font-family: var(--fuente-titulo);
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--color-acento);
+    opacity: 0.2;
+    line-height: 1;
+    transition: opacity 0.35s ease, transform 0.35s ease;
+  }
+
+  .servicio:hover .servicio__numero {
+    opacity: 0.8;
+    transform: translateX(4px);
+  }
+
+  /* Título */
   .servicio__titulo {
     font-family: var(--fuente-cuerpo);
     font-size: 1rem;
     font-weight: 500;
     color: var(--color-texto);
     line-height: 1.4;
+    transition: color 0.25s;
   }
 
+  .servicio:hover .servicio__titulo {
+    color: var(--color-acento-claro);
+  }
+
+  /* Descripción */
   .servicio__desc {
     font-size: 0.85rem;
     color: var(--color-texto-suave);
@@ -125,6 +173,7 @@ const servicios = [
     flex: 1;
   }
 
+  /* Tags con retraso escalonado */
   .servicio__tags {
     list-style: none;
     padding: 0;
@@ -138,9 +187,20 @@ const servicios = [
     font-size: 0.7rem;
     letter-spacing: 0.06em;
     text-transform: uppercase;
-    color: var(--color-acento);
+    color: var(--color-texto-suave);
     border: 1px solid var(--color-borde);
     padding: 0.2rem 0.6rem;
+    transition: color 0.2s, border-color 0.2s;
+  }
+
+  .servicio__tags li:nth-child(1) { transition-delay: 0ms; }
+  .servicio__tags li:nth-child(2) { transition-delay: 40ms; }
+  .servicio__tags li:nth-child(3) { transition-delay: 80ms; }
+  .servicio__tags li:nth-child(4) { transition-delay: 120ms; }
+
+  .servicio:hover .servicio__tags li {
+    color: var(--color-acento);
+    border-color: var(--color-acento);
   }
 </style>
 
@@ -150,12 +210,38 @@ const servicios = [
 
   gsap.registerPlugin(ScrollTrigger);
 
-  gsap.to('#servicios .fade-up', {
+  // Entrada escalonada con escala
+  gsap.from('.servicio', {
     scrollTrigger: { trigger: '#servicios', start: 'top 75%' },
+    opacity: 0,
+    y: 40,
+    scale: 0.96,
+    stagger: 0.08,
+    duration: 0.7,
+    ease: 'power3.out',
+  });
+
+  // Fade-up del encabezado
+  gsap.to('#servicios .fade-up', {
+    scrollTrigger: { trigger: '#servicios', start: 'top 80%' },
     opacity: 1,
     y: 0,
     stagger: 0.1,
     duration: 0.8,
     ease: 'power3.out',
+  });
+
+  // Spotlight que sigue el cursor en cada tarjeta
+  document.querySelectorAll<HTMLElement>('.servicio').forEach((card) => {
+    const spotlight = card.querySelector<HTMLElement>('.servicio__spotlight');
+    card.addEventListener('mousemove', (e: MouseEvent) => {
+      const rect = card.getBoundingClientRect();
+      const x = ((e.clientX - rect.left) / rect.width) * 100;
+      const y = ((e.clientY - rect.top) / rect.height) * 100;
+      if (spotlight) {
+        spotlight.style.setProperty('--mx', `${x}%`);
+        spotlight.style.setProperty('--my', `${y}%`);
+      }
+    });
   });
 </script>

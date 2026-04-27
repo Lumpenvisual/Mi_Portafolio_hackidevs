@@ -17,7 +17,7 @@ const tecnologias = [
       <h2 class="titulo-seccion">Sobre mí</h2>
       <div class="linea-acento"></div>
       <p>
-        Soy comunicadora audiovisual con más de 10 años narrando historias que importan.
+        Soy <strong>comunicadora audiovisual</strong> con más de 10 años narrando historias que importan.
         Hoy también construyo flujos de trabajo con <strong>inteligencia artificial</strong>
         para hacer que esas historias lleguen más lejos.
       </p>
@@ -42,15 +42,16 @@ const tecnologias = [
 
     <!-- Columna del avatar -->
     <div class="sobre-mi__avatar-wrap fade-up">
-      <div class="avatar-pixel-frame">
+      <div class="avatar-frame" id="avatar-frame">
         <img
           src="/Hackidev.png"
           alt="Foto de perfil de Jacky Gutiérrez"
-          class="avatar-pixel"
-          width="160"
-          height="160"
+          class="avatar-img"
+          id="avatar-img"
+          width="260"
+          height="260"
         />
-        <div class="avatar-pixel-glow" aria-hidden="true"></div>
+        <div class="avatar-glow" aria-hidden="true"></div>
       </div>
       <p class="avatar-nombre">@hackidevs</p>
     </div>
@@ -73,7 +74,7 @@ const tecnologias = [
 
   @media (min-width: 768px) {
     .sobre-mi__grid {
-      grid-template-columns: 1fr 280px;
+      grid-template-columns: 1fr 300px;
     }
   }
 
@@ -123,44 +124,47 @@ const tecnologias = [
     border-color: var(--color-acento);
   }
 
-  /* Avatar pixel art */
+  /* Avatar */
   .sobre-mi__avatar-wrap {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1rem;
+    gap: 1.25rem;
   }
 
-  .avatar-pixel-frame {
+  .avatar-frame {
     position: relative;
-    width: 180px;
-    height: 180px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    outline: 2px solid var(--color-acento);
-    outline-offset: 8px;
+    width: 260px;
+    height: 260px;
+    overflow: hidden;
   }
 
-  .avatar-pixel {
-    width: 160px;
-    height: 160px;
+  .avatar-img {
+    width: 260px;
+    height: 260px;
     display: block;
     object-fit: cover;
-    border-radius: 2px;
+    transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                filter 0.5s ease;
+    will-change: transform, filter;
   }
 
-  .avatar-pixel-glow {
+  .avatar-frame:hover .avatar-img {
+    transform: scale(1.06);
+    filter: brightness(1.08) contrast(1.05);
+  }
+
+  .avatar-glow {
     position: absolute;
-    inset: -20px;
-    background: radial-gradient(circle, rgba(139,92,246,0.15) 0%, transparent 70%);
+    inset: 0;
+    background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(139,92,246,0.22) 0%, transparent 65%);
     pointer-events: none;
-    animation: pulso-glow 3s ease-in-out infinite;
+    opacity: 0;
+    transition: opacity 0.3s ease;
   }
 
-  @keyframes pulso-glow {
-    0%, 100% { opacity: 0.5; }
-    50% { opacity: 1; }
+  .avatar-frame:hover .avatar-glow {
+    opacity: 1;
   }
 
   .avatar-nombre {
@@ -184,5 +188,19 @@ const tecnologias = [
     stagger: 0.2,
     duration: 0.8,
     ease: 'power3.out',
+  });
+
+  // Glow que sigue el cursor dentro del avatar
+  const frame = document.getElementById('avatar-frame');
+  const glow = frame?.querySelector('.avatar-glow') as HTMLElement | null;
+
+  frame?.addEventListener('mousemove', (e: MouseEvent) => {
+    const rect = frame.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
+    if (glow) {
+      glow.style.setProperty('--mx', `${x}%`);
+      glow.style.setProperty('--my', `${y}%`);
+    }
   });
 </script>
