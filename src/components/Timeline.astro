@@ -1,0 +1,148 @@
+---
+const hitos = [
+  {
+    periodo: '2025',
+    titulo: 'Premio TAL & Hackathon EAFIT',
+    descripcion: 'Premio TAL a la Dirección de Fotografía. Participación en el Hackathon FindHub de la Universidad EAFIT.',
+  },
+  {
+    periodo: '2024 — 25',
+    titulo: 'Beca MinTIC & Tallerista BIAM',
+    descripcion: 'Beca de formación en tecnología del Ministerio TIC de Colombia. Tallerista en el Bicentenario de las Artes de Medellín.',
+  },
+  {
+    periodo: '2023 — 24',
+    titulo: 'British Library & University of Edinburgh',
+    descripcion: 'Investigación y producción audiovisual en colaboración con la British Library y la Universidad de Edimburgo.',
+  },
+  {
+    periodo: '2022 — 23',
+    titulo: 'FAO Naciones Unidas & publicación',
+    descripcion: 'Producción audiovisual para la Organización de las Naciones Unidas para la Alimentación y la Agricultura. Publicación de libro.',
+  },
+  {
+    periodo: '2013 — 21',
+    titulo: 'Universo Centro, Medellín',
+    descripcion: 'Ocho años de trabajo periodístico, editorial y audiovisual con el medio independiente Universo Centro.',
+  },
+];
+---
+
+<section id="timeline" class="timeline">
+  <div class="contenedor">
+    <h2 class="titulo-seccion fade-up">Trayectoria</h2>
+    <div class="linea-acento fade-up"></div>
+
+    <ol class="timeline__lista">
+      {hitos.map((h) => (
+        <li class="hito fade-up">
+          <span class="hito__periodo">{h.periodo}</span>
+          <div class="hito__contenido">
+            <h3 class="hito__titulo">{h.titulo}</h3>
+            <p class="hito__desc">{h.descripcion}</p>
+          </div>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
+
+<style>
+  .timeline {
+    padding: 7rem 0;
+    background: var(--color-superficie);
+  }
+
+  .timeline__lista {
+    list-style: none;
+    padding: 0;
+    margin-top: 3rem;
+    display: flex;
+    flex-direction: column;
+    border-left: 1px solid var(--color-borde);
+    gap: 0;
+  }
+
+  .hito {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 1.5rem;
+    padding: 1.75rem 0 1.75rem 2rem;
+    position: relative;
+    border-bottom: 1px solid var(--color-borde);
+    transition: background 0.2s;
+  }
+
+  .hito:last-child {
+    border-bottom: none;
+  }
+
+  .hito:hover {
+    background: color-mix(in srgb, var(--color-acento) 4%, transparent);
+  }
+
+  .hito::before {
+    content: '';
+    position: absolute;
+    left: -4px;
+    top: 2rem;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--color-borde);
+    transition: background 0.2s;
+  }
+
+  .hito:hover::before {
+    background: var(--color-acento);
+  }
+
+  .hito__periodo {
+    font-family: var(--fuente-cuerpo);
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    color: var(--color-acento);
+    text-transform: uppercase;
+    padding-top: 0.15rem;
+  }
+
+  .hito__titulo {
+    font-family: var(--fuente-cuerpo);
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--color-texto);
+    margin-bottom: 0.4rem;
+    line-height: 1.4;
+  }
+
+  .hito__desc {
+    font-size: 0.85rem;
+    color: var(--color-texto-suave);
+    line-height: 1.7;
+  }
+
+  @media (max-width: 540px) {
+    .hito {
+      grid-template-columns: 1fr;
+      gap: 0.4rem;
+      padding-left: 1.5rem;
+    }
+  }
+</style>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  gsap.to('#timeline .fade-up', {
+    scrollTrigger: { trigger: '#timeline', start: 'top 75%' },
+    opacity: 1,
+    y: 0,
+    stagger: 0.12,
+    duration: 0.8,
+    ease: 'power3.out',
+  });
+</script>

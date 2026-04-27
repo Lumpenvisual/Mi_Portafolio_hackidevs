@@ -17,14 +17,13 @@ const tecnologias = [
       <h2 class="titulo-seccion">Sobre mí</h2>
       <div class="linea-acento"></div>
       <p>
-        Soy Jacky Gutiérrez, comunicadora audiovisual colombiana con una curiosidad
-        que no cabe en una sola disciplina. Estudié la narrativa visual durante años
-        y hoy también estudio <strong>Análisis y Desarrollo de Software</strong> —
-        porque las mejores historias del futuro se escriben con código.
+        Soy comunicadora audiovisual con más de 10 años narrando historias que importan.
+        Hoy también construyo flujos de trabajo con <strong>inteligencia artificial</strong>
+        para hacer que esas historias lleguen más lejos.
       </p>
       <p>
-        Estoy construyendo el puente entre la creatividad audiovisual y la
-        inteligencia artificial, un commit a la vez.
+        Estudio <strong>Análisis y Desarrollo de Software</strong> porque las mejores
+        narrativas del futuro se escriben con código.
       </p>
 
       <!-- Stack -->
@@ -45,8 +44,8 @@ const tecnologias = [
     <div class="sobre-mi__avatar-wrap fade-up">
       <div class="avatar-pixel-frame">
         <img
-          src="/avatar-pixel.svg"
-          alt="Avatar pixel art de Jacky Gutiérrez"
+          src="/Hackidev.png"
+          alt="Foto de perfil de Jacky Gutiérrez"
           class="avatar-pixel"
           width="160"
           height="160"
@@ -139,17 +138,16 @@ const tecnologias = [
     display: flex;
     align-items: center;
     justify-content: center;
-    /* Marco estilo pixel */
     outline: 2px solid var(--color-acento);
     outline-offset: 8px;
-    image-rendering: pixelated;
   }
 
   .avatar-pixel {
     width: 160px;
     height: 160px;
-    image-rendering: pixelated;
     display: block;
+    object-fit: cover;
+    border-radius: 2px;
   }
 
   .avatar-pixel-glow {

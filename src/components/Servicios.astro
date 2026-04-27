@@ -1,0 +1,161 @@
+---
+const servicios = [
+  {
+    numero: '01',
+    titulo: 'Producción & Edición de Video',
+    descripcion: 'Corto, documental, reel o pieza institucional. Storytelling que conecta desde la preproducción hasta la entrega final.',
+    tags: ['Producción', 'Edición', 'Color', 'Sonido'],
+  },
+  {
+    numero: '02',
+    titulo: 'Imagen & Video Generativo con IA',
+    descripcion: 'Conceptos visuales, assets y piezas audiovisuales generadas con herramientas de inteligencia artificial.',
+    tags: ['Midjourney', 'Runway', 'IA Generativa'],
+  },
+  {
+    numero: '03',
+    titulo: 'Automatización de Procesos con IA',
+    descripcion: 'Flujos de trabajo que ahorran horas: automatización de contenido, datos y tareas repetitivas.',
+    tags: ['n8n', 'Make', 'Python', 'LLMs'],
+  },
+  {
+    numero: '04',
+    titulo: 'Fotografía & Dirección de Arte',
+    descripcion: 'Sesiones fotográficas con dirección visual coherente para marcas, eventos y proyectos editoriales.',
+    tags: ['Retrato', 'Editorial', 'Arte', 'Marcas'],
+  },
+  {
+    numero: '05',
+    titulo: 'Marketing Automatizado',
+    descripcion: 'Campañas digitales conectadas con herramientas que trabajan las 24 horas.',
+    tags: ['Email', 'Social', 'SEO', 'Analytics'],
+  },
+  {
+    numero: '06',
+    titulo: 'Gestión Cultural & Proyectos',
+    descripcion: 'Coordinación de proyectos culturales, festivales y residencias con enfoque en comunidad e impacto.',
+    tags: ['Eventos', 'Cultura', 'Gestión', 'Medios'],
+  },
+];
+---
+
+<section id="servicios" class="servicios">
+  <div class="contenedor">
+    <h2 class="titulo-seccion fade-up">Servicios</h2>
+    <div class="linea-acento fade-up"></div>
+
+    <div class="servicios__grid">
+      {servicios.map((s) => (
+        <article class="servicio fade-up">
+          <span class="servicio__numero" aria-hidden="true">{s.numero}</span>
+          <h3 class="servicio__titulo">{s.titulo}</h3>
+          <p class="servicio__desc">{s.descripcion}</p>
+          <ul class="servicio__tags" aria-label="Tecnologías y áreas">
+            {s.tags.map((tag) => (
+              <li>{tag}</li>
+            ))}
+          </ul>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .servicios {
+    padding: 7rem 0;
+    background: var(--color-fondo);
+  }
+
+  .servicios__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1px;
+    background: var(--color-borde);
+    border: 1px solid var(--color-borde);
+    margin-top: 3rem;
+  }
+
+  @media (min-width: 640px) {
+    .servicios__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .servicios__grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .servicio {
+    background: var(--color-fondo);
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    transition: background 0.2s;
+  }
+
+  .servicio:hover {
+    background: var(--color-superficie);
+  }
+
+  .servicio__numero {
+    font-family: var(--fuente-titulo);
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--color-acento);
+    opacity: 0.3;
+    line-height: 1;
+  }
+
+  .servicio__titulo {
+    font-family: var(--fuente-cuerpo);
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--color-texto);
+    line-height: 1.4;
+  }
+
+  .servicio__desc {
+    font-size: 0.85rem;
+    color: var(--color-texto-suave);
+    line-height: 1.7;
+    flex: 1;
+  }
+
+  .servicio__tags {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-top: 0.5rem;
+  }
+
+  .servicio__tags li {
+    font-size: 0.7rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-acento);
+    border: 1px solid var(--color-borde);
+    padding: 0.2rem 0.6rem;
+  }
+</style>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  gsap.to('#servicios .fade-up', {
+    scrollTrigger: { trigger: '#servicios', start: 'top 75%' },
+    opacity: 1,
+    y: 0,
+    stagger: 0.1,
+    duration: 0.8,
+    ease: 'power3.out',
+  });
+</script>

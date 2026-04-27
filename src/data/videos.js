@@ -1,29 +1,34 @@
 // Solo el ID del video (la parte después de "v=" en la URL de YouTube)
 export const videos = [
   {
-    id: 'ig_583LphJU',
-    titulo: 'Campaña Abuso Infantil',
-    descripcion: '',
+    id: 'ULrllSX12UQ',
+    titulo: 'COMER — Rigoberto, agricultor de San Sebastián de Palmitas',
+    descripcion: 'Documental sobre soberanía alimentaria y vida campesina.',
   },
   {
-    id: 'TUKiRpMxpCI',
-    titulo: 'Animación Intro',
-    descripcion: '',
-  },
-  {
-    id: 'hmnJYny92L8',
-    titulo: 'Buda Mecanógrafo y Trompetista',
-    descripcion: '',
-  },
-  {
-    id: 'rZus_fWpZf8',
-    titulo: 'Reel',
-    descripcion: '',
+    id: '_-7ZI3wq4Q0',
+    titulo: 'Café Luthier',
+    descripcion: 'Retrato de un lugar donde la música y el café se encuentran.',
   },
   {
     id: 'LwCcRuVgFV4',
-    titulo: 'Programa de Archivos en Peligro — Divulgación científica',
-    descripcion: '',
+    titulo: 'Archivos en Peligro',
+    descripcion: 'Divulgación científica sobre patrimonio documental en riesgo.',
+  },
+  {
+    id: 'iI-uxTikYIY',
+    titulo: 'Zenzual',
+    descripcion: 'Pieza audiovisual de exploración sensorial y movimiento.',
+  },
+  {
+    id: 'ig_583LphJU',
+    titulo: 'Campaña social',
+    descripcion: 'Comunicación de impacto para una causa de interés público.',
+  },
+  {
+    id: 'hmnJYny92L8',
+    titulo: 'Mandrágora',
+    descripcion: 'Cortometraje de atmósfera y narrativa visual experimental.',
   },
 ];
 

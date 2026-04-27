@@ -13,8 +13,15 @@
       <span id="tw-texto"></span><span class="tw-cursor" aria-hidden="true">|</span>
     </h2>
     <p class="hero__frase fade-up">
-      Cuento historias con imágenes.<br />Ahora también las construyo con código.
+      Cuento historias con imágenes. Ahora también las construyo con código.
     </p>
+    <ul class="hero__servicios fade-up" aria-label="Servicios">
+      <li>Producción &amp; Edición de video</li>
+      <li>Imagen y video generativo con IA</li>
+      <li>Automatización de procesos con IA</li>
+      <li>Marketing automatizado</li>
+      <li>Gestión cultural &amp; proyectos</li>
+    </ul>
     <div class="hero__acciones fade-up">
       <a href="#sobre-mi" class="btn-primario">Conóceme</a>
       <a href="#contacto" class="btn-secundario">Hablemos</a>
@@ -105,6 +112,26 @@
     color: var(--color-texto-suave);
     margin-bottom: 2.5rem;
     line-height: 1.8;
+  }
+
+  .hero__servicios {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .hero__servicios li {
+    font-family: var(--fuente-cuerpo);
+    font-size: 0.75rem;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    color: var(--color-texto-suave);
+    border: 1px solid var(--color-borde);
+    padding: 0.3rem 0.8rem;
+    text-transform: uppercase;
   }
 
   .hero__acciones {
@@ -233,7 +260,7 @@
   window.addEventListener('resize', () => { redimensionar(); crearParticulas(); });
 
   // Typewriter
-  const frases = ['Comunicadora Audiovisual', 'Desarrollo de Software'];
+  const frases = ['Comunicadora Audiovisual', 'Desarrollo de Software', 'IA Aplicada'];
   const elTexto = document.getElementById('tw-texto')!;
   let indiceFrase = 0;
   let indiceCar = 0;
