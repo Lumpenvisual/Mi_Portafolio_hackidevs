@@ -1,0 +1,266 @@
+---
+// Hero — sección principal con animación de entrada y fondo de partículas
+---
+
+<section id="inicio" class="hero">
+  <!-- Canvas para partículas de fondo -->
+  <canvas id="particulas" aria-hidden="true"></canvas>
+
+  <div class="contenedor hero__contenido">
+    <p class="hero__saludo fade-up">Hola, soy</p>
+    <h1 class="hero__nombre fade-up">Jacky<span class="acento">.</span></h1>
+    <h2 class="hero__subtitulo fade-up">
+      <span id="tw-texto"></span><span class="tw-cursor" aria-hidden="true">|</span>
+    </h2>
+    <p class="hero__frase fade-up">
+      Cuento historias con imágenes.<br />Ahora también las construyo con código.
+    </p>
+    <div class="hero__acciones fade-up">
+      <a href="#sobre-mi" class="btn-primario">Conóceme</a>
+      <a href="#contacto" class="btn-secundario">Hablemos</a>
+    </div>
+  </div>
+
+  <!-- Indicador de scroll -->
+  <div class="scroll-indicador fade-up" aria-hidden="true">
+    <span></span>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    background: var(--color-fondo);
+  }
+
+  #particulas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+  }
+
+  .hero__contenido {
+    position: relative;
+    z-index: 1;
+    padding-top: 6rem;
+    padding-bottom: 6rem;
+  }
+
+  .hero__saludo {
+    font-family: var(--fuente-cuerpo);
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--color-acento);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+  }
+
+  .hero__nombre {
+    font-family: var(--fuente-titulo);
+    font-size: clamp(5rem, 15vw, 10rem);
+    font-weight: 700;
+    line-height: 1;
+    color: var(--color-texto);
+    margin-bottom: 1.5rem;
+  }
+
+  .hero__subtitulo {
+    font-family: var(--fuente-cuerpo);
+    font-size: clamp(1rem, 2.5vw, 1.4rem);
+    font-weight: 300;
+    color: var(--color-texto-suave);
+    margin-bottom: 1.5rem;
+    line-height: 1.4;
+  }
+
+  /* Cursor del typewriter */
+  .tw-cursor {
+    display: inline-block;
+    width: 2px;
+    background: var(--color-acento);
+    margin-left: 2px;
+    animation: parpadeo 0.9s step-end infinite;
+    vertical-align: text-bottom;
+    height: 1.1em;
+  }
+
+  @keyframes parpadeo {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0; }
+  }
+
+  .acento {
+    color: var(--color-acento);
+  }
+
+  .hero__frase {
+    font-size: clamp(1rem, 1.5vw, 1.1rem);
+    color: var(--color-texto-suave);
+    margin-bottom: 2.5rem;
+    line-height: 1.8;
+  }
+
+  .hero__acciones {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .btn-primario {
+    display: inline-block;
+    padding: 0.75rem 2rem;
+    background: var(--color-acento);
+    color: #fff;
+    font-family: var(--fuente-cuerpo);
+    font-weight: 500;
+    font-size: 0.9rem;
+    letter-spacing: 0.05em;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.2s;
+  }
+
+  .btn-primario:hover {
+    background: var(--color-acento-claro);
+    transform: translateY(-2px);
+  }
+
+  .btn-secundario {
+    display: inline-block;
+    padding: 0.75rem 2rem;
+    border: 1px solid var(--color-borde);
+    color: var(--color-texto);
+    font-family: var(--fuente-cuerpo);
+    font-weight: 400;
+    font-size: 0.9rem;
+    letter-spacing: 0.05em;
+    text-decoration: none;
+    transition: border-color 0.2s, color 0.2s, transform 0.2s;
+  }
+
+  .btn-secundario:hover {
+    border-color: var(--color-acento);
+    color: var(--color-acento);
+    transform: translateY(-2px);
+  }
+
+  .scroll-indicador {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .scroll-indicador span {
+    display: block;
+    width: 1px;
+    height: 4rem;
+    background: linear-gradient(to bottom, var(--color-acento), transparent);
+    animation: linea-scroll 2s ease-in-out infinite;
+  }
+
+  @keyframes linea-scroll {
+    0% { transform: scaleY(0); transform-origin: top; }
+    50% { transform: scaleY(1); transform-origin: top; }
+    51% { transform: scaleY(1); transform-origin: bottom; }
+    100% { transform: scaleY(0); transform-origin: bottom; }
+  }
+</style>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  // Animación de entrada del hero
+  const tl = gsap.timeline({ defaults: { ease: 'power3.out', duration: 0.9 } });
+  tl.to('.hero .fade-up', {
+    opacity: 1,
+    y: 0,
+    stagger: 0.15,
+    delay: 0.3,
+  });
+
+  // Partículas de fondo
+  const canvas = document.getElementById('particulas') as HTMLCanvasElement;
+  const ctx = canvas.getContext('2d')!;
+  let particulas: { x: number; y: number; vx: number; vy: number; r: number; alpha: number }[] = [];
+
+  function redimensionar() {
+    canvas.width = canvas.offsetWidth;
+    canvas.height = canvas.offsetHeight;
+  }
+
+  function crearParticulas() {
+    particulas = Array.from({ length: 60 }, () => ({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      vx: (Math.random() - 0.5) * 0.3,
+      vy: (Math.random() - 0.5) * 0.3,
+      r: Math.random() * 1.5 + 0.5,
+      alpha: Math.random() * 0.4 + 0.1,
+    }));
+  }
+
+  function animar() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    for (const p of particulas) {
+      p.x += p.vx;
+      p.y += p.vy;
+      if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+      if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(139, 92, 246, ${p.alpha})`;
+      ctx.fill();
+    }
+    requestAnimationFrame(animar);
+  }
+
+  redimensionar();
+  crearParticulas();
+  animar();
+  window.addEventListener('resize', () => { redimensionar(); crearParticulas(); });
+
+  // Typewriter
+  const frases = ['Comunicadora Audiovisual', 'Desarrollo de Software'];
+  const elTexto = document.getElementById('tw-texto')!;
+  let indiceFrase = 0;
+  let indiceCar = 0;
+  let borrando = false;
+
+  function escribir() {
+    const frase = frases[indiceFrase];
+    if (!borrando) {
+      elTexto.textContent = frase.slice(0, ++indiceCar);
+      if (indiceCar === frase.length) {
+        borrando = true;
+        setTimeout(escribir, 2200);
+        return;
+      }
+      setTimeout(escribir, 70);
+    } else {
+      elTexto.textContent = frase.slice(0, --indiceCar);
+      if (indiceCar === 0) {
+        borrando = false;
+        indiceFrase = (indiceFrase + 1) % frases.length;
+        setTimeout(escribir, 400);
+        return;
+      }
+      setTimeout(escribir, 35);
+    }
+  }
+
+  // Arrancar el typewriter después de la animación de entrada
+  setTimeout(escribir, 1500);
+</script>

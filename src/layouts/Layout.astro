@@ -1,0 +1,92 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  titulo?: string;
+  descripcion?: string;
+}
+
+const {
+  titulo = 'Jacky Gutiérrez | Comunicadora Audiovisual & Desarrollo de Software',
+  descripcion = 'Portafolio de Jacky Gutiérrez — comunicadora audiovisual en transición hacia el desarrollo de software e inteligencia artificial.',
+} = Astro.props;
+---
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={descripcion} />
+    <meta name="author" content="Jacky Gutiérrez" />
+    <meta property="og:title" content={titulo} />
+    <meta property="og:description" content={descripcion} />
+    <meta property="og:type" content="website" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet" />
+    <title>{titulo}</title>
+  </head>
+  <body>
+    <div id="cursor" aria-hidden="true"></div>
+    <slot />
+  </body>
+
+<style is:global>
+  /* Solo en dispositivos con mouse real */
+  @media (hover: hover) and (pointer: fine) {
+    *, a, button { cursor: none !important; }
+
+    #cursor {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 10px;
+      height: 10px;
+      border: 1.5px solid rgba(139, 92, 246, 0.8);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0;
+      will-change: transform;
+      transition: opacity 0.3s, width 0.2s, height 0.2s, background-color 0.2s;
+    }
+
+    #cursor.visible { opacity: 1; }
+    #cursor.agrandado {
+      width: 28px;
+      height: 28px;
+      background-color: rgba(139, 92, 246, 0.12);
+    }
+  }
+
+  /* En touch el cursor no se muestra */
+  @media not all and (hover: hover) {
+    #cursor { display: none; }
+  }
+</style>
+
+<script>
+  import { gsap } from 'gsap';
+
+  const cursor = document.getElementById('cursor');
+  if (cursor && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+    gsap.set(cursor, { xPercent: -50, yPercent: -50 });
+
+    const xTo = gsap.quickTo(cursor, 'x', { duration: 0.25, ease: 'power3' });
+    const yTo = gsap.quickTo(cursor, 'y', { duration: 0.25, ease: 'power3' });
+
+    window.addEventListener('mousemove', (e) => {
+      cursor.classList.add('visible');
+      xTo(e.clientX);
+      yTo(e.clientY);
+    }, { passive: true });
+
+    // Agrandar al pasar sobre elementos interactivos
+    document.querySelectorAll('a, button, [role="button"]').forEach((el) => {
+      el.addEventListener('mouseenter', () => cursor.classList.add('agrandado'));
+      el.addEventListener('mouseleave', () => cursor.classList.remove('agrandado'));
+    });
+  }
+</script>
+</html>

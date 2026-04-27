@@ -1,0 +1,190 @@
+---
+// Sobre mí — presentación con avatar pixel art y stack tecnológico
+const tecnologias = [
+  { nombre: 'HTML', icono: '🟧' },
+  { nombre: 'CSS', icono: '🟦' },
+  { nombre: 'JavaScript', icono: '🟨' },
+  { nombre: 'Python', icono: '🐍' },
+  { nombre: 'Git', icono: '🔀' },
+];
+---
+
+<section id="sobre-mi" class="sobre-mi">
+  <div class="contenedor sobre-mi__grid">
+
+    <!-- Columna de texto -->
+    <div class="sobre-mi__texto fade-up">
+      <h2 class="titulo-seccion">Sobre mí</h2>
+      <div class="linea-acento"></div>
+      <p>
+        Soy Jacky Gutiérrez, comunicadora audiovisual colombiana con una curiosidad
+        que no cabe en una sola disciplina. Estudié la narrativa visual durante años
+        y hoy también estudio <strong>Análisis y Desarrollo de Software</strong> —
+        porque las mejores historias del futuro se escriben con código.
+      </p>
+      <p>
+        Estoy construyendo el puente entre la creatividad audiovisual y la
+        inteligencia artificial, un commit a la vez.
+      </p>
+
+      <!-- Stack -->
+      <div class="sobre-mi__stack">
+        <p class="stack__etiqueta">Tecnologías que estoy aprendiendo</p>
+        <ul class="stack__lista">
+          {tecnologias.map((t) => (
+            <li class="stack__item">
+              <span aria-hidden="true" class="stack__icono">{t.icono}</span>
+              <span>{t.nombre}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+
+    <!-- Columna del avatar -->
+    <div class="sobre-mi__avatar-wrap fade-up">
+      <div class="avatar-pixel-frame">
+        <img
+          src="/avatar-pixel.svg"
+          alt="Avatar pixel art de Jacky Gutiérrez"
+          class="avatar-pixel"
+          width="160"
+          height="160"
+        />
+        <div class="avatar-pixel-glow" aria-hidden="true"></div>
+      </div>
+      <p class="avatar-nombre">@hackidevs</p>
+    </div>
+
+  </div>
+</section>
+
+<style>
+  .sobre-mi {
+    padding: 7rem 0;
+    background: var(--color-superficie);
+  }
+
+  .sobre-mi__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+
+  @media (min-width: 768px) {
+    .sobre-mi__grid {
+      grid-template-columns: 1fr 280px;
+    }
+  }
+
+  .sobre-mi__texto p {
+    color: var(--color-texto-suave);
+    font-size: 1rem;
+    line-height: 1.8;
+    margin-bottom: 1.25rem;
+  }
+
+  .sobre-mi__texto strong {
+    color: var(--color-acento-claro);
+    font-weight: 500;
+  }
+
+  /* Stack */
+  .stack__etiqueta {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--color-acento);
+    margin-bottom: 1rem;
+    margin-top: 0.5rem;
+  }
+
+  .stack__lista {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    list-style: none;
+    padding: 0;
+  }
+
+  .stack__item {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.4rem 0.9rem;
+    border: 1px solid var(--color-borde);
+    font-size: 0.85rem;
+    color: var(--color-texto);
+    background: var(--color-fondo);
+    transition: border-color 0.2s;
+  }
+
+  .stack__item:hover {
+    border-color: var(--color-acento);
+  }
+
+  /* Avatar pixel art */
+  .sobre-mi__avatar-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .avatar-pixel-frame {
+    position: relative;
+    width: 180px;
+    height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* Marco estilo pixel */
+    outline: 2px solid var(--color-acento);
+    outline-offset: 8px;
+    image-rendering: pixelated;
+  }
+
+  .avatar-pixel {
+    width: 160px;
+    height: 160px;
+    image-rendering: pixelated;
+    display: block;
+  }
+
+  .avatar-pixel-glow {
+    position: absolute;
+    inset: -20px;
+    background: radial-gradient(circle, rgba(139,92,246,0.15) 0%, transparent 70%);
+    pointer-events: none;
+    animation: pulso-glow 3s ease-in-out infinite;
+  }
+
+  @keyframes pulso-glow {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
+  }
+
+  .avatar-nombre {
+    font-size: 0.85rem;
+    color: var(--color-acento);
+    letter-spacing: 0.1em;
+    font-family: var(--fuente-cuerpo);
+  }
+</style>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  gsap.to('#sobre-mi .fade-up', {
+    scrollTrigger: { trigger: '#sobre-mi', start: 'top 75%' },
+    opacity: 1,
+    y: 0,
+    stagger: 0.2,
+    duration: 0.8,
+    ease: 'power3.out',
+  });
+</script>

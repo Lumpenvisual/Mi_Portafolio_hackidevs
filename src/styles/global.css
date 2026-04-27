@@ -1,0 +1,73 @@
+@import "tailwindcss";
+
+/* Variables de color */
+:root {
+  --color-fondo: #0a0a0a;
+  --color-superficie: #111111;
+  --color-borde: #1f1f1f;
+  --color-acento: #8b5cf6;
+  --color-acento-claro: #a78bfa;
+  --color-texto: #e5e5e5;
+  --color-texto-suave: #737373;
+  --fuente-titulo: 'Playfair Display', serif;
+  --fuente-cuerpo: 'Inter', sans-serif;
+}
+
+/* Reset base */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-fondo);
+  color: var(--color-texto);
+  font-family: var(--fuente-cuerpo);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Scrollbar personalizada */
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-fondo);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-acento);
+  border-radius: 2px;
+}
+
+/* Clases utilitarias */
+.contenedor {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.titulo-seccion {
+  font-family: var(--fuente-titulo);
+  font-size: clamp(2rem, 4vw, 3rem);
+  color: var(--color-texto);
+  margin-bottom: 1rem;
+}
+
+.linea-acento {
+  width: 3rem;
+  height: 2px;
+  background: var(--color-acento);
+  margin-bottom: 2.5rem;
+}
+
+/* Animaciones iniciales (GSAP las activa) */
+.fade-up {
+  opacity: 0;
+  transform: translateY(30px);
+}

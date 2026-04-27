@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" shape-rendering="crispEdges">
+  <!-- Cabello -->
+  <rect x="16" y="8" width="32" height="4" fill="#1a1a2e"/>
+  <rect x="12" y="12" width="40" height="4" fill="#1a1a2e"/>
+  <rect x="12" y="16" width="4" height="8" fill="#1a1a2e"/>
+  <rect x="48" y="16" width="4" height="8" fill="#1a1a2e"/>
+  <!-- Cara -->
+  <rect x="16" y="16" width="32" height="20" fill="#c8956c"/>
+  <!-- Ojos -->
+  <rect x="22" y="22" width="4" height="4" fill="#1a1a2e"/>
+  <rect x="38" y="22" width="4" height="4" fill="#1a1a2e"/>
+  <!-- Brillo ojos -->
+  <rect x="24" y="22" width="2" height="2" fill="#8b5cf6"/>
+  <rect x="40" y="22" width="2" height="2" fill="#8b5cf6"/>
+  <!-- Boca -->
+  <rect x="26" y="30" width="12" height="2" fill="#8b4a3a"/>
+  <rect x="24" y="28" width="4" height="2" fill="#8b4a3a"/>
+  <rect x="36" y="28" width="4" height="2" fill="#8b4a3a"/>
+  <!-- Cuello -->
+  <rect x="28" y="36" width="8" height="4" fill="#c8956c"/>
+  <!-- Cuerpo (camisa morada) -->
+  <rect x="16" y="40" width="32" height="20" fill="#8b5cf6"/>
+  <!-- Detalle camisa -->
+  <rect x="28" y="40" width="8" height="4" fill="#7c3aed"/>
+  <!-- Brazos -->
+  <rect x="8" y="40" width="8" height="16" fill="#8b5cf6"/>
+  <rect x="48" y="40" width="8" height="16" fill="#8b5cf6"/>
+  <!-- Manos -->
+  <rect x="8" y="56" width="8" height="4" fill="#c8956c"/>
+  <rect x="48" y="56" width="8" height="4" fill="#c8956c"/>
+  <!-- Pixel decorativo acento -->
+  <rect x="0" y="0" width="4" height="4" fill="#8b5cf6" opacity="0.5"/>
+  <rect x="60" y="60" width="4" height="4" fill="#8b5cf6" opacity="0.5"/>
+</svg>

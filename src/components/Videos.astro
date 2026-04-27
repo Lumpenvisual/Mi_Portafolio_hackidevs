@@ -1,0 +1,177 @@
+---
+// Videos — cuadrícula de videos de YouTube cargados desde src/data/videos.js
+import { videos, thumbnail, urlVideo } from '../data/videos.js';
+---
+
+<section id="videos" class="videos">
+  <div class="contenedor">
+    <h2 class="titulo-seccion fade-up">Mis Videos</h2>
+    <div class="linea-acento fade-up"></div>
+    <p class="videos__intro fade-up">
+      Contenido audiovisual que he creado — desde comunicación hasta tecnología.
+    </p>
+
+    <div class="videos__grid">
+      {videos.map((video, i) => (
+        <a
+          href={urlVideo(video.id)}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="tarjeta-video fade-up"
+          aria-label={`Ver video: ${video.titulo}`}
+        >
+          <div class="tarjeta-video__thumb">
+            <img
+              src={thumbnail(video.id)}
+              alt={video.titulo}
+              loading="lazy"
+              width="480"
+              height="360"
+            />
+            <!-- Icono de play al hacer hover -->
+            <div class="tarjeta-video__play" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="currentColor" width="40" height="40">
+                <path d="M8 5v14l11-7z"/>
+              </svg>
+            </div>
+            <div class="tarjeta-video__overlay"></div>
+          </div>
+          <div class="tarjeta-video__info">
+            <h3 class="tarjeta-video__titulo">{video.titulo}</h3>
+            <p class="tarjeta-video__desc">{video.descripcion}</p>
+          </div>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .videos {
+    padding: 7rem 0;
+    background: var(--color-fondo);
+  }
+
+  .videos__intro {
+    color: var(--color-texto-suave);
+    font-size: 1rem;
+    margin-bottom: 3rem;
+    max-width: 520px;
+  }
+
+  .videos__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  @media (min-width: 640px) {
+    .videos__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .videos__grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  /* Tarjeta */
+  .tarjeta-video {
+    display: block;
+    text-decoration: none;
+    background: var(--color-superficie);
+    border: 1px solid var(--color-borde);
+    overflow: hidden;
+    transition: border-color 0.25s, transform 0.25s;
+  }
+
+  .tarjeta-video:hover {
+    border-color: var(--color-acento);
+    transform: translateY(-4px);
+  }
+
+  /* Thumbnail */
+  .tarjeta-video__thumb {
+    position: relative;
+    aspect-ratio: 16/9;
+    overflow: hidden;
+  }
+
+  .tarjeta-video__thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.35s;
+  }
+
+  .tarjeta-video:hover .tarjeta-video__thumb img {
+    transform: scale(1.04);
+  }
+
+  .tarjeta-video__overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(10, 10, 10, 0.4);
+    transition: background 0.25s;
+  }
+
+  .tarjeta-video:hover .tarjeta-video__overlay {
+    background: rgba(139, 92, 246, 0.25);
+  }
+
+  .tarjeta-video__play {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    opacity: 0;
+    transform: scale(0.8);
+    transition: opacity 0.25s, transform 0.25s;
+    z-index: 1;
+  }
+
+  .tarjeta-video:hover .tarjeta-video__play {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  /* Info */
+  .tarjeta-video__info {
+    padding: 1rem 1.25rem 1.25rem;
+  }
+
+  .tarjeta-video__titulo {
+    font-family: var(--fuente-cuerpo);
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--color-texto);
+    margin-bottom: 0.4rem;
+    line-height: 1.4;
+  }
+
+  .tarjeta-video__desc {
+    font-size: 0.8rem;
+    color: var(--color-texto-suave);
+  }
+</style>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  gsap.to('#videos .fade-up', {
+    scrollTrigger: { trigger: '#videos', start: 'top 75%' },
+    opacity: 1,
+    y: 0,
+    stagger: 0.12,
+    duration: 0.8,
+    ease: 'power3.out',
+  });
+</script>
