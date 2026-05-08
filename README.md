@@ -1,17 +1,45 @@
 # Portafolio — Jacky Gutiérrez
 
-Sitio personal editorial de Jacky Gutiérrez, comunicadora audiovisual y desarrolladora en formación. Construido con React 19 + Vite, sin frameworks de UI ni librerías de animación: el lenguaje visual se sostiene en tipografía variable y CSS moderno.
+[![React](https://img.shields.io/badge/React-19.2-149ECA?logo=react&logoColor=white)](https://react.dev)
+[![Vite](https://img.shields.io/badge/Vite-8.0-646CFF?logo=vite&logoColor=white)](https://vite.dev)
+[![CSS Moderno](https://img.shields.io/badge/CSS-Moderno-1572B6?logo=css3&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/CSS)
+[![ESLint](https://img.shields.io/badge/ESLint-10-4B32C3?logo=eslint&logoColor=white)](https://eslint.org)
+[![Deploy](https://img.shields.io/badge/Deploy-Vercel-000000?logo=vercel&logoColor=white)](https://vercel.com)
+[![Web](https://img.shields.io/badge/Producción-mi--portafolio--hackidevs.vercel.app-c8553d)](https://mi-portafolio-hackidevs.vercel.app)
 
-URL local del dev server: <http://localhost:5173>
+> Sitio personal editorial de Jacky Gutiérrez — comunicadora audiovisual y desarrolladora en formación. Construido como una pieza de diseño tipográfico: serif italic para los acentos, sans tight para el cuerpo, paleta crema con acento terracota y modo oscuro cálido. Sin frameworks de UI, sin librerías de animación — el lenguaje visual se sostiene en CSS moderno, jerarquía editorial y tipografía variable.
 
-## Stack
+**Producción:** <https://mi-portafolio-hackidevs.vercel.app>
+**Dev local:** <http://localhost:5173>
 
-- **Vite 8** + **React 19** (StrictMode)
-- **CSS moderno** con custom properties, `color-mix`, `clamp`, `aspect-ratio`, `scroll-snap-type` y `mask-image` para los gradientes de borde
-- **Google Fonts** — [Fraunces](https://fonts.google.com/specimen/Fraunces) (display, variable axis `SOFT`) e [Inter Tight](https://fonts.google.com/specimen/Inter+Tight) (sans)
-- ESLint 10 con `react-hooks` y `react-refresh`
+## Resumen
 
-Sin dependencias de Tailwind, MUI, GSAP, Framer Motion ni i18n libraries.
+Portafolio de una sola página con **seis secciones** (Hero, Sobre mí, Servicios, Proyectos + Reels, Trayectoria, Contacto). El sitio narra la transición profesional de Jacky desde la comunicación audiovisual hacia el desarrollo de software con una voz de crónica.
+
+**Características técnicas relevantes:**
+
+- **Bilingüe ES/EN** sin librerías de i18n — un objeto `localized = { es: {...}, en: {...} }` por sección, con detección automática de `navigator.language` y persistencia en `localStorage`.
+- **Modo claro / oscuro** con detección de `prefers-color-scheme` y persistencia. Toggle disponible en el navbar (☀ / ☾).
+- **Línea de tiempo** vertical compuesta con un solo eje + marcadores circulares animados, sin librerías externas.
+- **Shelf horizontal de Reels** con `scroll-snap-type: x mandatory` y máscara `linear-gradient` en los bordes para indicar continuidad.
+- **Miniaturas de YouTube en vivo** vía la API pública de thumbnails (`i.ytimg.com/vi/{id}/maxresdefault.jpg` con fallback a `hqdefault.jpg`).
+- **Marquee** de palabras clave con animación CSS pura.
+- **Responsive** con tres breakpoints (1024px y 768px). En mobile los proyectos pasan a columna única con thumbs `aspect-ratio: 16/9`.
+
+**Performance:** ~218 KB de JavaScript (68 KB gzipped) y ~18 KB de CSS (~4 KB gzipped). Build en ~270 ms. **0 dependencias** de runtime más allá de React y ReactDOM.
+
+## Tecnologías
+
+| Capa | Stack | Versión |
+|---|---|---|
+| Build & dev server | [Vite](https://vite.dev) | 8.0.11 |
+| Framework | [React](https://react.dev) (StrictMode) | 19.2 |
+| Estilos | CSS moderno con custom properties, `color-mix`, `clamp`, `aspect-ratio`, `scroll-snap-type`, `mask-image`, `backdrop-filter` | — |
+| Tipografía | [Fraunces](https://fonts.google.com/specimen/Fraunces) (display, axis variable `SOFT`) + [Inter Tight](https://fonts.google.com/specimen/Inter+Tight) (sans) | Google Fonts |
+| Linting | [ESLint](https://eslint.org) + plugins `react-hooks` y `react-refresh` | 10 |
+| Deploy | [Vercel](https://vercel.com) (build estático desde Vite) | — |
+
+**Lo que NO usa el proyecto** (intencional): Tailwind, MUI, Bootstrap, styled-components, GSAP, Framer Motion, i18next, react-i18next, Three.js, Lottie, ni ninguna librería de iconos. Todo se resuelve con primitivas web.
 
 ## Cómo correrlo
 
