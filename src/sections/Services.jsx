@@ -115,7 +115,6 @@ export default function Services() {
   return (
     <section className="section services" id="services">
       <header className="section-head">
-        <span className="section-num">02</span>
         <span className="section-label">{t.sectionLabel}</span>
       </header>
 

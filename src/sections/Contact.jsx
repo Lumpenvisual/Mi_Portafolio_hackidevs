@@ -57,7 +57,6 @@ export default function Contact() {
   return (
     <section className="section contact" id="contact">
       <header className="section-head">
-        <span className="section-num">05</span>
         <span className="section-label">{t.sectionLabel}</span>
       </header>
 

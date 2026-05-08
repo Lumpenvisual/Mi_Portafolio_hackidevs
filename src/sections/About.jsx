@@ -31,8 +31,7 @@ const copy = {
         label: 'Aprendiendo',
         value: 'HTML · CSS · JavaScript · Python · Git',
       },
-      { label: 'Handle', value: '@hackidevs' },
-      { label: 'Idiomas', value: 'ES nativo · EN nivel B1' },
+      { label: 'Idiomas', value: 'ES nativo · EN - B1' },
     ],
   },
   en: {
@@ -65,8 +64,7 @@ const copy = {
         label: 'Learning',
         value: 'HTML · CSS · JavaScript · Python · Git',
       },
-      { label: 'Handle', value: '@hackidevs' },
-      { label: 'Languages', value: 'Native ES · B1 EN' },
+      { label: 'Languages', value: 'Native ES · EN - B1' },
     ],
   },
 }
@@ -78,7 +76,6 @@ export default function About() {
   return (
     <section className="section about" id="about">
       <header className="section-head">
-        <span className="section-num">01</span>
         <span className="section-label">{t.sectionLabel}</span>
       </header>
 
@@ -87,9 +84,10 @@ export default function About() {
           <img src="/hackidevs.png" alt={t.imgAlt} loading="lazy" />
         </figure>
 
-        <h2 className="section-title about-title">{t.title}</h2>
-
-        <div className="about-body">{t.body}</div>
+        <div className="about-text">
+          <h2 className="section-title about-title">{t.title}</h2>
+          <div className="about-body">{t.body}</div>
+        </div>
 
         <ul className="about-facts">
           {t.facts.map((f) => (

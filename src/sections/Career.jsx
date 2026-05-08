@@ -11,10 +11,16 @@ const data = {
     ),
     milestones: [
       {
-        year: '2025',
-        title: 'Premio TAL & Hackathon EAFIT',
+        year: '2024 — 26',
+        title: 'Proyecto Cartas de Puño y Reja',
         description:
-          'Premio TAL a la Dirección de Fotografía. Participación en el Hackathon FindHub de la Universidad EAFIT.',
+          'Ganó el Fondo Único de Tecnologías de la Información y Comunicación (TIC) en la categoría AbreCámara en 2024. En 2025 fue uno de los proyectos seleccionados al pitch del Ministerio TIC en el Bogotá Audiovisual Market (BAM). Recibió la nominación a los Premios de la Televisión Abierta Latinoamericana (TAL) y ganó el premio a mejor serie documental regional. Ha sido emitida en numerosos canales de televisión pública colombiana: Canal Trece (Bogotá), Canal Tro (Santander), TelePacífico, TeleCaribe, TeleCafé, TeleIslas (San Andrés). En 2026 recibió una nominación a los Premios India Catalina, que destaca lo mejor del audiovisual en Colombia.',
+      },
+      {
+        year: '2025',
+        title: 'Hackathon EAFIT',
+        description:
+          'Participación en el Hackathon FindHub de la Universidad EAFIT.',
       },
       {
         year: '2024 — 25',
@@ -52,10 +58,16 @@ const data = {
     ),
     milestones: [
       {
-        year: '2025',
-        title: 'TAL Award & EAFIT Hackathon',
+        year: '2024 — 26',
+        title: 'Cartas de Puño y Reja',
         description:
-          'TAL Award for Cinematography. Participated in EAFIT University’s FindHub Hackathon.',
+          'Won Colombia’s Single Fund for ICT (Information and Communication Technologies) in the AbreCámara category in 2024. In 2025, selected for the Ministry of ICT pitch at the Bogotá Audiovisual Market (BAM). Received a nomination at the Latin American Open Television Awards (TAL) and won Best Regional Documentary Series. Broadcast on numerous Colombian public TV channels: Canal Trece (Bogotá), Canal Tro (Santander), TelePacífico, TeleCaribe, TeleCafé, TeleIslas (San Andrés). In 2026 received a nomination at the India Catalina Awards, which honor the best of Colombian audiovisual work.',
+      },
+      {
+        year: '2025',
+        title: 'EAFIT Hackathon',
+        description:
+          'Participated in EAFIT University’s FindHub Hackathon.',
       },
       {
         year: '2024 — 25',
@@ -92,7 +104,6 @@ export default function Career() {
   return (
     <section className="section career" id="career">
       <header className="section-head">
-        <span className="section-num">04</span>
         <span className="section-label">{t.sectionLabel}</span>
       </header>
 

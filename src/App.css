@@ -459,20 +459,20 @@ main {
 }
 
 /* =========================================================
-   ABOUT — asymmetric editorial layout with logo mark
+   ABOUT — image and text side by side (vertically centered)
    ========================================================= */
 .about-layout {
   display: grid;
-  grid-template-columns: 260px minmax(0, 1fr);
-  grid-template-rows: auto auto auto;
+  grid-template-columns: 320px minmax(0, 1fr);
+  grid-template-rows: auto auto;
   column-gap: 64px;
-  row-gap: 40px;
-  align-items: start;
+  row-gap: 56px;
+  align-items: center;
 }
 
 .about-mark {
   grid-column: 1;
-  grid-row: 1 / span 2;
+  grid-row: 1;
   margin: 0;
   padding: 24px;
   background: var(--accent-soft);
@@ -501,16 +501,17 @@ main {
   filter: brightness(0.95);
 }
 
-.about-title {
+.about-text {
   grid-column: 2;
   grid-row: 1;
-  margin: 0;
-  max-width: 18ch;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
 }
 
-.about-body {
-  grid-column: 2;
-  grid-row: 2;
+.about-title {
+  margin: 0;
+  max-width: 18ch;
 }
 
 .about-body p {
@@ -520,9 +521,13 @@ main {
   color: var(--ink-soft);
 }
 
+.about-body p:last-child {
+  margin-bottom: 0;
+}
+
 .about-facts {
   grid-column: 1 / -1;
-  grid-row: 3;
+  grid-row: 2;
   list-style: none;
   padding: 32px 0 0;
   margin: 0;
@@ -555,26 +560,15 @@ main {
     row-gap: 32px;
   }
   .about-mark {
-    grid-column: 1;
-    grid-row: 1;
-    position: static;
     max-width: 240px;
-    aspect-ratio: 1 / 1;
+    grid-row: 1;
   }
-  .about-title,
-  .about-body,
-  .about-facts {
+  .about-text {
     grid-column: 1;
-  }
-  .about-title {
     grid-row: 2;
-    max-width: 100%;
-  }
-  .about-body {
-    grid-row: 3;
   }
   .about-facts {
-    grid-row: 4;
+    grid-row: 3;
     grid-template-columns: 1fr;
     gap: 16px;
   }
@@ -599,7 +593,7 @@ main {
 
 .project-link {
   display: grid;
-  grid-template-columns: 100px 1fr 280px;
+  grid-template-columns: 280px 100px 1fr;
   gap: 48px;
   align-items: start;
   padding: 40px 0;
@@ -607,19 +601,16 @@ main {
   transition: padding 0.35s ease;
 }
 
-/* Alternate: even projects get the thumbnail on the LEFT */
-.project:nth-child(even) .project-link {
-  grid-template-columns: 280px 100px 1fr;
-}
-.project:nth-child(even) .project-thumb {
+/* All projects: thumbnail on the LEFT, then meta, then main */
+.project-thumb {
   order: 1;
   grid-column: 1;
 }
-.project:nth-child(even) .project-meta {
+.project-meta {
   order: 2;
   grid-column: 2;
 }
-.project:nth-child(even) .project-main {
+.project-main {
   order: 3;
   grid-column: 3;
 }
@@ -797,52 +788,214 @@ main {
 }
 
 /* =========================================================
-   SERVICES — asymmetric 2:1 / 1:2 alternating grid
+   REELS SHELF — horizontal scroll, 9:16 cards (inside Projects)
+   ========================================================= */
+.reels-shelf {
+  margin-top: 96px;
+  padding-top: 64px;
+  border-top: 1px solid var(--border);
+}
+
+.reels-head {
+  margin-bottom: 36px;
+}
+
+.reels-head .section-label {
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.reels-title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(28px, 3.4vw, 44px);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin: 16px 0 0;
+  max-width: 22ch;
+}
+
+.reels-title em {
+  font-style: italic;
+  color: var(--accent);
+}
+
+.reels-track {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding: 8px 0 24px;
+  -webkit-overflow-scrolling: touch;
+  cursor: grab;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-strong) transparent;
+  /* fade-out gradient at the right edge to hint more content */
+  -webkit-mask-image: linear-gradient(
+    to right,
+    black 0,
+    black calc(100% - 48px),
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    black 0,
+    black calc(100% - 48px),
+    transparent 100%
+  );
+}
+
+.reels-track::-webkit-scrollbar {
+  height: 6px;
+}
+.reels-track::-webkit-scrollbar-track {
+  background: transparent;
+}
+.reels-track::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: 999px;
+}
+
+.reels-track:active {
+  cursor: grabbing;
+}
+
+.reel-card {
+  flex: 0 0 200px;
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.3s ease;
+}
+
+.reel-card:hover {
+  transform: translateY(-4px);
+}
+
+.reel-thumb {
+  position: relative;
+  aspect-ratio: 9 / 16;
+  border-radius: 6px;
+  overflow: hidden;
+  background: linear-gradient(
+    180deg,
+    var(--accent-soft) 0%,
+    var(--bg-elevated) 100%
+  );
+  border: 1px solid var(--border);
+}
+
+.reel-thumb img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.reel-card:hover .reel-thumb img {
+  transform: scale(1.06);
+}
+
+.reel-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0) 30%,
+    rgba(0, 0, 0, 0.55) 100%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.reel-card:hover .reel-overlay {
+  opacity: 1;
+}
+
+.reel-play {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.95);
+  color: var(--accent);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  padding-left: 3px;
+}
+
+.reel-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 0 2px;
+}
+
+.reel-title-text {
+  font-size: 14px;
+  color: var(--ink);
+  line-height: 1.35;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.reel-info {
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 768px) {
+  .reels-shelf {
+    margin-top: 64px;
+    padding-top: 40px;
+  }
+  .reel-card {
+    flex: 0 0 160px;
+  }
+}
+
+/* =========================================================
+   SERVICES — uniform 2-column grid (all cards equal)
    ========================================================= */
 .services-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   border-top: 1px solid var(--border);
 }
 
 .service {
-  padding: 44px 32px 44px 0;
+  padding: 44px 32px;
   border-bottom: 1px solid var(--border);
   display: flex;
   flex-direction: column;
   gap: 14px;
   position: relative;
-  transition: padding-left 0.3s ease, background 0.3s ease;
+  transition: background 0.3s ease;
 }
 
-/* Row 1: wide (2/3) | narrow (1/3) */
-.service:nth-child(1) {
-  grid-column: span 2;
-}
-.service:nth-child(2) {
-  grid-column: span 1;
-  padding-left: 32px;
-  border-left: 1px solid var(--border);
+.service:nth-child(odd) {
+  border-right: 1px solid var(--border);
+  padding-left: 0;
 }
 
-/* Row 2: narrow | wide */
-.service:nth-child(3) {
-  grid-column: span 1;
-}
-.service:nth-child(4) {
-  grid-column: span 2;
-  padding-left: 32px;
-  border-left: 1px solid var(--border);
-}
-
-/* Row 3: wide | narrow */
-.service:nth-child(5) {
-  grid-column: span 2;
-}
-.service:nth-child(6) {
-  grid-column: span 1;
-  padding-left: 32px;
-  border-left: 1px solid var(--border);
+.service:nth-child(even) {
+  padding-right: 0;
 }
 
 .service:hover {
@@ -851,13 +1004,6 @@ main {
     color-mix(in srgb, var(--accent-soft) 35%, transparent) 0%,
     transparent 70%
   );
-  padding-left: 40px;
-}
-
-.service:nth-child(1):hover,
-.service:nth-child(3):hover,
-.service:nth-child(5):hover {
-  padding-left: 8px;
 }
 
 .service-num {
@@ -920,64 +1066,73 @@ main {
 }
 
 /* =========================================================
-   CAREER (Trayectoria)
+   CAREER (Trayectoria) — vertical timeline with dot markers
    ========================================================= */
 .timeline {
   list-style: none;
   margin: 0;
   padding: 0;
-  border-top: 1px solid var(--border);
+  position: relative;
+}
+
+/* Vertical line running down the entire timeline */
+.timeline::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 200px;
+  width: 1px;
+  background: var(--border-strong);
 }
 
 .timeline-row {
   display: grid;
   grid-template-columns: 200px 1fr;
-  gap: 48px;
-  padding: 36px 0;
-  border-bottom: 1px solid var(--border);
-  transition: padding-left 0.3s ease, margin-left 0.4s ease;
+  column-gap: 64px;
+  padding: 32px 0;
   position: relative;
+  transition: padding-left 0.3s ease;
 }
 
-.timeline-row:nth-child(2) {
-  margin-left: 56px;
-}
-.timeline-row:nth-child(3) {
-  margin-left: 24px;
-}
-.timeline-row:nth-child(4) {
-  margin-left: 88px;
-}
-.timeline-row:nth-child(5) {
-  margin-left: 0;
-}
-
+/* Dot marker on the timeline line */
 .timeline-row::before {
   content: '';
   position: absolute;
-  left: 0;
-  top: 50%;
-  width: 0;
-  height: 1px;
-  background: var(--accent);
-  transition: width 0.4s ease;
-}
-
-.timeline-row:hover {
-  padding-left: 16px;
+  left: 200px;
+  top: 36px;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: var(--bg);
+  border: 2px solid var(--accent);
+  transform: translateX(-50%);
+  transition: background 0.25s ease, transform 0.25s ease;
+  z-index: 1;
 }
 
 .timeline-row:hover::before {
-  width: 8px;
+  background: var(--accent);
+  transform: translateX(-50%) scale(1.25);
+}
+
+.timeline-row:hover {
+  padding-left: 8px;
 }
 
 .timeline-year {
   font-family: var(--font-display);
   font-style: italic;
-  font-size: clamp(20px, 2vw, 24px);
+  font-size: clamp(20px, 2vw, 26px);
   color: var(--accent);
   letter-spacing: -0.01em;
-  padding-top: 4px;
+  padding-top: 2px;
+  text-align: right;
+  padding-right: 24px;
+}
+
+.timeline-body {
+  padding-top: 0;
 }
 
 .timeline-title {
@@ -999,9 +1154,21 @@ main {
 }
 
 @media (max-width: 768px) {
+  .timeline::before {
+    left: 12px;
+  }
   .timeline-row {
     grid-template-columns: 1fr;
     gap: 8px;
+    padding-left: 36px;
+  }
+  .timeline-row::before {
+    left: 12px;
+    top: 36px;
+  }
+  .timeline-year {
+    text-align: left;
+    padding-right: 0;
   }
 }
 

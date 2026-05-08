@@ -4,14 +4,24 @@ const baseProjects = [
   { num: '01', videoId: 'ULrllSX12UQ', accent: '#c8553d' },
   { num: '02', videoId: '_-7ZI3wq4Q0', accent: '#5d6b4f' },
   { num: '03', videoId: 'LwCcRuVgFV4', accent: '#8a6a3f' },
-  { num: '04', videoId: 'iI-uxTikYIY', accent: '#7a5577' },
+  { num: '04', videoId: '9dQOVCt28E8', accent: '#a87836' },
   { num: '05', videoId: 'ig_583LphJU', accent: '#3f5d6b' },
   { num: '06', videoId: 'hmnJYny92L8', accent: '#4a3f5d' },
 ]
 
+// Reels — YouTube Shorts. Titles taken from each video's oEmbed metadata.
+const reelsBase = [
+  { videoId: 'B4mf6aw48FQ', platform: 'YT · Short' },
+  { videoId: 'rqbNBqjMtEA', platform: 'YT · Short' },
+  { videoId: 'wrhCjN-KxBM', platform: 'YT · Short' },
+  { videoId: 'GAcKzQ28XI0', platform: 'YT · Short' },
+  { videoId: 'octP-msK8pY', platform: 'YT · Short' },
+  { videoId: 'ilzk5sFPpFE', platform: 'YT · Short' },
+]
+
 const localized = {
   es: {
-    sectionLabel: 'Proyectos seleccionados',
+    sectionLabel: 'Proyectos',
     title: (
       <>
         Seis piezas de <em>cine</em>, <em>archivo</em> y{' '}
@@ -19,6 +29,20 @@ const localized = {
       </>
     ),
     cta: 'Ver en YouTube',
+    reelsLabel: 'Reels',
+    reelsHeadline: (
+      <>
+        Piezas en <em>vertical</em> &mdash; ritmo corto.
+      </>
+    ),
+    reelTitles: [
+      'Un Bitcoin x Un Café',
+      '¿Quiénes son los verdaderos millonarios?',
+      'Estilos de vida saludable',
+      'Alquimia con tijeras',
+      'Blusa Mily Pink',
+      'Reel para redes sociales',
+    ],
     items: [
       {
         name: 'COMER',
@@ -45,12 +69,12 @@ const localized = {
         tags: ['Divulgación', 'Archivo', 'Investigación'],
       },
       {
-        name: 'Zenzual',
-        subtitle: 'Exploración sensorial',
-        role: 'Audiovisual experimental',
+        name: 'Papá en París',
+        subtitle: 'De −50.000 € a millonario',
+        role: 'Producción & Edición',
         description:
-          'Pieza audiovisual de exploración sensorial y movimiento — cuerpo, ritmo y cámara.',
-        tags: ['Experimental', 'Movimiento', 'Sensorial'],
+          'Retrato en primera persona de una reinvención financiera: el camino desde la deuda hasta la libertad económica, contado con ritmo de entrevista íntima.',
+        tags: ['Producción', 'Edición', 'Storytelling'],
       },
       {
         name: 'Campaña social',
@@ -71,7 +95,7 @@ const localized = {
     ],
   },
   en: {
-    sectionLabel: 'Selected Work',
+    sectionLabel: 'Projects',
     title: (
       <>
         Six pieces of <em>cinema</em>, <em>archive</em> and visual{' '}
@@ -79,6 +103,20 @@ const localized = {
       </>
     ),
     cta: 'Watch on YouTube',
+    reelsLabel: 'Reels',
+    reelsHeadline: (
+      <>
+        Pieces in <em>vertical</em> &mdash; short rhythm.
+      </>
+    ),
+    reelTitles: [
+      'One Bitcoin × One Coffee',
+      'Who are the real millionaires?',
+      'Healthy lifestyles',
+      'Alchemy with scissors',
+      'Blusa Mily Pink',
+      'Reel for social media',
+    ],
     items: [
       {
         name: 'COMER',
@@ -105,12 +143,12 @@ const localized = {
         tags: ['Outreach', 'Archive', 'Research'],
       },
       {
-        name: 'Zenzual',
-        subtitle: 'Sensory exploration',
-        role: 'Experimental audiovisual',
+        name: 'Papá en París',
+        subtitle: 'From −€50,000 to millionaire',
+        role: 'Production & Editing',
         description:
-          'Audiovisual piece of sensory exploration and movement — body, rhythm and camera.',
-        tags: ['Experimental', 'Movement', 'Sensory'],
+          'A first-person portrait of financial reinvention: the journey from debt to economic freedom, told with the rhythm of an intimate interview.',
+        tags: ['Production', 'Editing', 'Storytelling'],
       },
       {
         name: 'Social Campaign',
@@ -141,11 +179,11 @@ export default function Projects() {
   const { lang } = useApp()
   const t = localized[lang]
   const projects = baseProjects.map((p, i) => ({ ...p, ...t.items[i] }))
+  const reels = reelsBase.map((r, i) => ({ ...r, title: t.reelTitles[i] }))
 
   return (
     <section className="section projects" id="work">
       <header className="section-head">
-        <span className="section-num">03</span>
         <span className="section-label">{t.sectionLabel}</span>
       </header>
 
@@ -194,6 +232,41 @@ export default function Projects() {
           </li>
         ))}
       </ul>
+
+      <div className="reels-shelf">
+        <header className="reels-head">
+          <span className="section-label">{t.reelsLabel}</span>
+          <h3 className="reels-title">{t.reelsHeadline}</h3>
+        </header>
+
+        <div className="reels-track" role="list">
+          {reels.map((r, i) => (
+            <a
+              key={i}
+              href={`https://www.youtube.com/watch?v=${r.videoId}`}
+              className="reel-card"
+              target="_blank"
+              rel="noreferrer"
+              role="listitem"
+            >
+              <div className="reel-thumb">
+                <img
+                  src={`https://i.ytimg.com/vi/${r.videoId}/hqdefault.jpg`}
+                  alt={r.title}
+                  loading="lazy"
+                />
+                <span className="reel-overlay">
+                  <span className="reel-play">▶</span>
+                </span>
+              </div>
+              <div className="reel-meta">
+                <span className="reel-title-text">{r.title}</span>
+                <span className="reel-info">{r.platform}</span>
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
     </section>
   )
 }
