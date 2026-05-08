@@ -764,26 +764,63 @@ main {
 
 @media (max-width: 1024px) {
   .project-link {
-    grid-template-columns: 80px 1fr;
-    gap: 24px;
+    grid-template-columns: 1fr;
+    gap: 18px;
+    padding: 32px 0;
+  }
+  /* Override explicit desktop columns/order: stack vertically */
+  .project-thumb,
+  .project-meta,
+  .project-main {
+    grid-column: 1;
   }
   .project-thumb {
-    grid-column: 1 / -1;
-    height: 180px;
+    order: 1;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    width: 100%;
+  }
+  .project-meta {
+    order: 2;
+    flex-direction: row;
+    align-items: baseline;
+    gap: 14px;
+  }
+  .project-main {
+    order: 3;
+  }
+  /* Disable the desktop hover bg expansion on touch screens */
+  .project-link:hover {
+    padding: 32px 0;
+  }
+  .project-link::before {
+    display: none;
   }
 }
 
 @media (max-width: 768px) {
   .project-link {
-    grid-template-columns: 1fr;
-    gap: 16px;
+    gap: 14px;
+    padding: 28px 0;
   }
-  .project-meta {
-    flex-direction: row;
-    gap: 16px;
+  .project-link:hover {
+    padding: 28px 0;
   }
   .project-thumb {
-    height: 140px;
+    border-radius: 6px;
+  }
+  .project-name {
+    font-size: clamp(26px, 7vw, 32px);
+  }
+  .project-desc {
+    font-size: 15px;
+  }
+  /* Make the play CTA more visible on mobile (no hover) */
+  .project-cta {
+    background: rgba(0, 0, 0, 0.45);
+    padding: 6px 12px;
+    border-radius: 999px;
+    backdrop-filter: blur(6px);
   }
 }
 
