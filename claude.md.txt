@@ -1,0 +1,22 @@
+# CLAUDE.md - Memoria del Proyecto
+
+## Contexto actual
+- Proyecto: Portafolio profesional de Jacky
+- Estado: Trabajando en diseño UX/UI
+- Última decisión: Usar paleta crema + terracota
+
+## Decisiones arquitectónicas
+- Framework: HTML/CSS vanilla, sin dependencias
+- Despliegue: Vercel
+
+## Cosas aprendidas / Pendientes
+- [ ] Ajustar responsive en móvil
+- [ ] Mejorar animaciones del hover
+
+## Notas sobre estilo de código
+- Usar variables CSS para colores
+- Mantener tipografía con Playfair Display + Inter
+
+## Reglas de memoria
+Siempre que aprendas algo nuevo sobre este proyecto, guárdalo en 
+./.claude/memory/ como un archivo .md. NO uses ~/.claude/projects/.
