@@ -37,6 +37,9 @@
 
   --max-w: 1280px;
   --pad-x: 48px;
+  --nav-h: 92px;
+
+  scroll-padding-top: var(--nav-h);
 
   color: var(--ink-soft);
   background: var(--bg);
@@ -89,5 +92,6 @@ svg {
 @media (max-width: 768px) {
   :root {
     --pad-x: 24px;
+    --nav-h: 116px;
   }
 }

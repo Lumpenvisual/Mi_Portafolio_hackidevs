@@ -69,12 +69,12 @@ const localized = {
         tags: ['Divulgación', 'Archivo', 'Investigación'],
       },
       {
-        name: 'Papá en París',
-        subtitle: 'De −50.000 € a millonario',
-        role: 'Producción & Edición',
+        name: 'Fausto Murillo',
+        subtitle: 'Podcast del referente fitness en español',
+        role: 'Edición de podcast',
         description:
-          'Retrato en primera persona de una reinvención financiera: el camino desde la deuda hasta la libertad económica, contado con ritmo de entrevista íntima.',
-        tags: ['Producción', 'Edición', 'Storytelling'],
+          'Edición y postproducción del podcast de Fausto Murillo, una de las voces más reconocidas del fitness en habla hispana. Ritmo conversacional, cortes limpios y entrega lista para YouTube y plataformas de audio.',
+        tags: ['Podcast', 'Edición', 'Postproducción'],
       },
       {
         name: 'Campaña social',
@@ -86,11 +86,11 @@ const localized = {
       },
       {
         name: 'Mandrágora',
-        subtitle: 'Cortometraje experimental',
-        role: 'Cortometraje',
+        subtitle: 'Proyecto cultural — collage y música en vivo',
+        role: 'Registro de evento',
         description:
-          'Cortometraje de atmósfera y narrativa visual experimental. Ritmo lento, textura densa.',
-        tags: ['Cortometraje', 'Atmósfera', 'Narrativa'],
+          'Registro audiovisual de Mandrágora, proyecto cultural que cruza collage y música en vivo. Atmósfera, ritmo y memoria de una noche irrepetible.',
+        tags: ['Registro', 'Cultura', 'Música'],
       },
     ],
   },
@@ -143,12 +143,12 @@ const localized = {
         tags: ['Outreach', 'Archive', 'Research'],
       },
       {
-        name: 'Papá en París',
-        subtitle: 'From −€50,000 to millionaire',
-        role: 'Production & Editing',
+        name: 'Fausto Murillo',
+        subtitle: 'Podcast by the Spanish-speaking fitness icon',
+        role: 'Podcast editing',
         description:
-          'A first-person portrait of financial reinvention: the journey from debt to economic freedom, told with the rhythm of an intimate interview.',
-        tags: ['Production', 'Editing', 'Storytelling'],
+          'Editing and post-production for Fausto Murillo’s podcast — one of the leading voices in Spanish-language fitness. Conversational pacing, clean cuts and delivery ready for YouTube and audio platforms.',
+        tags: ['Podcast', 'Editing', 'Post-production'],
       },
       {
         name: 'Social Campaign',
@@ -160,11 +160,11 @@ const localized = {
       },
       {
         name: 'Mandrágora',
-        subtitle: 'Experimental short film',
-        role: 'Short film',
+        subtitle: 'Cultural project — collage & live music',
+        role: 'Event documentation',
         description:
-          'Experimental short film with atmosphere and visual narrative. Slow rhythm, dense texture.',
-        tags: ['Short film', 'Atmosphere', 'Narrative'],
+          'Audiovisual documentation of Mandrágora, a cultural project where collage meets live music. Atmosphere, rhythm and the memory of a one-of-a-kind night.',
+        tags: ['Documentation', 'Culture', 'Music'],
       },
     ],
   },
