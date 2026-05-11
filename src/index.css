@@ -10,9 +10,9 @@
   --muted-soft: #a3a39f;
   --border: #e4e0d6;
   --border-strong: #cfcabb;
-  --accent: #9d1cd4;
-  --accent-hover: #8517b5;
-  --accent-soft: #f1e0f8;
+  --accent: #c8553d;
+  --accent-hover: #b14730;
+  --accent-soft: #f1e3dc;
   --thumb-overlay: rgba(0, 0, 0, 0.6);
 }
 
@@ -25,9 +25,9 @@
   --muted-soft: #4a4640;
   --border: #2c2820;
   --border-strong: #3d382e;
-  --accent: #9d1cd4;
-  --accent-hover: #b244e0;
-  --accent-soft: #25153a;
+  --accent: #e8704f;
+  --accent-hover: #f08b6e;
+  --accent-soft: #2a1f1a;
   --thumb-overlay: rgba(0, 0, 0, 0.55);
 }
 
