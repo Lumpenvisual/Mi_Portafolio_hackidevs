@@ -1,7 +1,7 @@
 import { useApp } from '../lib/AppContext'
 
 const baseProjects = [
-  { num: '01', videoId: 'ULrllSX12UQ', accent: '#c8553d' },
+  { num: '01', videoId: 'ULrllSX12UQ', accent: '#9d1cd4' },
   { num: '02', videoId: '_-7ZI3wq4Q0', accent: '#5d6b4f' },
   { num: '03', videoId: 'LwCcRuVgFV4', accent: '#8a6a3f' },
   { num: '04', videoId: '9dQOVCt28E8', accent: '#a87836' },
