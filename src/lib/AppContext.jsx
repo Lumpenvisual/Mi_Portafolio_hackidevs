@@ -36,6 +36,14 @@ export function AppProvider({ children }) {
     localStorage.setItem('theme', theme)
   }, [theme])
 
+  useEffect(() => {
+    if (localStorage.getItem('theme')) return
+    const media = window.matchMedia('(prefers-color-scheme: dark)')
+    const handleChange = (e) => setTheme(e.matches ? 'dark' : 'light')
+    media.addEventListener('change', handleChange)
+    return () => media.removeEventListener('change', handleChange)
+  }, [])
+
   const toggleLang = () => setLang((l) => (l === 'es' ? 'en' : 'es'))
   const toggleTheme = () => setTheme((t) => (t === 'dark' ? 'light' : 'dark'))
 

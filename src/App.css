@@ -888,6 +888,8 @@ main {
   cursor: grab;
   scrollbar-width: thin;
   scrollbar-color: var(--border-strong) transparent;
+  list-style: none;
+  margin: 0;
   /* fade-out gradient at the right edge to hint more content */
   -webkit-mask-image: linear-gradient(
     to right,
@@ -901,6 +903,11 @@ main {
     black calc(100% - 48px),
     transparent 100%
   );
+}
+
+.reel-item {
+  flex: 0 0 200px;
+  scroll-snap-align: start;
 }
 
 .reels-track::-webkit-scrollbar {
@@ -919,8 +926,6 @@ main {
 }
 
 .reel-card {
-  flex: 0 0 200px;
-  scroll-snap-align: start;
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -1020,7 +1025,7 @@ main {
     margin-top: 64px;
     padding-top: 40px;
   }
-  .reel-card {
+  .reel-item {
     flex: 0 0 160px;
   }
 }

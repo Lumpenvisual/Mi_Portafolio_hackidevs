@@ -11,7 +11,7 @@ const baseProjects = [
 
 // Reels — YouTube Shorts. Titles taken from each video's oEmbed metadata.
 const reelsBase = [
-  { videoId: 'B4mf6aw48FQ', platform: 'YT · Short' },
+  { videoId: 'NtAlZCkbkh8', platform: 'YT · Short' },
   { videoId: 'rqbNBqjMtEA', platform: 'YT · Short' },
   { videoId: 'wrhCjN-KxBM', platform: 'YT · Short' },
   { videoId: 'GAcKzQ28XI0', platform: 'YT · Short' },
@@ -36,7 +36,7 @@ const localized = {
       </>
     ),
     reelTitles: [
-      'Un Bitcoin x Un Café',
+      'Casa en venta Ricaurte',
       '¿Quiénes son los verdaderos millonarios?',
       'Estilos de vida saludable',
       'Alquimia con tijeras',
@@ -110,7 +110,7 @@ const localized = {
       </>
     ),
     reelTitles: [
-      'One Bitcoin × One Coffee',
+      'Casa en venta Ricaurte',
       'Who are the real millionaires?',
       'Healthy lifestyles',
       'Alchemy with scissors',
@@ -239,15 +239,15 @@ export default function Projects() {
           <h3 className="reels-title">{t.reelsHeadline}</h3>
         </header>
 
-        <div className="reels-track" role="list">
+        <ul className="reels-track">
           {reels.map((r, i) => (
+            <li key={i} className="reel-item">
             <a
-              key={i}
               href={`https://www.youtube.com/watch?v=${r.videoId}`}
               className="reel-card"
               target="_blank"
               rel="noreferrer"
-              role="listitem"
+              aria-label={`${r.title} — YouTube (${t.reelsLabel})`}
             >
               <div className="reel-thumb">
                 <img
@@ -264,8 +264,9 @@ export default function Projects() {
                 <span className="reel-info">{r.platform}</span>
               </div>
             </a>
+            </li>
           ))}
-        </div>
+        </ul>
       </div>
     </section>
   )

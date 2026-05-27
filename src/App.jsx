@@ -12,8 +12,11 @@ import './App.css'
 export default function App() {
   return (
     <>
+      <a href="#main-content" className="skip-link">
+        Saltar al contenido
+      </a>
       <Nav />
-      <main>
+      <main id="main-content">
         <Hero />
         <Marquee />
         <About />

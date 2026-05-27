@@ -50,6 +50,8 @@ const links = [
   { label: 'YouTube', href: 'https://www.youtube.com/@Jackie.visual' },
 ]
 
+const newTabLabel = { es: 'abre en nueva pestaña', en: 'opens in new tab' }
+
 export default function Contact() {
   const { lang } = useApp()
   const t = copy[lang]
@@ -73,9 +75,14 @@ export default function Contact() {
           <ul className="contact-links">
             {links.map((l) => (
               <li key={l.label}>
-                <a href={l.href} target="_blank" rel="noreferrer">
+                <a
+                  href={l.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label={`${l.label} (${newTabLabel[lang]})`}
+                >
                   {l.label}
-                  <span className="arr">↗</span>
+                  <span className="arr" aria-hidden="true">↗</span>
                 </a>
               </li>
             ))}
