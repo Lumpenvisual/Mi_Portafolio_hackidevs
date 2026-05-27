@@ -1315,14 +1315,14 @@ main {
 .contact-mail {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   font-family: var(--font-display);
   font-style: italic;
-  font-size: clamp(28px, 4vw, 44px);
+  font-size: clamp(15px, 1.6vw, 20px);
   color: var(--ink);
   border-bottom: 1px solid var(--border-strong);
-  padding-bottom: 16px;
-  margin-bottom: 80px;
+  padding-bottom: 4px;
+  margin-top: 16px;
   transition: color 0.2s ease, border-color 0.2s ease;
 }
 

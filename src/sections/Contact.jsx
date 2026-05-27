@@ -125,11 +125,6 @@ export default function Contact() {
 
       <h2 className="contact-title">{t.title}</h2>
 
-      <a className="contact-mail" href={`mailto:${t.email}`}>
-        {t.email}
-        <span className="arr" aria-hidden="true">↗</span>
-      </a>
-
       <form
         ref={formRef}
         data-reveal
@@ -220,6 +215,10 @@ export default function Contact() {
         <div className="contact-col">
           <span className="label">{t.availability}</span>
           <p>{t.availabilityCopy}</p>
+          <a className="contact-mail" href={`mailto:${t.email}`}>
+            {t.email}
+            <span className="arr" aria-hidden="true">↗</span>
+          </a>
         </div>
       </div>
     </section>
