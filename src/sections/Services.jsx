@@ -1,4 +1,5 @@
 import { useApp } from '../lib/AppContext'
+import { useReveal } from '../hooks/useReveal'
 
 const data = {
   es: {
@@ -111,16 +112,18 @@ const data = {
 export default function Services() {
   const { lang } = useApp()
   const t = data[lang]
+  const headRef = useReveal()
+  const bodyRef = useReveal({ delay: 150 })
 
   return (
     <section className="section services" id="services">
-      <header className="section-head">
+      <header ref={headRef} data-reveal className="section-head">
         <span className="section-label">{t.sectionLabel}</span>
       </header>
 
       <h2 className="section-title">{t.title}</h2>
 
-      <div className="services-grid">
+      <div ref={bodyRef} data-reveal className="services-grid">
         {t.services.map((s) => (
           <article className="service" key={s.num}>
             <span className="service-num">{s.num}</span>

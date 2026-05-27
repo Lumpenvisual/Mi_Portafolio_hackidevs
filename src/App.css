@@ -181,6 +181,18 @@ main {
   width: 100%;
 }
 
+.nav-links a[aria-current='location'] {
+  color: var(--ink);
+}
+.nav-links a[aria-current='location']::after {
+  width: 100%;
+}
+
+/* Hamburger — hidden on desktop */
+.icon-btn.hamburger {
+  display: none;
+}
+
 .nav-cta {
   display: inline-flex;
   align-items: center;
@@ -250,22 +262,46 @@ main {
 
 @media (max-width: 768px) {
   .nav-inner {
-    flex-wrap: wrap;
-    row-gap: 8px;
     padding: 14px var(--pad-x);
   }
-  .nav-logo {
-    order: 1;
+
+  /* Show hamburger on mobile */
+  .icon-btn.hamburger {
+    display: inline-flex;
   }
-  .nav-tools {
-    order: 2;
-  }
+
+  /* Mobile dropdown — always in DOM for a11y, visually toggled */
   .nav-links {
-    order: 3;
-    flex-basis: 100%;
-    justify-content: center;
-    gap: 20px;
-    font-size: 13px;
+    position: fixed;
+    top: var(--nav-h);
+    left: 0;
+    right: 0;
+    z-index: 48;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+    flex-direction: column;
+    gap: 0;
+    font-size: 16px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease, padding 0.3s ease;
+  }
+
+  .nav--open .nav-links {
+    max-height: 400px;
+    padding: 8px var(--pad-x) 24px;
+  }
+
+  .nav-links a {
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+    color: var(--ink-soft);
+  }
+  .nav-links a:last-child {
+    border-bottom: none;
+  }
+  .nav-links a::after {
+    display: none;
   }
   .nav-cta {
     display: none;
@@ -318,7 +354,7 @@ main {
   grid-column: 1 / -1;
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: clamp(64px, 13vw, 188px);
+  font-size: clamp(42px, 13vw, 188px);
   line-height: 0.92;
   letter-spacing: -0.04em;
   color: var(--ink);
@@ -476,6 +512,12 @@ main {
   }
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none !important;
+  }
+}
+
 /* =========================================================
    ABOUT — image and text side by side (vertically centered)
    ========================================================= */
@@ -550,7 +592,7 @@ main {
   padding: 32px 0 0;
   margin: 0;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 32px;
   border-top: 1px solid var(--border);
 }
@@ -739,7 +781,11 @@ main {
   height: 100%;
   object-fit: cover;
   z-index: 0;
-  transition: transform 0.5s ease;
+  opacity: 0;
+  transition: transform 0.5s ease, opacity 0.4s ease;
+}
+.project-thumb img.loaded {
+  opacity: 1;
 }
 
 .project-link:hover .project-thumb img {
@@ -957,7 +1003,11 @@ main {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.5s ease;
+  opacity: 0;
+  transition: transform 0.5s ease, opacity 0.4s ease;
+}
+.reel-thumb img.loaded {
+  opacity: 1;
 }
 
 .reel-card:hover .reel-thumb img {
@@ -981,6 +1031,12 @@ main {
 
 .reel-card:hover .reel-overlay {
   opacity: 1;
+}
+
+@media (max-width: 768px) {
+  .reel-overlay {
+    opacity: 1;
+  }
 }
 
 .reel-play {
@@ -1242,7 +1298,7 @@ main {
 .contact-title {
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: clamp(56px, 11vw, 156px);
+  font-size: clamp(38px, 11vw, 156px);
   line-height: 0.94;
   letter-spacing: -0.04em;
   color: var(--ink);

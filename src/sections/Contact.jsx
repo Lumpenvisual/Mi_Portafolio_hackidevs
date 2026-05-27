@@ -1,4 +1,5 @@
 import { useApp } from '../lib/AppContext'
+import { useReveal } from '../hooks/useReveal'
 
 const copy = {
   es: {
@@ -55,10 +56,12 @@ const newTabLabel = { es: 'abre en nueva pestaña', en: 'opens in new tab' }
 export default function Contact() {
   const { lang } = useApp()
   const t = copy[lang]
+  const headRef = useReveal()
+  const bodyRef = useReveal({ delay: 150 })
 
   return (
     <section className="section contact" id="contact">
-      <header className="section-head">
+      <header ref={headRef} data-reveal className="section-head">
         <span className="section-label">{t.sectionLabel}</span>
       </header>
 
@@ -66,10 +69,10 @@ export default function Contact() {
 
       <a className="contact-mail" href={`mailto:${t.email}`}>
         {t.email}
-        <span className="arr">↗</span>
+        <span className="arr" aria-hidden="true">↗</span>
       </a>
 
-      <div className="contact-grid">
+      <div ref={bodyRef} data-reveal className="contact-grid">
         <div className="contact-col">
           <span className="label">{t.findMe}</span>
           <ul className="contact-links">

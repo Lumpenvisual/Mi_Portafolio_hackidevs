@@ -92,7 +92,7 @@ svg {
 @media (max-width: 768px) {
   :root {
     --pad-x: 24px;
-    --nav-h: 116px;
+    --nav-h: 64px; /* single-row nav with hamburger */
   }
 }
 
@@ -144,6 +144,17 @@ svg {
   border-radius: 2px;
 }
 
+/* Scroll-reveal */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.65s ease, transform 0.65s ease;
+}
+[data-reveal].is-visible {
+  opacity: 1;
+  transform: none;
+}
+
 /* Respect reduced motion */
 @media (prefers-reduced-motion: reduce) {
   *,
@@ -153,5 +164,12 @@ svg {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+  /* Reveal: instantly visible — specificity beats * above */
+  [data-reveal],
+  [data-reveal].is-visible {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
   }
 }

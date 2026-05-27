@@ -4,22 +4,36 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Prevent dark/light mode flash before React hydrates -->
+    <script>
+      (function () {
+        try {
+          var d = document.documentElement
+          var t = localStorage.getItem('theme')
+          if (t === 'dark' || t === 'light') { d.dataset.theme = t }
+          else if (window.matchMedia('(prefers-color-scheme: dark)').matches) { d.dataset.theme = 'dark' }
+          var l = localStorage.getItem('lang')
+          if (l === 'es' || l === 'en') d.lang = l
+        } catch (e) {}
+      })()
+    </script>
 
     <title>Jacky Gutiérrez — Comunicadora Audiovisual · IA · Código</title>
     <meta name="description" content="Portafolio de Jacky Gutiérrez, comunicadora audiovisual de Medellín. Documental, edición, storytelling, IA generativa y automatización de procesos." />
     <meta name="robots" content="index, follow" />
+    <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
 
     <meta property="og:type" content="website" />
     <meta property="og:title" content="Jacky Gutiérrez — Comunicadora Audiovisual · IA · Código" />
     <meta property="og:description" content="Portafolio de Jacky Gutiérrez, comunicadora audiovisual de Medellín. Documental, edición, storytelling, IA generativa y automatización de procesos." />
-    <meta property="og:image" content="/hackidevs.png" />
+    <meta property="og:image" content="https://hackidevs.com/hackidevs.png" />
     <meta property="og:locale" content="es_CO" />
     <meta property="og:locale:alternate" content="en_US" />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Jacky Gutiérrez — Comunicadora Audiovisual · IA · Código" />
     <meta name="twitter:description" content="Portafolio de Jacky Gutiérrez, comunicadora audiovisual de Medellín." />
-    <meta name="twitter:image" content="/hackidevs.png" />
+    <meta name="twitter:image" content="https://hackidevs.com/hackidevs.png" />
 
     <script type="application/ld+json">
     {

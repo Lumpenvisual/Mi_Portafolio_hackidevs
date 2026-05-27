@@ -1,4 +1,5 @@
 import { useApp } from '../lib/AppContext'
+import { useReveal } from '../hooks/useReveal'
 
 const baseProjects = [
   { num: '01', videoId: 'ULrllSX12UQ', accent: '#c8553d' },
@@ -180,16 +181,19 @@ export default function Projects() {
   const t = localized[lang]
   const projects = baseProjects.map((p, i) => ({ ...p, ...t.items[i] }))
   const reels = reelsBase.map((r, i) => ({ ...r, title: t.reelTitles[i] }))
+  const headRef = useReveal()
+  const listRef = useReveal({ delay: 150 })
+  const reelsRef = useReveal({ delay: 100 })
 
   return (
     <section className="section projects" id="work">
-      <header className="section-head">
+      <header ref={headRef} data-reveal className="section-head">
         <span className="section-label">{t.sectionLabel}</span>
       </header>
 
       <h2 className="section-title">{t.title}</h2>
 
-      <ul className="projects-list">
+      <ul ref={listRef} data-reveal className="projects-list">
         {projects.map((p) => (
           <li key={p.num} className="project">
             <a
@@ -221,8 +225,12 @@ export default function Projects() {
                 <img
                   src={`https://i.ytimg.com/vi/${p.videoId}/maxresdefault.jpg`}
                   alt={p.name}
+                  width="1280"
+                  height="720"
                   loading="lazy"
+                  decoding="async"
                   onError={(e) => handleThumbError(e, p.videoId)}
+                  onLoad={(e) => e.currentTarget.classList.add('loaded')}
                 />
                 <span className="project-cta">
                   {t.cta} <span className="arr">↗</span>
@@ -233,7 +241,7 @@ export default function Projects() {
         ))}
       </ul>
 
-      <div className="reels-shelf">
+      <div ref={reelsRef} data-reveal className="reels-shelf">
         <header className="reels-head">
           <span className="section-label">{t.reelsLabel}</span>
           <h3 className="reels-title">{t.reelsHeadline}</h3>
@@ -253,7 +261,11 @@ export default function Projects() {
                 <img
                   src={`https://i.ytimg.com/vi/${r.videoId}/hqdefault.jpg`}
                   alt={r.title}
+                  width="480"
+                  height="360"
                   loading="lazy"
+                  decoding="async"
+                  onLoad={(e) => e.currentTarget.classList.add('loaded')}
                 />
                 <span className="reel-overlay">
                   <span className="reel-play">▶</span>

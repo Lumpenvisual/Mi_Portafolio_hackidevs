@@ -1,4 +1,5 @@
 import { useApp } from '../lib/AppContext'
+import { useReveal } from '../hooks/useReveal'
 
 const data = {
   es: {
@@ -100,16 +101,18 @@ const data = {
 export default function Career() {
   const { lang } = useApp()
   const t = data[lang]
+  const headRef = useReveal()
+  const bodyRef = useReveal({ delay: 150 })
 
   return (
     <section className="section career" id="career">
-      <header className="section-head">
+      <header ref={headRef} data-reveal className="section-head">
         <span className="section-label">{t.sectionLabel}</span>
       </header>
 
       <h2 className="section-title">{t.title}</h2>
 
-      <ol className="timeline">
+      <ol ref={bodyRef} data-reveal className="timeline">
         {t.milestones.map((m, i) => (
           <li className="timeline-row" key={i}>
             <span className="timeline-year">{m.year}</span>

@@ -1,4 +1,5 @@
 import { useApp } from '../lib/AppContext'
+import { useReveal } from '../hooks/useReveal'
 
 const copy = {
   es: {
@@ -72,16 +73,28 @@ const copy = {
 export default function About() {
   const { lang } = useApp()
   const t = copy[lang]
+  const headRef = useReveal()
+  const bodyRef = useReveal({ delay: 150 })
 
   return (
     <section className="section about" id="about">
-      <header className="section-head">
+      <header ref={headRef} data-reveal className="section-head">
         <span className="section-label">{t.sectionLabel}</span>
       </header>
 
-      <div className="about-layout">
+      <div ref={bodyRef} data-reveal className="about-layout">
         <figure className="about-mark">
-          <img src="/hackidevs.png" alt={t.imgAlt} loading="lazy" />
+          <picture>
+            <source srcSet="/hackidevs.webp" type="image/webp" />
+            <img
+              src="/hackidevs.png"
+              alt={t.imgAlt}
+              width="640"
+              height="640"
+              loading="lazy"
+              decoding="async"
+            />
+          </picture>
         </figure>
 
         <div className="about-text">
