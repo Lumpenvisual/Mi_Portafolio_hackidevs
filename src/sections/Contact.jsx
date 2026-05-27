@@ -80,7 +80,7 @@ const links = [
 
 const newTabLabel = { es: 'abre en nueva pestaña', en: 'opens in new tab' }
 
-const FORMSPREE_ID = import.meta.env.VITE_FORMSPREE_ID
+const WEB3FORMS_KEY = import.meta.env.VITE_WEB3FORMS_KEY
 
 export default function Contact() {
   const { lang } = useApp()
@@ -101,10 +101,10 @@ export default function Contact() {
     e.preventDefault()
     setStatus('loading')
     try {
-      const res = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
+      const res = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-        body: JSON.stringify(fields),
+        body: JSON.stringify({ access_key: WEB3FORMS_KEY, ...fields }),
       })
       if (res.ok) {
         setStatus('success')
