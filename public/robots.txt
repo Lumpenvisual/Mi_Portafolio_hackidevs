@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://hackidevs.com/sitemap.xml
+Sitemap: https://mi-portafolio-liard-omega.vercel.app/sitemap.xml
