@@ -4,10 +4,26 @@ import reactHooks from 'eslint-plugin-react-hooks'
 import reactRefresh from 'eslint-plugin-react-refresh'
 import { defineConfig, globalIgnores } from 'eslint/config'
 
+const vitestGlobals = {
+  vi: 'readonly',
+  describe: 'readonly',
+  it: 'readonly',
+  test: 'readonly',
+  expect: 'readonly',
+  beforeAll: 'readonly',
+  afterAll: 'readonly',
+  beforeEach: 'readonly',
+  afterEach: 'readonly',
+  suite: 'readonly',
+}
+
 export default defineConfig([
   globalIgnores(['dist', 'public', 'node_modules']),
+
+  // Browser / React source files
   {
-    files: ['**/*.{js,jsx}'],
+    files: ['src/**/*.{js,jsx}'],
+    ignores: ['src/test/**'],
     extends: [
       js.configs.recommended,
       reactHooks.configs.flat.recommended,
@@ -16,6 +32,25 @@ export default defineConfig([
     languageOptions: {
       globals: globals.browser,
       parserOptions: { ecmaFeatures: { jsx: true } },
+    },
+  },
+
+  // Test files — jsdom + Vitest globals
+  {
+    files: ['src/test/**/*.{js,jsx}', '**/*.test.{js,jsx}'],
+    extends: [js.configs.recommended],
+    languageOptions: {
+      globals: { ...globals.browser, ...globals.node, ...vitestGlobals },
+      parserOptions: { ecmaFeatures: { jsx: true } },
+    },
+  },
+
+  // Node.js config / script files
+  {
+    files: ['vite.config.js', 'eslint.config.js', 'scripts/**/*.{js,mjs}'],
+    extends: [js.configs.recommended],
+    languageOptions: {
+      globals: { ...globals.node },
     },
   },
 ])

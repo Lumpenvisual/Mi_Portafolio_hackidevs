@@ -1,5 +1,4 @@
 import sharp from 'sharp'
-import { readdir } from 'fs/promises'
 import { extname, basename } from 'path'
 
 const targets = [
