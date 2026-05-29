@@ -1,6 +1,22 @@
 import { useApp } from '../lib/AppContext'
 import { useReveal } from '../hooks/useReveal'
 
+// Collage object cutouts layered on the About frame. Drop transparent PNGs in
+// /public with these names; missing files hide in prod, show labels in dev.
+const ABOUT_OBJECTS = [
+  { key: 'pc', src: '/pc-clasico.png', label: 'PC clásico', cls: 'obj-pc' },
+  { key: 'libreta', src: '/libreta.png', label: 'Libreta', cls: 'obj-libreta' },
+  { key: 'lapiz', src: '/lapiz.png', label: 'Lápiz', cls: 'obj-lapiz' },
+]
+
+const handleAssetError = (e) => {
+  e.currentTarget.parentElement.classList.add('is-empty')
+}
+
+const handleAssetLoad = (e) => {
+  e.currentTarget.classList.add('loaded')
+}
+
 const copy = {
   es: {
     sectionLabel: 'Sobre mí',
@@ -95,6 +111,25 @@ export default function About() {
               decoding="async"
             />
           </picture>
+
+          <div
+            className={`about-objects${import.meta.env.DEV ? ' show-placeholders' : ''}`}
+            aria-hidden="true"
+          >
+            <span className="collage-tape" />
+            {ABOUT_OBJECTS.map((o) => (
+              <span key={o.key} className={`collage-item ${o.cls}`} data-label={o.label}>
+                <img
+                  src={o.src}
+                  alt=""
+                  loading="lazy"
+                  decoding="async"
+                  onError={handleAssetError}
+                  onLoad={handleAssetLoad}
+                />
+              </span>
+            ))}
+          </div>
         </figure>
 
         <div className="about-text">

@@ -1,4 +1,60 @@
+import { useRef } from 'react'
+import { LazyMotion, m, useScroll, useTransform, useReducedMotion } from 'motion/react'
 import { useApp } from '../lib/AppContext'
+
+const loadMotionFeatures = () => import('../lib/motionFeatures').then((res) => res.default)
+
+// Hand-drawn loop that rings the emphasized words — draws itself on load.
+const Scribble = () => (
+  <svg
+    className="hero-scribble"
+    viewBox="0 0 600 220"
+    fill="none"
+    preserveAspectRatio="none"
+    aria-hidden="true"
+  >
+    <path
+      d="M40 120C70 40 240 26 400 34c145 8 190 58 158 104c-34 50-258 60-408 48c-80-6-132-36-84-90"
+      stroke="currentColor"
+      strokeWidth="5"
+      strokeLinecap="round"
+      vectorEffect="non-scaling-stroke"
+      pathLength="1"
+    />
+  </svg>
+)
+
+// 35mm film strip — audiovisual signature, used as a layered paper accent.
+const FilmStrip = () => {
+  const holes = [30, 75, 120, 165, 210, 255, 300, 345, 390, 435]
+  const frames = [40, 180, 320]
+  return (
+    <svg className="hero-filmstrip" viewBox="0 0 120 480" fill="none" aria-hidden="true">
+      <rect x="4" y="4" width="112" height="472" rx="7" stroke="currentColor" strokeWidth="2" />
+      <line x1="26" y1="4" x2="26" y2="476" stroke="currentColor" strokeWidth="1.5" />
+      <line x1="94" y1="4" x2="94" y2="476" stroke="currentColor" strokeWidth="1.5" />
+      {holes.map((y) => (
+        <g key={y}>
+          <rect x="9" y={y} width="8" height="22" rx="2" fill="currentColor" opacity="0.5" />
+          <rect x="103" y={y} width="8" height="22" rx="2" fill="currentColor" opacity="0.5" />
+        </g>
+      ))}
+      {frames.map((y) => (
+        <rect
+          key={y}
+          x="32"
+          y={y}
+          width="56"
+          height="120"
+          rx="3"
+          fill="var(--accent-soft)"
+          stroke="currentColor"
+          strokeWidth="1.5"
+        />
+      ))}
+    </svg>
+  )
+}
 
 const copy = {
   es: {
@@ -9,7 +65,10 @@ const copy = {
         <br />
         historias en
         <br />
-        <em>imágenes</em> <em>&amp;</em> <em>código.</em>
+        <span className="hero-emph">
+          <em>imágenes</em> <em>&amp;</em> <em>código.</em>
+          <Scribble />
+        </span>
       </>
     ),
     lede: (
@@ -35,7 +94,10 @@ const copy = {
         <br />
         stories in
         <br />
-        <em>images</em> <em>&amp;</em> <em>code.</em>
+        <span className="hero-emph">
+          <em>images</em> <em>&amp;</em> <em>code.</em>
+          <Scribble />
+        </span>
       </>
     ),
     lede: (
@@ -60,8 +122,26 @@ export default function Hero() {
   const { lang } = useApp()
   const t = copy[lang]
 
+  const sectionRef = useRef(null)
+  const reduce = useReducedMotion()
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ['start start', 'end start'],
+  })
+  const filmY = useTransform(scrollYProgress, [0, 1], reduce ? [0, 0] : [0, 130])
+  const filmRotate = useTransform(scrollYProgress, [0, 1], reduce ? [-5, -5] : [-5, -11])
+
   return (
-    <section className="hero" id="top">
+    <section className="hero" id="top" ref={sectionRef}>
+      <div className="hero-deco" aria-hidden="true">
+        <LazyMotion features={loadMotionFeatures} strict>
+          <m.div className="hero-filmstrip-wrap" style={{ y: filmY, rotate: filmRotate }}>
+            <span className="hero-tape" />
+            <FilmStrip />
+          </m.div>
+        </LazyMotion>
+      </div>
+
       <div className="hero-grid">
         <div className="hero-meta">
           <span className="hero-eyebrow">

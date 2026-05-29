@@ -1,0 +1,8 @@
+dist
+build
+coverage
+node_modules
+public
+.moodboard
+*.min.*
+package-lock.json

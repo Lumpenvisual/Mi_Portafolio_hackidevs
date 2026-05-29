@@ -1,39 +1,48 @@
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..900,0..100;1,9..144,300..900,0..100&family=Inter+Tight:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Inter+Tight:wght@300;400;500;600;700&display=swap');
 
 :root,
 [data-theme='light'] {
-  --bg: #f7f5f0;
-  --bg-elevated: #fdfcf9;
-  --ink: #0e0e10;
-  --ink-soft: #2c2c30;
-  --muted: #6b6b6e;
-  --muted-soft: #a3a39f;
-  --border: #e4e0d6;
-  --border-strong: #cfcabb;
-  --accent: #c8553d;
-  --accent-hover: #b14730;
-  --accent-soft: #f1e3dc;
-  --thumb-overlay: rgba(0, 0, 0, 0.6);
+  --bg: #f7f3ec;
+  --bg-elevated: #fdfbf6;
+  --ink: #1b1726;
+  --ink-soft: #423c52;
+  --muted: #6f697e;
+  --muted-soft: #aaa4b6;
+  --border: #e6e0ec;
+  --border-strong: #d0c8dd;
+  --accent: #5a52d5;
+  --accent-hover: #4840bf;
+  --accent-soft: #e8e4f7;
+  --accent-2: #e67e9b;
+  --accent-2-soft: #f8e3ea;
+  --thumb-overlay: rgba(20, 16, 36, 0.6);
 }
 
 [data-theme='dark'] {
-  --bg: #16140f;
-  --bg-elevated: #1d1a14;
-  --ink: #f0ece2;
-  --ink-soft: #d2cdc1;
-  --muted: #8a857a;
-  --muted-soft: #4a4640;
-  --border: #2c2820;
-  --border-strong: #3d382e;
-  --accent: #e8704f;
-  --accent-hover: #f08b6e;
-  --accent-soft: #2a1f1a;
+  --bg: #15131e;
+  --bg-elevated: #1d1b29;
+  --ink: #efecf6;
+  --ink-soft: #cdc8db;
+  --muted: #8d889e;
+  --muted-soft: #4b4760;
+  --border: #2a2738;
+  --border-strong: #3c3852;
+  --accent: #8e86f0;
+  --accent-hover: #a8a1f7;
+  --accent-soft: #241f3a;
+  --accent-2: #f0a0b8;
+  --accent-2-soft: #321f2b;
   --thumb-overlay: rgba(0, 0, 0, 0.55);
 }
 
 :root {
-  --font-display: 'Fraunces', 'Times New Roman', serif;
+  --font-display: 'Bricolage Grotesque', 'Inter Tight', sans-serif;
   --font-sans: 'Inter Tight', system-ui, -apple-system, sans-serif;
+
+  /* Cut / collage accents */
+  --tape: color-mix(in srgb, var(--accent-2) 34%, #faf3ee);
+  --paper-shadow: 0 22px 48px -28px rgba(40, 28, 18, 0.5),
+    0 6px 14px -8px rgba(40, 28, 18, 0.28);
 
   --max-w: 1280px;
   --pad-x: 48px;
