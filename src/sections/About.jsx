@@ -1,26 +1,10 @@
 import { useApp } from '../lib/AppContext'
 import { useReveal } from '../hooks/useReveal'
 
-// Collage object cutouts layered on the About frame. Drop transparent PNGs in
-// /public with these names; missing files hide in prod, show labels in dev.
-const ABOUT_OBJECTS = [
-  { key: 'pc', src: '/pc-clasico.png', label: 'PC clásico', cls: 'obj-pc' },
-  { key: 'libreta', src: '/libreta.png', label: 'Libreta', cls: 'obj-libreta' },
-  { key: 'lapiz', src: '/lapiz.png', label: 'Lápiz', cls: 'obj-lapiz' },
-]
-
-const handleAssetError = (e) => {
-  e.currentTarget.parentElement.classList.add('is-empty')
-}
-
-const handleAssetLoad = (e) => {
-  e.currentTarget.classList.add('loaded')
-}
-
 const copy = {
   es: {
     sectionLabel: 'Sobre mí',
-    imgAlt: 'Marca hackidevs',
+    imgAlt: 'Retrato de Jacky Gutiérrez',
     title: (
       <>
         Comunicadora <em>narrando</em> historias que <em>importan</em>.
@@ -53,7 +37,7 @@ const copy = {
   },
   en: {
     sectionLabel: 'About',
-    imgAlt: 'hackidevs mark',
+    imgAlt: 'Portrait of Jacky Gutiérrez',
     title: (
       <>
         Storyteller <em>telling</em> stories that <em>matter</em>.
@@ -99,37 +83,16 @@ export default function About() {
       </header>
 
       <div ref={bodyRef} data-reveal className="about-layout">
-        <figure className="about-mark">
-          <picture>
-            <source srcSet="/hackidevs.webp" type="image/webp" />
-            <img
-              src="/hackidevs.png"
-              alt={t.imgAlt}
-              width="640"
-              height="640"
-              loading="lazy"
-              decoding="async"
-            />
-          </picture>
-
-          <div
-            className={`about-objects${import.meta.env.DEV ? ' show-placeholders' : ''}`}
-            aria-hidden="true"
-          >
-            <span className="collage-tape" />
-            {ABOUT_OBJECTS.map((o) => (
-              <span key={o.key} className={`collage-item ${o.cls}`} data-label={o.label}>
-                <img
-                  src={o.src}
-                  alt=""
-                  loading="lazy"
-                  decoding="async"
-                  onError={handleAssetError}
-                  onLoad={handleAssetLoad}
-                />
-              </span>
-            ))}
-          </div>
+        <figure className="about-mark about-photo-wrap">
+          <img
+            className="about-photo"
+            src="/yo-retoque.webp"
+            alt={t.imgAlt}
+            width="900"
+            height="900"
+            loading="lazy"
+            decoding="async"
+          />
         </figure>
 
         <div className="about-text">

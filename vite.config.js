@@ -8,6 +8,13 @@ export default defineConfig({
   resolve: {
     alias: { '@': resolve(__dirname, 'src') },
   },
+  server: {
+    // Don't watch external folders (reference clones, agent skill dirs). They
+    // contain other projects' files and trip the Windows file watcher (EBUSY).
+    watch: {
+      ignored: ['**/_repos/**', '**/.claude/**', '**/.agents/**', '**/allan-pinot/**'],
+    },
+  },
   build: {
     target: 'esnext',
     chunkSizeWarningLimit: 600,

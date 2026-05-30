@@ -20,7 +20,15 @@ const vitestGlobals = {
 }
 
 export default defineConfig([
-  globalIgnores(['dist', 'public', 'node_modules']),
+  globalIgnores([
+    'dist',
+    'public',
+    'node_modules',
+    '_repos',
+    'allan-pinot',
+    '.claude',
+    '.agents',
+  ]),
 
   // Browser / React source files
   {

@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react'
 import { useApp } from '../lib/AppContext'
 import { useReveal } from '../hooks/useReveal'
 
@@ -103,6 +104,39 @@ export default function Career() {
   const t = data[lang]
   const headRef = useReveal()
   const bodyRef = useReveal({ delay: 150 })
+  const progressRef = useRef(null)
+
+  // Scroll-scrubbed progress line that fills the timeline rail as the section
+  // passes. GSAP + ScrollTrigger are lazy-imported (gsap is already a dep, kept
+  // out of the initial bundle); disabled under reduced motion.
+  useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    const bar = progressRef.current
+    const trigger = bar?.parentElement
+    if (!bar || !trigger) return
+
+    let st = null
+    let cancelled = false
+    Promise.all([import('gsap'), import('gsap/ScrollTrigger')]).then(
+      ([{ gsap }, { ScrollTrigger }]) => {
+        if (cancelled) return
+        gsap.registerPlugin(ScrollTrigger)
+        gsap.set(bar, { scaleY: 0, transformOrigin: 'top center' })
+        st = ScrollTrigger.create({
+          trigger,
+          start: 'top 75%',
+          end: 'bottom 60%',
+          scrub: true,
+          onUpdate: (self) => gsap.set(bar, { scaleY: self.progress }),
+        })
+      }
+    )
+
+    return () => {
+      cancelled = true
+      if (st) st.kill()
+    }
+  }, [])
 
   return (
     <section className="section career" id="career">
@@ -113,6 +147,7 @@ export default function Career() {
       <h2 className="section-title">{t.title}</h2>
 
       <ol ref={bodyRef} data-reveal className="timeline">
+        <span className="timeline-progress" ref={progressRef} aria-hidden="true" />
         {t.milestones.map((m, i) => (
           <li className="timeline-row" key={i}>
             <span className="timeline-year">{m.year}</span>

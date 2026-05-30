@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useApp } from '../lib/AppContext'
 import { useReveal } from '../hooks/useReveal'
+import Fireflies from '../components/Fireflies'
 
 const copy = {
   es: {
@@ -119,6 +120,7 @@ export default function Contact() {
 
   return (
     <section className="section contact" id="contact">
+      <Fireflies count={10} />
       <header ref={headRef} data-reveal className="section-head">
         <span className="section-label">{t.sectionLabel}</span>
       </header>

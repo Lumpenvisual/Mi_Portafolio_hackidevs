@@ -28,3 +28,11 @@ dist-ssr
 
 # Phase 2 analysis: cloned reference repos (NOT part of the portfolio)
 _repos/
+
+# Raw source art — huge; optimized WebPs are committed under public/
+assests/
+
+# autoskills skill bundles + agent memory (skills-lock.json is the tracked source of truth)
+.claude/skills/
+.claude/agent-memory/
+.agents/

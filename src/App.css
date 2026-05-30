@@ -119,7 +119,7 @@ main {
   top: 0;
   left: 0;
   right: 0;
-  z-index: 50;
+  z-index: 100;
   background: color-mix(in srgb, var(--bg) 88%, transparent);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
@@ -470,97 +470,81 @@ main {
   }
 }
 
-/* ---------- HERO — cut / collage accents ---------- */
+/* ---------- HERO ---------- */
 .hero-grid {
   position: relative;
   z-index: 1;
 }
 
-.hero-deco {
+/* Ambient fireflies — drifting glow behind the hero copy */
+.fireflies {
   position: absolute;
   inset: 0;
   z-index: 0;
-  pointer-events: none;
   overflow: hidden;
+  pointer-events: none;
 }
 
-.hero-filmstrip-wrap {
+.firefly {
   position: absolute;
-  top: 64px;
-  right: 8px;
-  width: 116px;
-  filter: drop-shadow(0 14px 28px rgba(40, 28, 18, 0.22));
-}
-
-.hero-filmstrip {
-  width: 100%;
-  height: auto;
-  color: var(--ink);
-  opacity: 0.55;
-}
-
-.hero-tape {
-  position: absolute;
-  top: -13px;
-  left: 50%;
-  width: 92px;
-  height: 28px;
-  transform: translateX(-50%) rotate(-7deg);
-  background: var(--tape);
-  opacity: 0.82;
-  mix-blend-mode: multiply;
-  box-shadow: var(--paper-shadow);
-  /* torn / cut ends */
-  clip-path: polygon(
-    3% 8%, 12% 0, 26% 9%, 41% 2%, 58% 10%, 74% 1%, 90% 9%, 98% 4%,
-    97% 92%, 88% 100%, 71% 91%, 55% 99%, 39% 90%, 24% 100%, 10% 91%, 2% 96%
+  width: var(--fly-size, 6px);
+  height: var(--fly-size, 6px);
+  border-radius: 50%;
+  background: radial-gradient(
+    50% 50% at 50% 50%,
+    color-mix(in srgb, var(--firefly) 92%, #fff) 0%,
+    color-mix(in srgb, var(--firefly) 45%, transparent) 45%,
+    transparent 72%
   );
+  filter: drop-shadow(0 0 6px color-mix(in srgb, var(--firefly) 60%, transparent));
+  opacity: 0;
+  transform: scale(var(--fly-scale, 1));
+  animation-name: firefly-drift;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
 }
 
-[data-theme='dark'] .hero-tape {
-  mix-blend-mode: screen;
-  opacity: 0.6;
+@keyframes firefly-drift {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) scale(var(--fly-scale, 1));
+  }
+  15% {
+    opacity: 0.95;
+  }
+  50% {
+    opacity: 0.8;
+    transform: translate(var(--fly-dx, 20px), var(--fly-dy, -30px))
+      scale(var(--fly-scale, 1));
+  }
+  85% {
+    opacity: 0.6;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(calc(var(--fly-dx, 20px) * -0.6), -55px)
+      scale(var(--fly-scale, 1));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .firefly {
+    animation: none;
+    opacity: 0.45;
+  }
+}
+
+/* Keep section content above its ambient firefly layer */
+.section.contact > :not(.fireflies) {
+  position: relative;
+  z-index: 1;
 }
 
 .hero-emph {
   position: relative;
   display: inline-block;
-}
-
-.hero-scribble {
-  position: absolute;
-  inset: -14% -4%;
-  width: 108%;
-  height: 128%;
-  color: var(--accent-2);
-  z-index: -1;
-  overflow: visible;
-  pointer-events: none;
-}
-
-.hero-scribble path {
-  stroke-dasharray: 1;
-  stroke-dashoffset: 1;
-  animation: draw-scribble 1.1s ease 0.55s forwards;
-}
-
-@keyframes draw-scribble {
-  to {
-    stroke-dashoffset: 0;
-  }
-}
-
-@media (max-width: 900px) {
-  .hero-deco {
-    display: none;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .hero-scribble path {
-    stroke-dashoffset: 0;
-    animation: none;
-  }
+  color: var(--accent);
 }
 
 /* =========================================================
@@ -653,110 +637,6 @@ main {
 [data-theme='dark'] .about-mark img {
   mix-blend-mode: screen;
   filter: brightness(0.95);
-}
-
-/* ---------- ABOUT — object collage vignette ---------- */
-.about-objects {
-  position: absolute;
-  inset: 0;
-  z-index: 3;
-  pointer-events: none;
-}
-
-.collage-item {
-  position: absolute;
-  display: block;
-  filter: drop-shadow(0 12px 22px rgba(40, 28, 18, 0.24));
-}
-
-.collage-item img {
-  display: block;
-  width: 100%;
-  height: auto;
-  opacity: 0;
-  transition: opacity 0.45s ease;
-}
-
-.collage-item img.loaded {
-  opacity: 1;
-}
-
-.obj-pc {
-  width: 132px;
-  right: -30px;
-  bottom: -34px;
-  transform: rotate(4deg);
-  z-index: 1;
-}
-
-.obj-libreta {
-  width: 116px;
-  left: -26px;
-  bottom: -40px;
-  transform: rotate(-7deg);
-  z-index: 2;
-}
-
-.obj-lapiz {
-  width: 148px;
-  left: 64px;
-  bottom: -52px;
-  transform: rotate(24deg);
-  z-index: 3;
-}
-
-.collage-tape {
-  position: absolute;
-  top: -12px;
-  right: 28px;
-  width: 72px;
-  height: 26px;
-  transform: rotate(-9deg);
-  background: var(--tape);
-  opacity: 0.82;
-  mix-blend-mode: multiply;
-  box-shadow: var(--paper-shadow);
-  clip-path: polygon(
-    4% 10%, 14% 0, 30% 9%, 48% 2%, 66% 10%, 84% 1%, 97% 8%, 96% 90%,
-    82% 100%, 64% 91%, 47% 99%, 30% 90%, 14% 100%, 3% 94%
-  );
-  z-index: 4;
-}
-
-[data-theme='dark'] .collage-tape {
-  mix-blend-mode: screen;
-  opacity: 0.62;
-}
-
-/* Empty slots: hidden in prod, labeled dashed placeholder in dev */
-.about-objects:not(.show-placeholders) .collage-item.is-empty {
-  display: none;
-}
-
-.about-objects.show-placeholders .collage-item.is-empty img {
-  display: none;
-}
-
-.about-objects.show-placeholders .collage-item.is-empty::after {
-  content: attr(data-label);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 78px;
-  border: 1.5px dashed var(--border-strong);
-  border-radius: 6px;
-  background: var(--bg-elevated);
-  color: var(--muted);
-  font-size: 10px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
-
-@media (max-width: 1024px) {
-  .about-objects {
-    display: none;
-  }
 }
 
 .about-text {
@@ -1401,6 +1281,20 @@ main {
   z-index: 0;
 }
 
+/* Scroll-scrubbed accent fill over the rail (driven by GSAP ScrollTrigger) */
+.timeline-progress {
+  position: absolute;
+  top: 0;
+  left: 200px;
+  width: 2px;
+  height: 100%;
+  background: var(--accent);
+  transform: translateX(-50%) scaleY(0);
+  transform-origin: top center;
+  z-index: 0;
+  pointer-events: none;
+}
+
 .timeline-row {
   display: grid;
   grid-template-columns: 200px 1fr;
@@ -1473,6 +1367,9 @@ main {
 
 @media (max-width: 768px) {
   .timeline::before {
+    left: 12px;
+  }
+  .timeline-progress {
     left: 12px;
   }
   .timeline-row {
@@ -1611,6 +1508,7 @@ main {
   display: flex;
   flex-direction: column;
   gap: 28px;
+  position: relative;
 }
 
 .contact-form-row {
@@ -1773,5 +1671,406 @@ main {
   .footer-inner {
     flex-direction: column;
     align-items: flex-start;
+  }
+}
+
+/* =========================================================
+   RETRO / TERMINAL TYPE PIVOT
+   Only CSS values change here — JSX class names stay intact.
+   Appended last so equal-specificity rules win by source order.
+   ========================================================= */
+
+/* ---- Eyebrows, labels, section meta → pixel (Silkscreen) ---- */
+.section-head,
+.section-label,
+.label,
+.reels-head .section-label,
+.contact-field label,
+.project-role,
+.reel-info {
+  font-family: var(--font-pixel);
+  letter-spacing: 0.05em;
+}
+
+/* ---- Section titles (h2) → pixel, small + spaced per spec ---- */
+.section-title {
+  font-family: var(--font-pixel);
+  font-weight: 400;
+  font-size: clamp(1rem, 2.5vw, 1.8rem);
+  line-height: 1.5;
+  letter-spacing: 0.05em;
+}
+.section-title em {
+  font-style: normal;
+  font-variation-settings: normal;
+  color: var(--accent);
+}
+
+/* ---- Nav → pixel ---- */
+.nav-logo,
+.nav-links,
+.nav-cta,
+.icon-btn {
+  font-family: var(--font-pixel);
+}
+.nav-logo {
+  font-size: 13px;
+  letter-spacing: 0.04em;
+}
+.nav-logo em {
+  font-style: normal;
+}
+.nav-links {
+  font-size: 11px;
+  letter-spacing: 0.05em;
+}
+
+/* ---- Hero name → Nova Mono (display), resized for mono width ---- */
+.hero-title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(2rem, 6vw, 5rem);
+  line-height: 1.12;
+  letter-spacing: 0.01em;
+}
+.hero-title em,
+.hero-italic {
+  font-style: normal;
+  font-variation-settings: normal;
+  font-weight: 400;
+}
+
+/* ---- Subtitles (h3-level) → terminal mono, keep responsive sizes ---- */
+.service-title,
+.timeline-title,
+.project-name,
+.reels-title {
+  font-family: var(--font-terminal);
+  font-weight: 400;
+  letter-spacing: 0;
+}
+.reels-title em {
+  font-style: normal;
+}
+
+/* ---- Big display + numeric/italic accents → kill synthetic italics ---- */
+.contact-title,
+.contact-title em,
+.marquee-item,
+.marquee-item *,
+.section-num,
+.project-num,
+.service-num,
+.timeline-year,
+.contact-mail,
+.contact-col p em,
+.footer-meta em,
+.nav-logo em {
+  font-style: normal;
+  font-variation-settings: normal;
+}
+.contact-title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(2.4rem, 9vw, 7rem);
+  letter-spacing: 0.01em;
+}
+
+/* ---- Numeric accents → Nova Mono in phosphor-friendly accent ---- */
+.section-num,
+.project-num,
+.service-num {
+  font-family: var(--font-display);
+}
+
+/* ---- Narrative / body → Courier Prime, airy line-height ---- */
+.about-body p,
+.project-desc,
+.service-desc,
+.timeline-desc,
+.hero-lede,
+.contact-col p,
+.reel-title-text,
+.value {
+  font-family: var(--font-typewriter);
+  line-height: 1.8;
+}
+
+/* ---- Form fields → terminal; placeholder stays typewriter ---- */
+.contact-field input,
+.contact-field textarea,
+.contact-submit {
+  font-family: var(--font-terminal);
+}
+.contact-field input,
+.contact-field textarea {
+  caret-color: var(--phosphor);
+}
+.contact-field input::placeholder,
+.contact-field textarea::placeholder {
+  font-family: var(--font-typewriter);
+}
+
+/* ---- Live "online / active" status → phosphor (terminal semantics) ---- */
+.dot-on {
+  background: var(--phosphor);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--phosphor) 22%, transparent),
+    0 0 8px rgba(0, 255, 65, 0.5);
+}
+
+/* =========================================================
+   ABOUT — real photo with grabando/REC hover
+   ========================================================= */
+/* Frameless: drop the logo-mark box (bg / border / radius / padding) */
+.about-photo-wrap {
+  padding: 0;
+  overflow: hidden;
+  background: none;
+  border: none;
+  border-radius: 0;
+}
+
+/* Real photo fills edge-to-edge with a B&W filter that warms to colour on hover */
+.about-mark img.about-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  aspect-ratio: 1 / 1;
+  mix-blend-mode: normal;
+  border-radius: 0;
+  filter: grayscale(1) contrast(1.06) brightness(0.98);
+  transition: filter 0.6s ease, transform 0.6s ease;
+}
+[data-theme='dark'] .about-mark img.about-photo {
+  mix-blend-mode: normal;
+}
+.about-photo-wrap:hover .about-photo,
+.about-photo-wrap:focus-within .about-photo {
+  filter: grayscale(0) contrast(1) brightness(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .about-mark img.about-photo {
+    transition: none;
+  }
+}
+
+/* =========================================================
+   FOTOGRAFÍA — bento grid + lightbox
+   ========================================================= */
+.foto-bento {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+.foto-item {
+  position: relative;
+  overflow: hidden;
+  border-radius: 6px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  aspect-ratio: 1 / 1;
+}
+
+.foto-btn {
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  position: relative;
+}
+
+.foto-thumb {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: transform 0.5s ease, opacity 0.4s ease;
+}
+.foto-thumb.loaded {
+  opacity: 1;
+}
+.foto-item:hover .foto-thumb {
+  transform: scale(1.05);
+}
+
+@media (max-width: 900px) {
+  .foto-bento {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .foto-bento {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Lightbox */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: rgba(6, 6, 10, 0.92);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  backdrop-filter: blur(4px);
+  animation: lightbox-in 0.2s ease;
+}
+@keyframes lightbox-in {
+  from {
+    opacity: 0;
+  }
+}
+
+.lightbox-backdrop {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: zoom-out;
+}
+
+.lightbox-img {
+  position: relative;
+  z-index: 1;
+  max-width: 92vw;
+  max-height: 86vh;
+  object-fit: contain;
+  border-radius: 4px;
+  box-shadow: 0 20px 60px -10px rgba(0, 0, 0, 0.7);
+  pointer-events: none;
+}
+
+.lightbox-close,
+.lightbox-nav {
+  position: absolute;
+  z-index: 2;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: #fff;
+  font-family: var(--font-terminal);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease;
+}
+.lightbox-close:hover,
+.lightbox-nav:hover {
+  background: rgba(255, 255, 255, 0.22);
+}
+
+.lightbox-close {
+  top: 20px;
+  right: 20px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  font-size: 16px;
+}
+.lightbox-nav {
+  top: 50%;
+  transform: translateY(-50%);
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  font-size: 28px;
+  line-height: 1;
+}
+.lightbox-prev {
+  left: 20px;
+}
+.lightbox-next {
+  right: 20px;
+}
+
+.lightbox-counter {
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  color: var(--phosphor);
+  letter-spacing: 0.1em;
+}
+
+@media (max-width: 600px) {
+  .lightbox-nav {
+    width: 40px;
+    height: 40px;
+    font-size: 22px;
+  }
+}
+
+/* =========================================================
+   SKILLS — toolkit, editorial grid
+   ========================================================= */
+.skill-groups {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 48px;
+}
+
+.skill-group {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+}
+
+.skill-group-label {
+  font-family: var(--font-terminal);
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.skill-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.skill-tags li {
+  font-size: 13px;
+  padding: 7px 14px;
+  border: 1px solid var(--border-strong);
+  border-radius: 999px;
+  color: var(--ink-soft);
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.skill-tags li:hover {
+  border-color: var(--accent);
+  color: var(--ink);
+}
+
+@media (max-width: 900px) {
+  .skill-groups {
+    grid-template-columns: 1fr;
+    gap: 32px;
   }
 }

@@ -4,7 +4,9 @@ import Footer from './components/Footer'
 import Hero from './sections/Hero'
 import About from './sections/About'
 import Services from './sections/Services'
+import Skills from './sections/Skills'
 import Projects from './sections/Projects'
+import Fotografia from './sections/Fotografia'
 import Career from './sections/Career'
 import Contact from './sections/Contact'
 import './App.css'
@@ -21,7 +23,9 @@ export default function App() {
         <Marquee />
         <About />
         <Services />
+        <Skills />
         <Projects />
+        <Fotografia />
         <Career />
         <Contact />
       </main>
