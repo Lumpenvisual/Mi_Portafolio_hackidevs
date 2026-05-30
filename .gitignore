@@ -25,3 +25,6 @@ dist-ssr
 
 .vercel
 .moodboard/
+
+# Phase 2 analysis: cloned reference repos (NOT part of the portfolio)
+_repos/

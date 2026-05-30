@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Allan Pinot — Creative Developer (Web &amp; Real-time 3D)</title>
+
+    <!--
+      PHASE 3 — Vite + React Three Fiber entry (isolated project).
+      This file is the Vite dev/build HTML entry. The Phase 1 standalone
+      prototype (no build step) is preserved alongside as prototype.html.
+    -->
+    <meta
+      name="description"
+      content="Allan Pinot — Creative Developer specializing in Web and real-time 3D experiences."
+    />
+
+    <!-- Inter font for the hero typography (matches the prototype). -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- React mounts here. The hero text renders immediately (HTML-first);
+         the heavy 3D canvas is lazy-loaded behind it. -->
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

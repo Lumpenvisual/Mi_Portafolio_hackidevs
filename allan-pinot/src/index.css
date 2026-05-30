@@ -1,0 +1,118 @@
+/* ---------------------------------------------------------------------------
+   Global styles for the isolated Allan Pinot R3F hero.
+   Ported from the Phase 1 prototype so the typography / layering / a11y
+   behavior is identical — only the rendering engine changed (vanilla -> R3F).
+   --------------------------------------------------------------------------- */
+
+:root {
+  --bg: #000000;
+  --fg: #ffffff;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  overflow: hidden;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ---------------------------------------------------------------------------
+   Canvas layer (decorative). R3F renders into a <canvas> inside .scene; it is
+   marked aria-hidden via the <Canvas> prop in Scene.jsx. The real, accessible
+   content is the .hero overlay below.
+   --------------------------------------------------------------------------- */
+.scene {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+/* Plain-color fallback shown while the lazy 3D chunk loads (or if it fails). */
+.scene--fallback {
+  background: #000;
+}
+
+/* ---------------------------------------------------------------------------
+   Hero overlay: real, selectable, accessible HTML on top of the canvas.
+   --------------------------------------------------------------------------- */
+.hero {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0 1.5rem;
+  /* Wrapper ignores pointer events so the mouse reaches the canvas (parallax);
+     children re-enable pointer events so the text stays selectable. */
+  pointer-events: none;
+}
+
+.hero__title {
+  font-weight: 800;
+  font-size: clamp(2.75rem, 11vw, 9rem);
+  letter-spacing: -0.03em;
+  line-height: 0.95;
+  text-shadow: 0 2px 40px rgba(0, 0, 0, 0.85);
+  pointer-events: auto;
+}
+
+.hero__subtitle {
+  margin-top: 1.25rem;
+  font-weight: 300;
+  font-size: clamp(0.95rem, 2.2vw, 1.5rem);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.72);
+  text-shadow: 0 1px 24px rgba(0, 0, 0, 0.9);
+  pointer-events: auto;
+}
+
+/* Entrance animation, disabled under prefers-reduced-motion below. */
+.hero__title,
+.hero__subtitle {
+  opacity: 0;
+  transform: translateY(18px);
+  animation: rise 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+.hero__subtitle {
+  animation-delay: 0.25s;
+}
+
+@keyframes rise {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Accessibility: respect prefers-reduced-motion. The CSS entrance is disabled
+   here; the 3D scene independently checks the same media query (useReducedMotion
+   in Scene.jsx) and renders a single static frame with no animation loop. */
+@media (prefers-reduced-motion: reduce) {
+  .hero__title,
+  .hero__subtitle {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}
