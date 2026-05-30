@@ -1,0 +1,71 @@
+:root {
+  --bg: #15131e;
+  --ink: #efecf6;
+  --accent: #8e86f0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+.fp-stage {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  background: radial-gradient(120% 120% at 50% 30%, #1d1b29 0%, #15131e 70%);
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+}
+
+.face-particles {
+  position: relative;
+  width: min(80vmin, 720px);
+  height: min(80vmin, 720px);
+}
+
+.face-particles canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* The source image only shows if the canvas fails to mount */
+.face-particles-fallback {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  opacity: 0;
+  filter: grayscale(1) contrast(1.1);
+}
+.face-particles.is-fallback .face-particles-fallback {
+  opacity: 0.85;
+}
+
+.fp-caption {
+  position: absolute;
+  bottom: 8%;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+  font-size: clamp(20px, 4vw, 40px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  pointer-events: none;
+}
+.fp-caption em {
+  color: var(--accent);
+  font-style: italic;
+}
+.fp-caption span + em,
+.fp-caption em + span {
+  margin: 0 0.4em;
+}
