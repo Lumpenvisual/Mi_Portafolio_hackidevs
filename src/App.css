@@ -2191,3 +2191,64 @@ main {
     gap: 32px;
   }
 }
+
+/* =========================================================
+   INTRO OVERLAY (one-time Remotion intro, /intro.mp4)
+   ========================================================= */
+.intro-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: grid;
+  place-items: center;
+  background: #15131e; /* matches the hero so the fade is seamless */
+  opacity: 1;
+  transition: opacity 0.6s ease;
+}
+
+.intro-overlay.is-leaving {
+  opacity: 0;
+}
+
+.intro-video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* letterbox blends into the matching bg */
+}
+
+.intro-skip {
+  position: absolute;
+  bottom: 32px;
+  right: 32px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ink, #efecf6);
+  background: color-mix(in srgb, #1d1b29 78%, transparent);
+  border: 1px solid var(--border-strong, #3c3852);
+  border-radius: 999px;
+  backdrop-filter: blur(6px);
+  cursor: pointer;
+  transition:
+    color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.intro-skip:hover,
+.intro-skip:focus-visible {
+  color: #8e86f0;
+  border-color: #8e86f0;
+  transform: translateY(-1px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* belt-and-suspenders: the component already skips render under RM */
+  .intro-overlay {
+    display: none;
+  }
+}
