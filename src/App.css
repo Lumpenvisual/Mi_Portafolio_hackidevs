@@ -547,6 +547,123 @@ main {
   color: var(--accent);
 }
 
+/* ---------- HERO · 3D variant (model + orbital nav) ---------- */
+.hero--3d .hero-grid {
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  align-items: center;
+  gap: 40px 64px;
+}
+
+.hero-copy {
+  grid-column: 1 / 2;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 28px;
+}
+
+.hero--3d .hero-copy .hero-title {
+  grid-column: auto;
+  margin: 12px 0 0;
+  font-size: clamp(2rem, 4.6vw, 4.4rem);
+}
+
+.hero-stage {
+  grid-column: 2 / 3;
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  aspect-ratio: 1 / 1;
+  margin-inline: auto;
+}
+
+/* the canvas sits in the centre disc; the nodes ring around it */
+.hero-stage .model-3d,
+.hero-stage-fallback {
+  position: absolute;
+  inset: 16%;
+  width: 68%;
+  height: 68%;
+}
+
+.hero-stage-fallback {
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 50% 40%,
+    var(--accent-soft) 0%,
+    transparent 70%
+  );
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.hero-orbit {
+  position: absolute;
+  inset: 0;
+  pointer-events: none; /* only the nodes themselves are interactive */
+}
+
+.orbit-node {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  pointer-events: auto;
+  padding: 9px 15px;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  color: var(--accent);
+  background: color-mix(in srgb, var(--bg-elevated) 78%, transparent);
+  border: 1px solid var(--border-strong);
+  border-radius: 999px;
+  backdrop-filter: blur(6px);
+  transition:
+    transform 0.25s ease,
+    color 0.2s ease,
+    border-color 0.2s ease,
+    background 0.2s ease;
+}
+
+.orbit-node:hover,
+.orbit-node:focus-visible {
+  color: var(--bg);
+  background: var(--accent);
+  border-color: var(--accent);
+  transform: translate(-50%, -50%) scale(1.06);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-stage-fallback {
+    animation: none;
+  }
+}
+
+@media (max-width: 900px) {
+  .hero--3d .hero-grid {
+    grid-template-columns: 1fr;
+  }
+  .hero-copy,
+  .hero-stage {
+    grid-column: 1 / -1;
+  }
+  .hero-copy {
+    align-items: stretch;
+  }
+  /* the global Nav covers navigation on small screens; the orbit ring would
+     overlap the model, so collapse it and show the model on its own */
+  .hero-orbit {
+    display: none;
+  }
+  .hero-stage {
+    max-width: 340px;
+  }
+  .hero-stage .model-3d,
+  .hero-stage-fallback {
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+}
+
 /* =========================================================
    MARQUEE
    ========================================================= */
