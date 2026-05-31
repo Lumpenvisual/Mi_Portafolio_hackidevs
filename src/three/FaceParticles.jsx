@@ -64,7 +64,9 @@ export default function FaceParticles({ src = '/yo-retoque.webp', color = '#f3f0
     if (!mount) return
     let disposed = false
     let cleanup = () => {}
-    const pointer = { x: 0, y: 0, tx: 0, ty: 0 }
+    // start off-screen so the cursor-repulsion field is dormant until the
+    // user actually moves the pointer (otherwise it eats the face at center)
+    const pointer = { x: 999, y: 999, tx: 999, ty: 999 }
     let visible = true
 
     const start = async () => {
@@ -114,8 +116,10 @@ export default function FaceParticles({ src = '/yo-retoque.webp', color = '#f3f0
           const i = (y * SW + x) * 4
           const lum =
             (0.299 * px[i] + 0.587 * px[i + 1] + 0.114 * px[i + 2]) / 255
-          // skip the near-white studio background; keep the figure (incl. dark hair)
-          if (lum > 0.9) continue
+          // drop the background: near-white studio sweeps AND the near-black
+          // surround of dark-backed portraits. The figure (incl. hair, which
+          // keeps some sheen) sits comfortably inside the band.
+          if (lum > 0.9 || lum < 0.1) continue
           const u = x / (SW - 1)
           const v = y / (SH - 1)
           faceArr.push(

@@ -9,7 +9,7 @@ import './facePreview.css'
 function Preview() {
   return (
     <main className="fp-stage">
-      <FaceParticles src="/yo-retoque.webp" />
+      <FaceParticles src="/retrato.webp" />
       <div className="fp-caption">
         <span>imágenes</span>
         <em>&amp;</em>
