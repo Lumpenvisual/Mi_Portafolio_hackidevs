@@ -13,7 +13,8 @@
     "test": "vitest",
     "test:run": "vitest run",
     "test:coverage": "vitest run --coverage",
-    "optimize:images": "node scripts/optimize-images.mjs"
+    "optimize:images": "node scripts/optimize-images.mjs",
+    "generate:3d": "node scripts/image-to-3d.mjs"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",

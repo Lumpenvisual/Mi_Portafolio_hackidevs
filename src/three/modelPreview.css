@@ -12,7 +12,7 @@ body {
   margin: 0;
 }
 
-.fp-stage {
+.mp-stage {
   position: relative;
   width: 100vw;
   height: 100vh;
@@ -22,33 +22,40 @@ body {
   place-items: center;
 }
 
-.face-particles {
+.model-3d {
   position: relative;
   width: min(80vmin, 720px);
   height: min(80vmin, 720px);
+  cursor: grab;
+}
+.model-3d:active {
+  cursor: grabbing;
 }
 
-.face-particles canvas {
+.model-3d canvas {
   display: block;
   width: 100%;
   height: 100%;
 }
 
-/* The source image only shows if the canvas fails to mount */
-.face-particles-fallback {
+/* Shows only if the canvas fails to mount (no WebGL) */
+.model-3d-fallback {
   position: absolute;
   inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
+  display: grid;
+  place-items: center;
   opacity: 0;
-  filter: grayscale(1) contrast(1.1);
+  color: var(--ink);
+  font-family: 'Space Grotesk', system-ui, sans-serif;
 }
-.face-particles.is-fallback .face-particles-fallback {
-  opacity: 0.85;
+.model-3d-fallback::after {
+  content: '3D no disponible';
+}
+.model-3d.is-fallback .model-3d-fallback {
+  opacity: 0.6;
 }
 
-.fp-caption {
+.mp-caption {
   position: absolute;
   bottom: 8%;
   left: 0;
@@ -61,11 +68,28 @@ body {
   color: var(--ink);
   pointer-events: none;
 }
-.fp-caption em {
+.mp-caption em {
   color: var(--accent);
   font-style: italic;
 }
-.fp-caption span + em,
-.fp-caption em + span {
+.mp-caption span + em,
+.mp-caption em + span {
   margin: 0 0.4em;
+}
+
+.mp-status {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  margin: 0;
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  color: var(--ink);
+  opacity: 0.55;
+  pointer-events: none;
+}
+.mp-status[data-status='placeholder'] {
+  color: var(--accent);
+  opacity: 0.85;
 }
