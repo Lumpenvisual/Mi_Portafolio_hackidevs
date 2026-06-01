@@ -116,10 +116,22 @@ export default function CameraStage({
       const cur = { rotY: base.rotY, rotX: base.rotX, camX: 0, camY: 0, scrollY: window.scrollY || 0 }
       const lerp = (a, b, t) => a + (b - a) * t
 
+      // pause rendering while the hero is scrolled out of view — no point
+      // burning GPU/CPU on a canvas nobody can see (helps INP + battery)
+      let visible = true
+      const io = new IntersectionObserver(
+        ([en]) => {
+          visible = en.isIntersecting
+        },
+        { threshold: 0 },
+      )
+      io.observe(mount)
+
       let raf = 0
       const tick = () => {
         if (disposed) return
         raf = requestAnimationFrame(tick)
+        if (!visible) return
         const px = pointer.current.x
         const py = pointer.current.y
 
@@ -160,6 +172,7 @@ export default function CameraStage({
 
       cleanup = () => {
         window.removeEventListener('resize', onResize)
+        io.disconnect()
         cancelAnimationFrame(raf)
         particleGeo.dispose()
         particleMat.dispose()

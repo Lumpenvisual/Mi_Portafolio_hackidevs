@@ -1,4 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap');
+/* Google Fonts are loaded via a non-blocking <link> in index.html (not an
+   @import here, which would chain requests behind this stylesheet and delay
+   the hero text / LCP). display=swap keeps text visible during font load. */
 
 :root,
 [data-theme='light'] {
