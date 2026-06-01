@@ -33,6 +33,9 @@ _repos/
 assests/
 hacki-perfil-real.png
 
+# Raw 3D model — 44 MB; must be optimized (Draco/meshopt) before committing
+public/models/vintage_slr_camera/
+
 # allan-pinot reference build (NOT part of the portfolio)
 allan-pinot/
 
