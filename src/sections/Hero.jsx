@@ -1,4 +1,4 @@
-import { lazy, Suspense, useCallback, useEffect, useState } from 'react'
+import { lazy, Suspense, useCallback, useEffect, useRef, useState } from 'react'
 import { useApp } from '../lib/AppContext'
 import Fireflies from '../components/Fireflies'
 
@@ -13,17 +13,6 @@ const CameraStage = lazy(() => import('../components/CameraStage'))
 const HeroPlayer = lazy(() => import('../components/HeroPlayer'))
 
 const skipCopy = { es: 'Saltar intro', en: 'Skip intro' }
-
-// Quick-access nodes orbiting the model. ids match the real section ids
-// (Projects is #work, Photography is #fotografia). Angles are spaced 72° and
-// offset so the first node sits at the top of the ring.
-const NAV_NODES = [
-  { id: 'services', angle: 0 },
-  { id: 'work', angle: 72 },
-  { id: 'skills', angle: 144 },
-  { id: 'fotografia', angle: 216 },
-  { id: 'contact', angle: 288 },
-]
 
 const copy = {
   es: {
@@ -51,14 +40,6 @@ const copy = {
     based: 'Medellín, Colombia',
     focus: 'Audiovisual · IA · Código',
     status: 'Abierta a proyectos',
-    orbitAria: 'Acceso rápido',
-    nodes: {
-      services: 'Servicios',
-      work: 'Proyectos',
-      skills: 'Habilidades',
-      fotografia: 'Fotografía',
-      contact: 'Contacto',
-    },
   },
   en: {
     eyebrow: 'Portfolio — 2026',
@@ -85,14 +66,6 @@ const copy = {
     based: 'Medellín, Colombia',
     focus: 'Audiovisual · AI · Code',
     status: 'Open to projects',
-    orbitAria: 'Quick links',
-    nodes: {
-      services: 'Services',
-      work: 'Work',
-      skills: 'Skills',
-      fotografia: 'Photography',
-      contact: 'Contact',
-    },
   },
 }
 
@@ -124,6 +97,31 @@ export default function Hero({ modelUrl = '/models/camera.glb' }) {
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
   }, [intro, dismissIntro])
+
+  // On scroll, the camera sinks and dissolves: as the first ~70% of the
+  // viewport scrolls past, translate the stage down and fade it out. Skipped
+  // under reduced-motion (the stage just stays put).
+  const stageRef = useRef(null)
+  useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    let raf = 0
+    const onScroll = () => {
+      cancelAnimationFrame(raf)
+      raf = requestAnimationFrame(() => {
+        const el = stageRef.current
+        if (!el) return
+        const p = Math.min(1, window.scrollY / (window.innerHeight * 0.7))
+        el.style.opacity = String(1 - p)
+        el.style.transform = `translateY(${p * 140}px)`
+      })
+    }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    onScroll()
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      cancelAnimationFrame(raf)
+    }
+  }, [])
 
   return (
     <>
@@ -168,28 +166,10 @@ export default function Hero({ modelUrl = '/models/camera.glb' }) {
             </div>
           </div>
 
-          <div className="hero-stage">
+          <div className="hero-stage" ref={stageRef}>
             <Suspense fallback={<div className="hero-stage-fallback" />}>
               <CameraStage />
             </Suspense>
-
-            <nav className="hero-orbit" aria-label={t.orbitAria}>
-              {NAV_NODES.map(({ id, angle }) => {
-                const rad = ((angle - 90) * Math.PI) / 180
-                const x = 50 + Math.cos(rad) * 46
-                const y = 50 + Math.sin(rad) * 46
-                return (
-                  <a
-                    key={id}
-                    href={`#${id}`}
-                    className="orbit-node"
-                    style={{ left: `${x}%`, top: `${y}%` }}
-                  >
-                    {t.nodes[id]}
-                  </a>
-                )
-              })}
-            </nav>
           </div>
 
           <div className="hero-foot">

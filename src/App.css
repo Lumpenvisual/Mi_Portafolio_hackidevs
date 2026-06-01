@@ -323,7 +323,9 @@ main {
   width: 100%;
   max-width: var(--max-w);
   margin: 0 auto;
-  padding: 96px var(--pad-x) 120px;
+  /* tightened bottom padding now that the marquee band no longer separates the
+     hero from About — keeps the section rhythm without an oversized void */
+  padding: 96px var(--pad-x) 88px;
   position: relative;
 }
 
@@ -606,41 +608,6 @@ main {
   animation: pulse 2s ease-in-out infinite;
 }
 
-.hero-orbit {
-  position: absolute;
-  inset: 0;
-  pointer-events: none; /* only the nodes themselves are interactive */
-}
-
-.orbit-node {
-  position: absolute;
-  transform: translate(-50%, -50%);
-  pointer-events: auto;
-  padding: 9px 15px;
-  font-size: 13px;
-  font-weight: 500;
-  letter-spacing: -0.01em;
-  white-space: nowrap;
-  color: var(--accent);
-  background: color-mix(in srgb, var(--bg-elevated) 78%, transparent);
-  border: 1px solid var(--border-strong);
-  border-radius: 999px;
-  backdrop-filter: blur(6px);
-  transition:
-    transform 0.25s ease,
-    color 0.2s ease,
-    border-color 0.2s ease,
-    background 0.2s ease;
-}
-
-.orbit-node:hover,
-.orbit-node:focus-visible {
-  color: var(--bg);
-  background: var(--accent);
-  border-color: var(--accent);
-  transform: translate(-50%, -50%) scale(1.06);
-}
-
 @media (prefers-reduced-motion: reduce) {
   .hero-stage-fallback {
     animation: none;
@@ -658,11 +625,6 @@ main {
   .hero-copy {
     align-items: stretch;
   }
-  /* the global Nav covers navigation on small screens; the orbit ring would
-     overlap the model, so collapse it and show the model on its own */
-  .hero-orbit {
-    display: none;
-  }
   .hero-stage {
     max-width: 340px;
   }
@@ -671,54 +633,6 @@ main {
     inset: 0;
     width: 100%;
     height: 100%;
-  }
-}
-
-/* =========================================================
-   MARQUEE
-   ========================================================= */
-.marquee {
-  width: 100%;
-  border-block: 1px solid var(--border);
-  background: var(--bg-elevated);
-  overflow: hidden;
-  padding: 22px 0;
-}
-
-.marquee-track {
-  display: flex;
-  gap: 32px;
-  white-space: nowrap;
-  animation: scroll 38s linear infinite;
-  width: max-content;
-}
-
-.marquee-item {
-  display: inline-flex;
-  align-items: center;
-  gap: 32px;
-  font-family: var(--font-display);
-  font-style: italic;
-  font-size: 28px;
-  color: var(--ink);
-  letter-spacing: -0.01em;
-}
-
-.marquee-bullet {
-  color: var(--accent-2);
-  font-style: normal;
-  font-size: 14px;
-}
-
-@keyframes scroll {
-  to {
-    transform: translateX(calc(-100% / 3));
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .marquee-track {
-    animation: none !important;
   }
 }
 
@@ -1895,8 +1809,6 @@ main {
 /* ---- Big display + numeric/italic accents → kill synthetic italics ---- */
 .contact-title,
 .contact-title em,
-.marquee-item,
-.marquee-item *,
 .section-num,
 .project-num,
 .service-num,

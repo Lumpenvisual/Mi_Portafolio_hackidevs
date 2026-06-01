@@ -1,5 +1,4 @@
 import Nav from './components/Nav'
-import Marquee from './components/Marquee'
 import Footer from './components/Footer'
 import Hero from './sections/Hero'
 import About from './sections/About'
@@ -20,7 +19,6 @@ export default function App() {
       <Nav />
       <main id="main-content">
         <Hero />
-        <Marquee />
         <About />
         <Services />
         <Skills />
