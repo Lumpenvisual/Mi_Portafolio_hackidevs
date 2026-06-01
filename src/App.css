@@ -202,7 +202,9 @@ main {
   border-radius: 999px;
   font-size: 13px;
   color: var(--ink);
-  transition: border-color 0.2s, background 0.2s;
+  transition:
+    border-color 0.2s,
+    background 0.2s;
 }
 
 .nav-cta:hover {
@@ -236,7 +238,11 @@ main {
   font-family: var(--font-display);
   font-size: 13px;
   font-weight: 500;
-  transition: border-color 0.2s, background 0.2s, color 0.2s, transform 0.2s;
+  transition:
+    border-color 0.2s,
+    background 0.2s,
+    color 0.2s,
+    transform 0.2s;
   padding: 0;
 }
 
@@ -284,7 +290,9 @@ main {
     font-size: 16px;
     max-height: 0;
     overflow: hidden;
-    transition: max-height 0.3s ease, padding 0.3s ease;
+    transition:
+      max-height 0.3s ease,
+      padding 0.3s ease;
   }
 
   .nav--open .nav-links {
@@ -496,7 +504,9 @@ main {
     color-mix(in srgb, var(--firefly) 45%, transparent) 45%,
     transparent 72%
   );
-  filter: drop-shadow(0 0 6px color-mix(in srgb, var(--firefly) 60%, transparent));
+  filter: drop-shadow(
+    0 0 6px color-mix(in srgb, var(--firefly) 60%, transparent)
+  );
   opacity: 0;
   transform: scale(var(--fly-scale, 1));
   animation-name: firefly-drift;
@@ -737,7 +747,9 @@ main {
   align-items: center;
   justify-content: center;
   aspect-ratio: 1 / 1;
-  transition: transform 0.4s ease, background 0.3s ease;
+  transition:
+    transform 0.4s ease,
+    background 0.3s ease;
 }
 
 .about-mark:hover {
@@ -977,7 +989,9 @@ main {
   object-fit: cover;
   z-index: 0;
   opacity: 0;
-  transition: transform 0.5s ease, opacity 0.4s ease;
+  transition:
+    transform 0.5s ease,
+    opacity 0.4s ease;
 }
 .project-thumb img.loaded {
   opacity: 1;
@@ -1199,7 +1213,9 @@ main {
   height: 100%;
   object-fit: cover;
   opacity: 0;
-  transition: transform 0.5s ease, opacity 0.4s ease;
+  transition:
+    transform 0.5s ease,
+    opacity 0.4s ease;
 }
 .reel-thumb img.loaded {
   opacity: 1;
@@ -1432,7 +1448,9 @@ main {
   background: var(--bg);
   border: 2px solid var(--accent);
   transform: translateX(-50%);
-  transition: background 0.25s ease, transform 0.25s ease;
+  transition:
+    background 0.25s ease,
+    transform 0.25s ease;
   z-index: 1;
 }
 
@@ -1535,7 +1553,9 @@ main {
   border-bottom: 1px solid var(--border-strong);
   padding-bottom: 4px;
   margin-top: 16px;
-  transition: color 0.2s ease, border-color 0.2s ease;
+  transition:
+    color 0.2s ease,
+    border-color 0.2s ease;
 }
 
 .contact-mail:hover {
@@ -1600,7 +1620,9 @@ main {
   color: var(--ink);
   padding: 10px 0;
   border-bottom: 1px solid var(--border);
-  transition: color 0.2s ease, padding-left 0.2s ease;
+  transition:
+    color 0.2s ease,
+    padding-left 0.2s ease;
 }
 
 .contact-links a:hover {
@@ -1931,7 +1953,8 @@ main {
 /* ---- Live "online / active" status → phosphor (terminal semantics) ---- */
 .dot-on {
   background: var(--phosphor);
-  box-shadow: 0 0 0 4px color-mix(in srgb, var(--phosphor) 22%, transparent),
+  box-shadow:
+    0 0 0 4px color-mix(in srgb, var(--phosphor) 22%, transparent),
     0 0 8px rgba(0, 255, 65, 0.5);
 }
 
@@ -1956,7 +1979,9 @@ main {
   mix-blend-mode: normal;
   border-radius: 0;
   filter: grayscale(1) contrast(1.06) brightness(0.98);
-  transition: filter 0.6s ease, transform 0.6s ease;
+  transition:
+    filter 0.6s ease,
+    transform 0.6s ease;
 }
 [data-theme='dark'] .about-mark img.about-photo {
   mix-blend-mode: normal;
@@ -2010,7 +2035,9 @@ main {
   height: 100%;
   object-fit: cover;
   opacity: 0;
-  transition: transform 0.5s ease, opacity 0.4s ease;
+  transition:
+    transform 0.5s ease,
+    opacity 0.4s ease;
 }
 .foto-thumb.loaded {
   opacity: 1;
@@ -2177,7 +2204,9 @@ main {
   border: 1px solid var(--border-strong);
   border-radius: 999px;
   color: var(--ink-soft);
-  transition: border-color 0.2s ease, color 0.2s ease;
+  transition:
+    border-color 0.2s ease,
+    color 0.2s ease;
 }
 
 .skill-tags li:hover {
@@ -2193,15 +2222,13 @@ main {
 }
 
 /* =========================================================
-   INTRO OVERLAY (one-time Remotion intro, /intro.mp4)
+   INTRO OVERLAY (one-time Remotion <Player> intro)
    ========================================================= */
 .intro-overlay {
   position: fixed;
   inset: 0;
   z-index: 1000;
-  display: grid;
-  place-items: center;
-  background: #15131e; /* matches the hero so the fade is seamless */
+  background: #0d0d1a; /* matches the intro composition bg */
   opacity: 1;
   transition: opacity 0.6s ease;
 }
@@ -2210,10 +2237,9 @@ main {
   opacity: 0;
 }
 
-.intro-video {
-  width: 100%;
-  height: 100%;
-  object-fit: contain; /* letterbox blends into the matching bg */
+.intro-player {
+  position: absolute;
+  inset: 0; /* the Player scales the 1920×1080 comp to fit, letterboxed */
 }
 
 .intro-skip {

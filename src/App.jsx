@@ -1,7 +1,6 @@
 import Nav from './components/Nav'
 import Marquee from './components/Marquee'
 import Footer from './components/Footer'
-import IntroOverlay from './components/IntroOverlay'
 import Hero from './sections/Hero'
 import About from './sections/About'
 import Services from './sections/Services'
@@ -15,7 +14,6 @@ import './App.css'
 export default function App() {
   return (
     <>
-      <IntroOverlay />
       <a href="#main-content" className="skip-link">
         Saltar al contenido
       </a>

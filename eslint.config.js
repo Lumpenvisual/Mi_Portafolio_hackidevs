@@ -28,6 +28,10 @@ export default defineConfig([
     'allan-pinot',
     '.claude',
     '.agents',
+    // Remotion intro is authored in TypeScript (.tsx); this project's lint is
+    // JS-only, so skip TS files here — Vite/esbuild still compiles them.
+    '**/*.ts',
+    '**/*.tsx',
   ]),
 
   // Browser / React source files
