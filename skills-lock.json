@@ -82,6 +82,16 @@
       "sourceType": "autoskills-registry",
       "computedHash": "502eb06700e2c3cb1bd7f710860528f72281320bd5171a2087b05a090b573dc1"
     },
+    "react-three-fiber": {
+      "source": "vercel-labs/json-render",
+      "sourceType": "autoskills-registry",
+      "computedHash": "1158a4910694206be05c820faca73de932bcbdd23f12fb98897f859b61cb7005"
+    },
+    "remotion": {
+      "source": "remotion-dev/skills",
+      "sourceType": "autoskills-registry",
+      "computedHash": "00b6ae6385bbf5d1f401c40dc301697f10ae39e0226283f3c1ba2583a1f421f6"
+    },
     "seo": {
       "source": "addyosmani/web-quality-skills",
       "sourceType": "autoskills-registry",
