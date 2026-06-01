@@ -2,10 +2,10 @@ import { lazy, Suspense, useCallback, useEffect, useState } from 'react'
 import { useApp } from '../lib/AppContext'
 import Fireflies from '../components/Fireflies'
 
-// The 3D viewer is lazy-loaded so three.js stays out of the initial bundle —
-// it (and three) only download once the Hero mounts. Until /models/jacky.glb
-// exists the viewer shows a faceted placeholder.
-const Model3D = lazy(() => import('../three/Model3D'))
+// The 3D camera stage is lazy-loaded so three.js stays out of the initial
+// bundle — it (and three) only download once the Hero mounts. Loads the
+// optimized vintage SLR camera (/models/camera.glb, 1.17 MB).
+const CameraStage = lazy(() => import('../components/CameraStage'))
 
 // The Remotion intro <Player> is lazy-loaded too — @remotion/player + three only
 // download (as a separate chunk) when the intro actually plays on the first
@@ -96,7 +96,7 @@ const copy = {
   },
 }
 
-export default function Hero({ modelUrl = '/models/jacky.glb' }) {
+export default function Hero({ modelUrl = '/models/camera.glb' }) {
   const { lang } = useApp()
   const t = copy[lang]
 
@@ -170,7 +170,7 @@ export default function Hero({ modelUrl = '/models/jacky.glb' }) {
 
           <div className="hero-stage">
             <Suspense fallback={<div className="hero-stage-fallback" />}>
-              <Model3D src={modelUrl} />
+              <CameraStage />
             </Suspense>
 
             <nav className="hero-orbit" aria-label={t.orbitAria}>

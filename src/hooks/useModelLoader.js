@@ -27,10 +27,16 @@ export function useModelLoader(basePath, candidates = DEFAULT_CANDIDATES) {
       // doesn't trip react-hooks/set-state-in-effect)
       setState({ model: null, loading: true, error: null })
 
-      // 1. dynamically import the loader (keeps three out of the main bundle)
-      let GLTFLoader
+      // 1. dynamically import the loaders (keeps three out of the main bundle).
+      // DRACOLoader decodes KHR_draco_mesh_compression — the camera.glb is
+      // Draco-compressed (1.17 MB vs 45 MB raw); the decoder WASM is served
+      // from /public/draco. Plain (non-Draco) models load fine too.
+      let GLTFLoader, DRACOLoader
       try {
-        ;({ GLTFLoader } = await import('three/addons/loaders/GLTFLoader.js'))
+        ;[{ GLTFLoader }, { DRACOLoader }] = await Promise.all([
+          import('three/addons/loaders/GLTFLoader.js'),
+          import('three/addons/loaders/DRACOLoader.js'),
+        ])
       } catch (err) {
         if (!disposed) setState({ model: null, loading: false, error: err })
         return
@@ -61,17 +67,21 @@ export function useModelLoader(basePath, candidates = DEFAULT_CANDIDATES) {
         return
       }
 
-      // 3. load it
-      new GLTFLoader().load(
+      // 3. load it (with Draco decoding wired in)
+      const draco = new DRACOLoader().setDecoderPath('/draco/')
+      const loader = new GLTFLoader().setDRACOLoader(draco)
+      loader.load(
         url,
         (gltf) => {
           if (disposed) return
           loaded = gltf.scene
           setState({ model: gltf.scene, loading: false, error: null })
+          draco.dispose()
         },
         undefined,
         (err) => {
           if (!disposed) setState({ model: null, loading: false, error: err })
+          draco.dispose()
         }
       )
     }
