@@ -22,7 +22,7 @@ const easeInOutCubic = Easing.inOut(Easing.cubic)
 export const NameScene: React.FC<{ startFrame: number }> = ({ startFrame }) => {
   const { fps } = useVideoConfig()
   const f = useCurrentFrame() - startFrame
-  const letters = 'Hola soy'.split('')
+  const letters = 'Hola, soy'.split('')
 
   const gut = spring({ frame: f - 12, fps, config: { damping: 16, mass: 0.7 } })
   const gutX = interpolate(gut, [0, 1], [140, 0])
@@ -77,15 +77,24 @@ export const NameScene: React.FC<{ startFrame: number }> = ({ startFrame }) => {
 }
 
 // ───────────────────────────────────────────────────────────────────────────
-// ESCENA 3 (4s - 5.5s): Tagline kinetic
-// "Cuento historias en" fade-in rápido.
-// "imágenes & código." entra con blur-in + scale 0.8 -> 1, color #a78bfa.
+// ESCENA 3 (4s - ~7s): Tagline kinetic — APARECE y DESAPARECE.
+// "Comunicadora audiovisual," fade-in rápido.
+// "IA generativa" entra con blur-in + scale 0.8 -> 1, color #a78bfa.
+// El bloque completo se desvanece antes del final de la escena (efecto
+// aparecer/desaparecer) para dar paso al avatar.
 // ───────────────────────────────────────────────────────────────────────────
 export const TaglineScene: React.FC<{ startFrame: number }> = ({
   startFrame,
 }) => {
   const { fps } = useVideoConfig()
   const f = useCurrentFrame() - startFrame
+
+  // aparece (0→14) y desaparece (78→98): fade del bloque completo
+  const appear = interpolate(f, [0, 14, 78, 98], [0, 1, 1, 0], {
+    extrapolateLeft: 'clamp',
+    extrapolateRight: 'clamp',
+    easing: easeInOutCubic,
+  })
 
   const line1 = interpolate(f, [0, 10], [0, 1], {
     extrapolateLeft: 'clamp',
@@ -108,13 +117,14 @@ export const TaglineScene: React.FC<{ startFrame: number }> = ({
   return (
     <div
       style={{
-        fontSize: 76,
+        fontSize: 64,
         fontWeight: 300,
         color: '#ffffff',
-        lineHeight: 1.1,
+        lineHeight: 1.15,
+        opacity: appear,
       }}
     >
-      <div style={{ opacity: line1 }}>Cuento historias en</div>
+      <div style={{ opacity: line1 }}>Comunicadora audiovisual,</div>
       <div
         style={{
           opacity: line2,
@@ -125,7 +135,7 @@ export const TaglineScene: React.FC<{ startFrame: number }> = ({
           filter: `blur(${blur}px)`,
         }}
       >
-        imágenes &amp; código.
+        IA generativa
       </div>
     </div>
   )
