@@ -1,19 +1,8 @@
 import { test, expect } from '@playwright/test'
 
-// The Remotion intro plays once per session; skip it (via sessionStorage) so
-// the hero is asserted directly. Pass { intro: true } to test the intro itself.
-async function gotoApp(page, { intro = false } = {}) {
-  if (!intro) {
-    await page.addInitScript(() => {
-      try {
-        sessionStorage.setItem('introSeen', '1')
-      } catch {
-        /* sessionStorage may be unavailable pre-navigation */
-      }
-    })
-  }
+async function gotoApp(page) {
   // domcontentloaded (not 'load'): the SPA hydrates immediately and we don't
-  // want to hang waiting on external Google Fonts / lazy 3D + video chunks.
+  // want to hang waiting on external Google Fonts / the lazy 3D chunk.
   await page.goto('/', { waitUntil: 'domcontentloaded' })
 }
 
@@ -88,16 +77,6 @@ test('photography renders 8 photos', async ({ page }) => {
 test('contact section is present', async ({ page }) => {
   await gotoApp(page)
   await expect(page.locator('#contact')).toBeVisible()
-})
-
-test('the intro plays on first visit and is skippable', async ({ page }) => {
-  await gotoApp(page, { intro: true })
-  const overlay = page.locator('.intro-overlay')
-  await expect(overlay).toBeVisible()
-  await page
-    .getByRole('button', { name: /Saltar intro|Skip intro/ })
-    .click()
-  await expect(overlay).toBeHidden({ timeout: 3_000 })
 })
 
 test.describe('mobile (390px)', () => {

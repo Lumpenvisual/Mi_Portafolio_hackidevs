@@ -1,4 +1,4 @@
-import { lazy, Suspense, useCallback, useEffect, useRef, useState } from 'react'
+import { lazy, Suspense, useEffect, useRef } from 'react'
 import { useApp } from '../lib/AppContext'
 import Fireflies from '../components/Fireflies'
 
@@ -6,13 +6,6 @@ import Fireflies from '../components/Fireflies'
 // bundle — it (and three) only download once the Hero mounts. Loads the
 // optimized vintage SLR camera (/models/camera.glb, 1.17 MB).
 const CameraStage = lazy(() => import('../components/CameraStage'))
-
-// The Remotion intro <Player> is lazy-loaded too — @remotion/player + three only
-// download (as a separate chunk) when the intro actually plays on the first
-// visit. Skipped entirely under reduced-motion, so that chunk never loads there.
-const HeroPlayer = lazy(() => import('../components/HeroPlayer'))
-
-const skipCopy = { es: 'Saltar intro', en: 'Skip intro' }
 
 const copy = {
   es: {
@@ -69,34 +62,9 @@ const copy = {
   },
 }
 
-export default function Hero({ modelUrl = '/models/camera.glb' }) {
+export default function Hero() {
   const { lang } = useApp()
   const t = copy[lang]
-
-  // One-time Remotion intro: plays once per session, skippable (button/Esc),
-  // skipped entirely under reduced-motion. Fades out to reveal the hero.
-  const [intro, setIntro] = useState(() => {
-    if (typeof window === 'undefined') return false
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches)
-      return false
-    return !sessionStorage.getItem('introSeen')
-  })
-  const [leaving, setLeaving] = useState(false)
-
-  const dismissIntro = useCallback(() => {
-    setLeaving(true)
-    setTimeout(() => setIntro(false), 600) // matches the CSS fade
-  }, [])
-
-  useEffect(() => {
-    if (!intro) return
-    sessionStorage.setItem('introSeen', '1')
-    const onKey = (e) => {
-      if (e.key === 'Escape') dismissIntro()
-    }
-    window.addEventListener('keydown', onKey)
-    return () => window.removeEventListener('keydown', onKey)
-  }, [intro, dismissIntro])
 
   // On scroll, the camera sinks and dissolves: as the first ~70% of the
   // viewport scrolls past, translate the stage down and fade it out. Desktop
@@ -135,22 +103,6 @@ export default function Hero({ modelUrl = '/models/camera.glb' }) {
 
   return (
     <>
-      {intro && (
-        <div
-          className={`intro-overlay${leaving ? ' is-leaving' : ''}`}
-          role="dialog"
-          aria-label="Intro"
-        >
-          <Suspense fallback={null}>
-            <div className="intro-player">
-              <HeroPlayer modelUrl={modelUrl} onEnded={dismissIntro} />
-            </div>
-          </Suspense>
-          <button type="button" className="intro-skip" onClick={dismissIntro}>
-            {skipCopy[lang]} <span aria-hidden="true">→</span>
-          </button>
-        </div>
-      )}
       <section className="hero hero--3d" id="top">
         <Fireflies count={40} />
 
