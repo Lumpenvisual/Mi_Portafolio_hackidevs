@@ -58,9 +58,12 @@ export default function CameraStage({
       const camera = new THREE.PerspectiveCamera(45, w / h, 0.1, 100)
       camera.position.set(0, 0, 5)
 
-      // LIGHTS — dark-portfolio palette. The spec's intensities were tuned for
-      // three r128 (legacy lighting); r0.184 is physically-based, so the point
-      // lights are scaled up to read at the same hue/positions.
+      // LIGHTS — theme-aware. The intensities were tuned for three r128 (legacy
+      // lighting); r0.184 is physically-based, so the point lights are scaled up
+      // to read at the same hue/positions. The dark palette leans purple/pink so
+      // the camera glows against the dark hero; the light palette lifts ambient
+      // fill and the key light and dials the coloured points back, so the model
+      // reads crisp and clean (not muddy/tinted) against the white background.
       const ambient = new THREE.AmbientLight(0x4c1d95, 0.9)
       const key = new THREE.DirectionalLight(0xffffff, 2.6)
       key.position.set(3, 4, 2)
@@ -85,6 +88,47 @@ export default function CameraStage({
       })
       const particles = new THREE.Points(particleGeo, particleMat)
       scene.add(particles)
+
+      // THEME — re-tune the lights + particles for light vs dark mode. White
+      // particles vanish on a light background, so they switch to a soft violet;
+      // ambient/key are lifted and the coloured points pulled back so the camera
+      // reads clean on white. Re-applied live when the user toggles the theme
+      // (the root <html data-theme> attribute flips).
+      const THEME_LIGHTS = {
+        dark: {
+          ambient: { color: 0x4c1d95, intensity: 0.9 },
+          key: 2.6,
+          accent: 26,
+          warm: 10,
+          particle: { color: 0xffffff, opacity: 0.4 },
+        },
+        light: {
+          ambient: { color: 0xeae6ff, intensity: 1.8 },
+          key: 3.3,
+          accent: 11,
+          warm: 5,
+          particle: { color: 0x6d5bd0, opacity: 0.55 },
+        },
+      }
+      const applyTheme = () => {
+        const c =
+          document.documentElement.dataset.theme === 'light'
+            ? THEME_LIGHTS.light
+            : THEME_LIGHTS.dark
+        ambient.color.setHex(c.ambient.color)
+        ambient.intensity = c.ambient.intensity
+        key.intensity = c.key
+        accent.intensity = c.accent
+        warm.intensity = c.warm
+        particleMat.color.setHex(c.particle.color)
+        particleMat.opacity = c.particle.opacity
+      }
+      applyTheme()
+      const themeObserver = new MutationObserver(applyTheme)
+      themeObserver.observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ['data-theme'],
+      })
 
       // group holding the model (lets us rotate/position before it loads)
       const modelGroup = new THREE.Group()
@@ -173,6 +217,7 @@ export default function CameraStage({
       cleanup = () => {
         window.removeEventListener('resize', onResize)
         io.disconnect()
+        themeObserver.disconnect()
         cancelAnimationFrame(raf)
         particleGeo.dispose()
         particleMat.dispose()
