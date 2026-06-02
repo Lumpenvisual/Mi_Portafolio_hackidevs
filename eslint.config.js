@@ -62,10 +62,25 @@ export default defineConfig([
 
   // Node.js config / script files
   {
-    files: ['vite.config.js', 'eslint.config.js', 'scripts/**/*.{js,mjs}'],
+    files: [
+      'vite.config.js',
+      'eslint.config.js',
+      'playwright.config.js',
+      'scripts/**/*.{js,mjs}',
+    ],
     extends: [js.configs.recommended],
     languageOptions: {
       globals: { ...globals.node },
+    },
+  },
+
+  // Playwright E2E specs — Node + browser globals (page.evaluate callbacks run
+  // in the browser); `test`/`expect` come from @playwright/test imports.
+  {
+    files: ['tests/e2e/**/*.e2e.js'],
+    extends: [js.configs.recommended],
+    languageOptions: {
+      globals: { ...globals.node, ...globals.browser },
     },
   },
 

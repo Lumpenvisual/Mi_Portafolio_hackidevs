@@ -43,3 +43,9 @@ allan-pinot/
 .claude/skills/
 .claude/agent-memory/
 .agents/
+
+# Playwright
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
