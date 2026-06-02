@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react'
 import { useApp } from '../lib/AppContext'
 import { useReveal } from '../hooks/useReveal'
 
@@ -184,6 +185,63 @@ export default function Projects() {
   const headRef = useReveal()
   const listRef = useReveal({ delay: 150 })
   const reelsRef = useReveal({ delay: 100 })
+  const trackRef = useRef(null)
+
+  // Drag-to-scroll the reels shelf with inertia (GSAP Draggable + InertiaPlugin,
+  // lazy-imported to stay out of the initial bundle, like the Career timeline).
+  // Touch devices already scroll natively, so only wire it up for fine pointers;
+  // skipped entirely under reduced motion. Snaps to the 220px card step.
+  useEffect(() => {
+    const el = trackRef.current
+    if (!el) return
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return
+
+    let draggable = null
+    let cancelled = false
+    let gsapRef = null
+
+    Promise.all([
+      import('gsap'),
+      import('gsap/Draggable'),
+      import('gsap/InertiaPlugin'),
+    ]).then(([{ gsap }, { Draggable }, { InertiaPlugin }]) => {
+      if (cancelled) return
+      gsap.registerPlugin(Draggable, InertiaPlugin)
+      gsapRef = gsap
+      // NB: don't use Draggable's `type: 'scrollLeft'` — its scrollProxy wraps the
+      // track's children in a block <div>, which breaks the flex row. Instead drag
+      // an off-DOM proxy and map its delta onto el.scrollLeft, leaving the native
+      // flex/scroll layout untouched. Disable CSS scroll-snap so it doesn't fight
+      // the inertia throw (cursor grab/grabbing stays driven by the CSS :active).
+      el.style.scrollSnapType = 'none'
+      const proxy = document.createElement('div')
+      let startScroll = 0
+      const applyScroll = function () {
+        el.scrollLeft = startScroll - this.x // browser clamps to [0, maxScroll]
+      }
+      ;[draggable] = Draggable.create(proxy, {
+        type: 'x',
+        trigger: el,
+        inertia: true,
+        dragClickables: true, // keep reel links clickable; real drags suppress click
+        onPressInit() {
+          gsap.killTweensOf(proxy)
+          startScroll = el.scrollLeft
+          gsap.set(proxy, { x: 0 })
+        },
+        onDrag: applyScroll,
+        onThrowUpdate: applyScroll,
+      })
+    })
+
+    return () => {
+      cancelled = true
+      if (draggable) draggable.kill()
+      if (gsapRef) gsapRef.killTweensOf?.(draggable?.target)
+      if (el) el.style.scrollSnapType = ''
+    }
+  }, [])
 
   return (
     <section className="section projects" id="work">
@@ -247,7 +305,7 @@ export default function Projects() {
           <h3 className="reels-title">{t.reelsHeadline}</h3>
         </header>
 
-        <ul className="reels-track">
+        <ul className="reels-track" ref={trackRef}>
           {reels.map((r, i) => (
             <li key={i} className="reel-item">
             <a
