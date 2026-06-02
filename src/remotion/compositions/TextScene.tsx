@@ -16,7 +16,7 @@ const easeInOutCubic = Easing.inOut(Easing.cubic)
 // ───────────────────────────────────────────────────────────────────────────
 // ESCENA 2 (2s - 4s): Saludo
 // "Hola soy" letra por letra con spring({ damping: 12, mass: 0.5 });
-// "Jackie" en #a78bfa hace slide-in desde la derecha con spring.
+// "Jacky" en #a78bfa hace slide-in desde la derecha con spring.
 // Tipografía: Inter, weight 300, tamaño grande.
 // ───────────────────────────────────────────────────────────────────────────
 export const NameScene: React.FC<{ startFrame: number }> = ({ startFrame }) => {
@@ -70,7 +70,7 @@ export const NameScene: React.FC<{ startFrame: number }> = ({ startFrame }) => {
           transform: `translateX(${gutX}px)`,
         }}
       >
-        Jackie
+        Jacky
       </span>
     </div>
   )
