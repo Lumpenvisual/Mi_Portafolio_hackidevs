@@ -99,26 +99,36 @@ export default function Hero({ modelUrl = '/models/camera.glb' }) {
   }, [intro, dismissIntro])
 
   // On scroll, the camera sinks and dissolves: as the first ~70% of the
-  // viewport scrolls past, translate the stage down and fade it out. Skipped
-  // under reduced-motion (the stage just stays put).
+  // viewport scrolls past, translate the stage down and fade it out. Desktop
+  // only — on mobile the hero is stacked and the camera sits well below the
+  // copy, so the raw-scroll fade would hide it before it's even in view; there
+  // the stage renders normally. Skipped under reduced-motion too.
   const stageRef = useRef(null)
   useEffect(() => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
     let raf = 0
+    const apply = () => {
+      const el = stageRef.current
+      if (!el) return
+      if (window.innerWidth <= 900) {
+        el.style.opacity = ''
+        el.style.transform = ''
+        return
+      }
+      const p = Math.min(1, window.scrollY / (window.innerHeight * 0.7))
+      el.style.opacity = String(1 - p)
+      el.style.transform = `translateY(${p * 140}px)`
+    }
     const onScroll = () => {
       cancelAnimationFrame(raf)
-      raf = requestAnimationFrame(() => {
-        const el = stageRef.current
-        if (!el) return
-        const p = Math.min(1, window.scrollY / (window.innerHeight * 0.7))
-        el.style.opacity = String(1 - p)
-        el.style.transform = `translateY(${p * 140}px)`
-      })
+      raf = requestAnimationFrame(apply)
     }
     window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', onScroll, { passive: true })
     onScroll()
     return () => {
       window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', onScroll)
       cancelAnimationFrame(raf)
     }
   }, [])
