@@ -76,37 +76,39 @@ export const NameScene: React.FC<{ startFrame: number }> = ({ startFrame }) => {
 // ───────────────────────────────────────────────────────────────────────────
 // ESCENA 3 (4s - …): Tagline con EFECTO ESCRITURA (typewriter).
 // "Comunicadora audiovisual," (blanco) + "IA generativa" (#a78bfa) se escriben
-// carácter por carácter con un cursor que parpadea al terminar. NO desaparece:
-// permanece en pantalla. Todo va con useCurrentFrame() (sin animación propia).
+// carácter por carácter (string slicing, per la skill de Remotion). El cursor
+// NO existe antes de que arranque la escena (el componente está siempre montado,
+// así que devolvemos null mientras f < 0); es sólido mientras escribe y parpadea
+// suave al terminar. NO desaparece: permanece en pantalla.
 // ───────────────────────────────────────────────────────────────────────────
 const TAG_L1 = 'Comunicadora audiovisual,'
 const TAG_L2 = 'IA generativa'
+const CHAR_FRAMES = 1.1 // frames por carácter
+const CURSOR_BLINK_FRAMES = 16
 
 export const TaglineScene: React.FC<{ startFrame: number }> = ({
   startFrame,
 }) => {
   const f = useCurrentFrame() - startFrame
-  const total = TAG_L1.length + TAG_L2.length
+  // antes del inicio de la escena no renderizamos nada (ni el cursor)
+  if (f < 0) return null
 
-  // revela caracteres progresivamente (~1 char/frame)
-  const charsShown = Math.max(
-    0,
-    Math.min(
-      total,
-      Math.floor(
-        interpolate(f, [0, 42], [0, total], {
-          extrapolateLeft: 'clamp',
-          extrapolateRight: 'clamp',
-        }),
-      ),
-    ),
-  )
+  const total = TAG_L1.length + TAG_L2.length
+  const charsShown = Math.min(total, Math.floor(f / CHAR_FRAMES))
   const l1 = TAG_L1.slice(0, Math.min(charsShown, TAG_L1.length))
   const l2 = TAG_L2.slice(0, Math.max(0, charsShown - TAG_L1.length))
   const typingL1 = charsShown < TAG_L1.length
   const done = charsShown >= total
-  // cursor sólido mientras escribe; parpadea al terminar
-  const cursorOn = done ? Math.floor(f / 16) % 2 === 0 : true
+
+  // cursor sólido mientras escribe; parpadeo suave al terminar (patrón skill)
+  const cursorOpacity = done
+    ? interpolate(
+        f % CURSOR_BLINK_FRAMES,
+        [0, CURSOR_BLINK_FRAMES / 2, CURSOR_BLINK_FRAMES],
+        [1, 0, 1],
+        { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' },
+      )
+    : 1
 
   return (
     <div
@@ -119,11 +121,11 @@ export const TaglineScene: React.FC<{ startFrame: number }> = ({
     >
       <div style={{ minHeight: '1.15em' }}>
         {l1}
-        {typingL1 && <span style={{ opacity: cursorOn ? 1 : 0 }}>|</span>}
+        {typingL1 && <span style={{ opacity: cursorOpacity }}>|</span>}
       </div>
       <div style={{ minHeight: '1.15em', color: '#a78bfa', fontWeight: 500 }}>
         {l2}
-        {!typingL1 && <span style={{ opacity: cursorOn ? 1 : 0 }}>|</span>}
+        {!typingL1 && <span style={{ opacity: cursorOpacity }}>|</span>}
       </div>
     </div>
   )
