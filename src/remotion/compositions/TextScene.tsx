@@ -1,6 +1,5 @@
 import React from 'react'
 import {
-  Easing,
   interpolate,
   spring,
   useCurrentFrame,
@@ -10,8 +9,6 @@ import {
 // Escenas de texto del intro. Cada componente recibe `startFrame` (frame global
 // en el que arranca su animación) y queda SIEMPRE montado para no causar saltos
 // de layout; antes de su inicio simplemente es invisible.
-
-const easeInOutCubic = Easing.inOut(Easing.cubic)
 
 // ───────────────────────────────────────────────────────────────────────────
 // ESCENA 2 (2s - 4s): Saludo
@@ -77,42 +74,39 @@ export const NameScene: React.FC<{ startFrame: number }> = ({ startFrame }) => {
 }
 
 // ───────────────────────────────────────────────────────────────────────────
-// ESCENA 3 (4s - ~7s): Tagline kinetic — APARECE y DESAPARECE.
-// "Comunicadora audiovisual," fade-in rápido.
-// "IA generativa" entra con blur-in + scale 0.8 -> 1, color #a78bfa.
-// El bloque completo se desvanece antes del final de la escena (efecto
-// aparecer/desaparecer) para dar paso al avatar.
+// ESCENA 3 (4s - …): Tagline con EFECTO ESCRITURA (typewriter).
+// "Comunicadora audiovisual," (blanco) + "IA generativa" (#a78bfa) se escriben
+// carácter por carácter con un cursor que parpadea al terminar. NO desaparece:
+// permanece en pantalla. Todo va con useCurrentFrame() (sin animación propia).
 // ───────────────────────────────────────────────────────────────────────────
+const TAG_L1 = 'Comunicadora audiovisual,'
+const TAG_L2 = 'IA generativa'
+
 export const TaglineScene: React.FC<{ startFrame: number }> = ({
   startFrame,
 }) => {
-  const { fps } = useVideoConfig()
   const f = useCurrentFrame() - startFrame
+  const total = TAG_L1.length + TAG_L2.length
 
-  // aparece (0→14) y desaparece (78→98): fade del bloque completo
-  const appear = interpolate(f, [0, 14, 78, 98], [0, 1, 1, 0], {
-    extrapolateLeft: 'clamp',
-    extrapolateRight: 'clamp',
-    easing: easeInOutCubic,
-  })
-
-  const line1 = interpolate(f, [0, 10], [0, 1], {
-    extrapolateLeft: 'clamp',
-    extrapolateRight: 'clamp',
-    easing: easeInOutCubic,
-  })
-
-  const pop = spring({ frame: f - 8, fps, config: { damping: 200, mass: 0.8 } })
-  const scale = interpolate(pop, [0, 1], [0.8, 1])
-  const blur = interpolate(f, [8, 32], [20, 0], {
-    extrapolateLeft: 'clamp',
-    extrapolateRight: 'clamp',
-    easing: easeInOutCubic,
-  })
-  const line2 = interpolate(f, [8, 24], [0, 1], {
-    extrapolateLeft: 'clamp',
-    extrapolateRight: 'clamp',
-  })
+  // revela caracteres progresivamente (~1 char/frame)
+  const charsShown = Math.max(
+    0,
+    Math.min(
+      total,
+      Math.floor(
+        interpolate(f, [0, 42], [0, total], {
+          extrapolateLeft: 'clamp',
+          extrapolateRight: 'clamp',
+        }),
+      ),
+    ),
+  )
+  const l1 = TAG_L1.slice(0, Math.min(charsShown, TAG_L1.length))
+  const l2 = TAG_L2.slice(0, Math.max(0, charsShown - TAG_L1.length))
+  const typingL1 = charsShown < TAG_L1.length
+  const done = charsShown >= total
+  // cursor sólido mientras escribe; parpadea al terminar
+  const cursorOn = done ? Math.floor(f / 16) % 2 === 0 : true
 
   return (
     <div
@@ -121,21 +115,15 @@ export const TaglineScene: React.FC<{ startFrame: number }> = ({
         fontWeight: 300,
         color: '#ffffff',
         lineHeight: 1.15,
-        opacity: appear,
       }}
     >
-      <div style={{ opacity: line1 }}>Comunicadora audiovisual,</div>
-      <div
-        style={{
-          opacity: line2,
-          color: '#a78bfa',
-          fontWeight: 500,
-          transform: `scale(${scale})`,
-          transformOrigin: 'left center',
-          filter: `blur(${blur}px)`,
-        }}
-      >
-        IA generativa
+      <div style={{ minHeight: '1.15em' }}>
+        {l1}
+        {typingL1 && <span style={{ opacity: cursorOn ? 1 : 0 }}>|</span>}
+      </div>
+      <div style={{ minHeight: '1.15em', color: '#a78bfa', fontWeight: 500 }}>
+        {l2}
+        {!typingL1 && <span style={{ opacity: cursorOn ? 1 : 0 }}>|</span>}
       </div>
     </div>
   )
