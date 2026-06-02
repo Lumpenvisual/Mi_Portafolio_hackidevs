@@ -557,35 +557,6 @@ main {
   position: relative;
   display: inline-block;
   color: var(--accent);
-  /* risograph 2-colour overprint / misregistration on the emphasised words
-     (pink + indigo plates, slightly offset). Scales with the title via em. */
-  text-shadow:
-    -0.028em -0.014em 0 rgba(236, 72, 153, 0.55),
-    0.024em 0.016em 0 rgba(99, 102, 241, 0.5);
-}
-
-/* =========================================================
-   HERO · artistic style (risograph / grain / duotone) — DEMO
-   CSS/SVG only, scoped to .hero. Grain is static, so it's
-   reduced-motion safe; dialled down when motion is reduced.
-   ========================================================= */
-.hero::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  pointer-events: none;
-  /* fractal-noise film grain (riso paper tooth) */
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  background-size: 160px 160px;
-  opacity: 0.13;
-  mix-blend-mode: overlay;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .hero::after {
-    opacity: 0.07;
-  }
 }
 
 /* ---------- HERO · 3D variant (model + orbital nav) ---------- */
