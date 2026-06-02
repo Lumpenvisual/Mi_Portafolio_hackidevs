@@ -14,15 +14,15 @@ import {
 const easeInOutCubic = Easing.inOut(Easing.cubic)
 
 // ───────────────────────────────────────────────────────────────────────────
-// ESCENA 2 (2s - 4s): Nombre
-// "Jacky" letra por letra con spring({ damping: 12, mass: 0.5 });
-// "Gutiérrez" en #a78bfa hace slide-in desde la derecha con spring.
+// ESCENA 2 (2s - 4s): Saludo
+// "Hola soy" letra por letra con spring({ damping: 12, mass: 0.5 });
+// "Jackie" en #a78bfa hace slide-in desde la derecha con spring.
 // Tipografía: Inter, weight 300, tamaño grande.
 // ───────────────────────────────────────────────────────────────────────────
 export const NameScene: React.FC<{ startFrame: number }> = ({ startFrame }) => {
   const { fps } = useVideoConfig()
   const f = useCurrentFrame() - startFrame
-  const letters = 'Jacky'.split('')
+  const letters = 'Hola soy'.split('')
 
   const gut = spring({ frame: f - 12, fps, config: { damping: 16, mass: 0.7 } })
   const gutX = interpolate(gut, [0, 1], [140, 0])
@@ -53,6 +53,7 @@ export const NameScene: React.FC<{ startFrame: number }> = ({ startFrame }) => {
               key={i}
               style={{
                 display: 'inline-block',
+                whiteSpace: 'pre', // preserve the space in "Hola soy"
                 opacity: Math.min(1, s),
                 transform: `translateY(${y}px)`,
               }}
@@ -69,7 +70,7 @@ export const NameScene: React.FC<{ startFrame: number }> = ({ startFrame }) => {
           transform: `translateX(${gutX}px)`,
         }}
       >
-        Gutiérrez
+        Jackie
       </span>
     </div>
   )
