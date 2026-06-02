@@ -31,13 +31,7 @@ const easeInOutCubic = Easing.inOut(Easing.cubic)
 // 5 pills en stagger (8 frames entre cada una), entran desde abajo con
 // translateY spring. Montado en <Sequence from={300}> → frame relativo.
 // ───────────────────────────────────────────────────────────────────────────
-const MODULES = [
-  'Servicios',
-  'Proyectos',
-  'Habilidades',
-  'Fotografía',
-  'Contacto',
-]
+const MODULES = ['Imagen', 'Edición', 'Narrativa', 'Marketing']
 
 const ModuleCards: React.FC = () => {
   const { fps } = useVideoConfig()
