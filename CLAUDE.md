@@ -41,7 +41,7 @@ npm run optimize:images # WebP optimization (scripts/)
 
 Minimal / editorial. The earlier retro-terminal and paper-collage phases were **removed** — no texture overlays, washi tape, REC icons, or collage cutouts. A risograph/grain/duotone artistic treatment was **tried on the hero and reverted** (2026-06-01) — the direction stays minimal/editorial; don't re-introduce grain/overprint unless asked. The hero is a two-column layout: bilingual copy + a 3D vintage SLR camera (`CameraStage`) that sinks and dissolves on scroll (desktop only), over a subtle **CSS firefly** layer (theme-aware, hidden under reduced-motion). The orbital quick-nav around the camera was removed. Skills is a clean tag grid (no % bars). Reference clones live in `_repos/` (Next.js + R3F — a different stack; adapt patterns, don't merge).
 
-This work lives on branch **`feature/3d-set`** (3D hero, Remotion intro, CWV fixes) — not yet merged to `react-version`/production; iterated via Vercel **preview** deploys.
+This work (3D camera hero, Remotion avatar intro, CWV fixes, Playwright E2E) was built on `feature/3d-set` and **shipped to production** on 2026-06-01 — merged into `react-version` and promoted via `vercel --prod`. Note: Vercel's "Production Branch" isn't wired to `react-version`, so pushes deploy as *preview*; promote to prod with `vercel --prod` (or set the production branch in the Vercel dashboard).
 
 ## Conventions / guardrails
 
