@@ -6,7 +6,7 @@ Guidance for working in this repo. Keep it accurate — update it when conventio
 
 Personal portfolio for **Jacky Gutiérrez** (audiovisual communicator / documentary photographer, Medellín — brand *hackidevs*). Single-page, bilingual (ES/EN), dark/light themed, deployed on Vercel.
 
-- Live: https://mi-portafolio-liard-omega.vercel.app/
+- Live (fixed — always deploy/alias here, do not change): https://mi-portafolio-hackidevs.vercel.app/
 - Branch: `react-version` (also the default/PR base)
 
 ## Stack
