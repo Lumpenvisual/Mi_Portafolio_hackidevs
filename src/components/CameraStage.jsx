@@ -72,7 +72,12 @@ export default function CameraStage({
       accent.position.set(-2, 1, 2)
       const warm = new THREE.PointLight(0xec4899, 10, 6)
       warm.position.set(2, -2, 1)
-      scene.add(ambient, key, accent, warm)
+      // Front fill from the viewer side — lifts the dark front/underside of the
+      // matte-black camera so it reads crisp on white. Light mode only (its
+      // intensity is set to 0 in dark by applyTheme, keeping the original glow).
+      const fill = new THREE.DirectionalLight(0xffffff, 0)
+      fill.position.set(0, 0.6, 5)
+      scene.add(ambient, key, accent, warm, fill)
 
       // PARTICLES — 80 white points in a -15..15 cube, slow constant spin
       const COUNT = 80
@@ -89,46 +94,8 @@ export default function CameraStage({
       const particles = new THREE.Points(particleGeo, particleMat)
       scene.add(particles)
 
-      // THEME — re-tune the lights + particles for light vs dark mode. White
-      // particles vanish on a light background, so they switch to a soft violet;
-      // ambient/key are lifted and the coloured points pulled back so the camera
-      // reads clean on white. Re-applied live when the user toggles the theme
-      // (the root <html data-theme> attribute flips).
-      const THEME_LIGHTS = {
-        dark: {
-          ambient: { color: 0x4c1d95, intensity: 0.9 },
-          key: 2.6,
-          accent: 26,
-          warm: 10,
-          particle: { color: 0xffffff, opacity: 0.4 },
-        },
-        light: {
-          ambient: { color: 0xeae6ff, intensity: 1.8 },
-          key: 3.3,
-          accent: 11,
-          warm: 5,
-          particle: { color: 0x6d5bd0, opacity: 0.55 },
-        },
-      }
-      const applyTheme = () => {
-        const c =
-          document.documentElement.dataset.theme === 'light'
-            ? THEME_LIGHTS.light
-            : THEME_LIGHTS.dark
-        ambient.color.setHex(c.ambient.color)
-        ambient.intensity = c.ambient.intensity
-        key.intensity = c.key
-        accent.intensity = c.accent
-        warm.intensity = c.warm
-        particleMat.color.setHex(c.particle.color)
-        particleMat.opacity = c.particle.opacity
-      }
-      applyTheme()
-      const themeObserver = new MutationObserver(applyTheme)
-      themeObserver.observe(document.documentElement, {
-        attributes: true,
-        attributeFilter: ['data-theme'],
-      })
+      // forward ref so fitAndMount can re-tune a freshly-loaded model for the theme
+      const applyThemeRef = { current: null }
 
       // group holding the model (lets us rotate/position before it loads)
       const modelGroup = new THREE.Group()
@@ -151,9 +118,95 @@ export default function CameraStage({
           }
         })
         modelGroup.add(obj)
+        applyThemeRef.current?.() // tune the freshly-mounted model for the theme
       }
       mountModelRef.current = fitAndMount
       if (pendingModelRef.current) fitAndMount(pendingModelRef.current)
+
+      // ENVIRONMENT (IBL) — a neutral studio reflection map. On the cream light
+      // background the matte-black camera read as a flat silhouette; an env map
+      // gives its metal/glass real reflections and surface detail. Used in light
+      // mode; dark mode keeps the original point-light glow (no IBL).
+      let envTex = null
+      try {
+        const { RoomEnvironment } = await import(
+          'three/examples/jsm/environments/RoomEnvironment.js'
+        )
+        const pmrem = new THREE.PMREMGenerator(renderer)
+        envTex = pmrem.fromScene(new RoomEnvironment(), 0.04).texture
+        pmrem.dispose()
+      } catch {
+        /* IBL is optional — without it the lights still render the model */
+      }
+      if (disposed) return
+
+      // THEME — re-tune lights + particles + IBL for light vs dark. White
+      // particles vanish on a light background, so they switch to a soft violet;
+      // ambient/key are lifted, the coloured points pulled back, and the studio
+      // env map is switched on so the camera reads crisp and textured on white.
+      // Re-applied live when the user toggles the theme (root data-theme flips).
+      // The model is mostly baked-texture, non-metallic materials (only 1 of 5 is
+      // metal), so brightness is driven by diffuse light + exposure, not by
+      // reflections. Light mode therefore lifts ambient/fill AND switches the
+      // renderer to Neutral tone mapping with raised exposure for a photographic,
+      // realistic product look; dark mode keeps NoToneMapping so its glow is
+      // untouched. The materials are left exactly as authored (no matte hack).
+      const THEME_LIGHTS = {
+        dark: {
+          ambient: { color: 0x4c1d95, intensity: 0.9 },
+          key: 2.6,
+          accent: 26,
+          warm: 10,
+          fill: 0,
+          particle: { color: 0xffffff, opacity: 0.4 },
+          env: 0, // no IBL in dark — keep the original glow
+          tone: THREE.NoToneMapping,
+          exposure: 1,
+        },
+        light: {
+          ambient: { color: 0xfbfaff, intensity: 2.1 },
+          key: 3.6,
+          accent: 7,
+          warm: 3,
+          fill: 2.6, // strong front fill so the body reads bright, not a silhouette
+          particle: { color: 0x6d5bd0, opacity: 0.55 },
+          env: 1.1, // subtle reflections on the metal trim/lens — not chrome
+          tone: THREE.NeutralToneMapping, // photographic roll-off, keeps colour
+          exposure: 1.55,
+        },
+      }
+      const applyTheme = () => {
+        const light = document.documentElement.dataset.theme === 'light'
+        const c = light ? THEME_LIGHTS.light : THEME_LIGHTS.dark
+        ambient.color.setHex(c.ambient.color)
+        ambient.intensity = c.ambient.intensity
+        key.intensity = c.key
+        accent.intensity = c.accent
+        warm.intensity = c.warm
+        fill.intensity = c.fill
+        particleMat.color.setHex(c.particle.color)
+        particleMat.opacity = c.particle.opacity
+        scene.environment = light ? envTex : null
+        renderer.toneMapping = c.tone
+        renderer.toneMappingExposure = c.exposure
+        // set env strength + force a recompile so the tone-mapping change applies
+        modelGroup.traverse((o) => {
+          if (!o.isMesh || !o.material) return
+          const mats = Array.isArray(o.material) ? o.material : [o.material]
+          mats.forEach((m) => {
+            if ('envMapIntensity' in m) m.envMapIntensity = c.env
+            m.needsUpdate = true
+          })
+        })
+        particleMat.needsUpdate = true
+      }
+      applyThemeRef.current = applyTheme
+      applyTheme()
+      const themeObserver = new MutationObserver(applyTheme)
+      themeObserver.observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ['data-theme'],
+      })
 
       // ANIMATION — parallax with lerp smoothing
       const base = { rotY: -0.3, rotX: 0.05 } // aesthetic 3/4 pose
@@ -221,6 +274,7 @@ export default function CameraStage({
         cancelAnimationFrame(raf)
         particleGeo.dispose()
         particleMat.dispose()
+        if (envTex) envTex.dispose()
         renderer.dispose()
         if (renderer.domElement.parentNode) {
           renderer.domElement.parentNode.removeChild(renderer.domElement)
