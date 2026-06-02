@@ -2,10 +2,12 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { useApp } from '../lib/AppContext'
 import { useReveal } from '../hooks/useReveal'
 
-const PHOTOS = Array.from({ length: 10 }, (_, i) => {
-  const n = String(i + 1).padStart(2, '0')
-  return { src: `/fotos/foto-${n}.webp` }
-})
+// foto-02 y foto-04 quedaron fuera de la selección (los archivos siguen en
+// /public/fotos por si se reincorporan). Quedan 8 → grid 4×2 parejo.
+const PHOTO_NUMS = [1, 3, 5, 6, 7, 8, 9, 10]
+const PHOTOS = PHOTO_NUMS.map((n) => ({
+  src: `/fotos/foto-${String(n).padStart(2, '0')}.webp`,
+}))
 
 const copy = {
   es: {
