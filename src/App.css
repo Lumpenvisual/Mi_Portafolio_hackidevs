@@ -1231,6 +1231,23 @@ main {
   transition: background 0.3s ease;
 }
 
+/* Accent rail that wipes in on hover. Absolutely positioned so it adds depth
+   without shifting layout -- keeps the border-separated grid intact. */
+.service::before {
+  content: '';
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 2px;
+  background: var(--accent);
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 0.4s ease;
+}
+
+.service:hover::before {
+  transform: scaleY(1);
+}
+
 .service:nth-child(odd) {
   border-right: 1px solid var(--border);
   padding-left: 0;
@@ -1253,6 +1270,12 @@ main {
   font-style: italic;
   font-size: 14px;
   color: var(--accent);
+  display: inline-block;
+  transition: transform 0.4s ease;
+}
+
+.service:hover .service-num {
+  transform: translateX(6px);
 }
 
 .service-title {
@@ -1290,6 +1313,12 @@ main {
   padding: 4px 10px;
   border: 1px solid var(--border-strong);
   border-radius: 999px;
+  transition: border-color 0.3s ease, color 0.3s ease;
+}
+
+.service:hover .service-tags li {
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--border-strong));
+  color: var(--ink-soft);
 }
 
 @media (max-width: 768px) {
@@ -1626,7 +1655,11 @@ main {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: var(--accent);
+  background: linear-gradient(
+    135deg,
+    var(--accent),
+    color-mix(in srgb, var(--accent) 80%, var(--accent-2))
+  );
   color: #fff;
   border: none;
   padding: 14px 28px;
@@ -1635,11 +1668,17 @@ main {
   font-weight: 500;
   letter-spacing: 0.02em;
   cursor: pointer;
-  transition: background 0.2s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
 }
 
 .contact-submit:hover:not(:disabled) {
-  background: var(--accent-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 26px -10px color-mix(in srgb, var(--accent) 65%, transparent);
+  filter: brightness(1.06);
+}
+
+.contact-submit:active:not(:disabled) {
+  transform: translateY(0);
 }
 
 .contact-submit:disabled {
