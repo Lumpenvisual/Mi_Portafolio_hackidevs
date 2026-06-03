@@ -11,6 +11,7 @@ import ErrorBoundary from './components/ErrorBoundary.jsx'
 const isHeroPreview =
   typeof window !== 'undefined' &&
   new URLSearchParams(window.location.search).get('preview') === 'heroes'
+// eslint-disable-next-line react-refresh/only-export-components -- entry module, not an HMR component file
 const HeroGallery = lazy(() => import('./preview/HeroGallery.jsx'))
 
 createRoot(document.getElementById('root')).render(

@@ -28,6 +28,10 @@ export default defineConfig([
     'allan-pinot',
     '.claude',
     '.agents',
+    // Vendored shadcn / cult-ui primitives: generated code copied from a
+    // registry and re-overwritten on update, so we don't lint them. Your own
+    // code under src/ (including anything that composes these) stays strict.
+    'src/components/ui',
   ]),
 
   // Browser / React source files

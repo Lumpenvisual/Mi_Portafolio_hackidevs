@@ -3,7 +3,10 @@
 @import "shadcn/tailwind.css";
 @import "@fontsource-variable/geist";
 
-@custom-variant dark (&:is(.dark *));
+/* Bridge: this site toggles theme via [data-theme="dark"] on <html> (not the
+   .dark class shadcn assumes). Match both so shadcn / cult-ui components track
+   the site theme. :where() keeps specificity at 0, same as the default. */
+@custom-variant dark (&:where(.dark, .dark *, [data-theme="dark"], [data-theme="dark"] *));
 
 /* Google Fonts are loaded via a non-blocking <link> in index.html (not an
    @import here, which would chain requests behind this stylesheet and delay
@@ -295,7 +298,8 @@ svg {
   --radius-4xl: calc(var(--radius) * 2.6);
 }
 
-.dark {
+.dark,
+[data-theme='dark'] {
   --background: oklch(0.145 0 0);
   --foreground: oklch(0.985 0 0);
   --card: oklch(0.205 0 0);
