@@ -258,7 +258,8 @@ main {
   letter-spacing: 0.04em;
 }
 
-.icon-btn.theme svg {
+/* Icon glyphs (theme sun/moon, hamburger, close) — the lang button uses text */
+.icon-btn svg {
   width: 16px;
   height: 16px;
   stroke: currentColor;
