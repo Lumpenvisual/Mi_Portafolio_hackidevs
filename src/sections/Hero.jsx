@@ -79,7 +79,18 @@ export default function Hero() {
       const el = stageRef.current
       if (!el) return
       if (window.innerWidth <= 900) {
-        el.style.opacity = ''
+        // Mobile: the hero is stacked and the camera sits below the copy, so a
+        // raw-scrollY fade would hide it before it's even in view. Instead fade
+        // by OPACITY only (no sink), driven by the stage's own position in the
+        // viewport: fully visible while its centre is low in the viewport, then
+        // dissolving as it scrolls up toward the top.
+        const rect = el.getBoundingClientRect()
+        const vh = window.innerHeight || 1
+        const center = rect.top + rect.height / 2
+        const start = vh * 0.55 // opacity 1 at/below this line
+        const end = vh * 0.08 // opacity 0 by this line (near the top)
+        const p = Math.min(1, Math.max(0, (center - end) / (start - end)))
+        el.style.opacity = String(p)
         el.style.transform = ''
         return
       }
