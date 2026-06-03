@@ -87,8 +87,11 @@ export default function Hero() {
         const rect = el.getBoundingClientRect()
         const vh = window.innerHeight || 1
         const center = rect.top + rect.height / 2
-        const start = vh * 0.55 // opacity 1 at/below this line
-        const end = vh * 0.08 // opacity 0 by this line (near the top)
+        // Fully visible while centred, fully faded by the time it nears the top —
+        // it dissolves completely BEFORE its top edge could slide under the
+        // sticky nav, so it never appears cut at the margin.
+        const start = vh * 0.5 // opacity 1 at/below this line
+        const end = vh * 0.3 // opacity 0 by this line (upper third)
         const p = Math.min(1, Math.max(0, (center - end) / (start - end)))
         el.style.opacity = String(p)
         el.style.transform = ''

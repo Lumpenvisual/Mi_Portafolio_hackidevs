@@ -105,11 +105,17 @@ export default function CameraStage({
       const fitAndMount = (obj) => {
         while (modelGroup.children.length) modelGroup.remove(modelGroup.children[0])
         const box = new THREE.Box3().setFromObject(obj)
-        const size = box.getSize(new THREE.Vector3())
         const center = box.getCenter(new THREE.Vector3())
+        const sphere = box.getBoundingSphere(new THREE.Sphere())
         obj.position.sub(center) // recenter to origin
+        // Fit the WHOLE model inside the smaller frustum dimension using its
+        // bounding sphere (rotation-invariant), so the wide camera never clips
+        // against the square canvas edge at any parallax rotation — it only fades
+        // out. 0.95 leaves a small margin so it never touches the edge.
         const visibleH = 2 * Math.tan((45 * Math.PI) / 180 / 2) * camera.position.z
-        const scale = (visibleH * 0.58) / (size.y || 1)
+        const visibleW = visibleH * (camera.aspect || 1)
+        const fitDim = Math.min(visibleH, visibleW)
+        const scale = (fitDim * 0.95) / (sphere.radius * 2 || 1)
         obj.scale.setScalar(scale)
         obj.traverse((o) => {
           if (o.isMesh) {
@@ -217,7 +223,7 @@ export default function CameraStage({
 
       // ANIMATION — parallax with lerp smoothing
       const base = { rotY: -0.3, rotX: 0.05 } // aesthetic 3/4 pose
-      const cur = { rotY: base.rotY, rotX: base.rotX, camX: 0, camY: 0, scrollY: window.scrollY || 0 }
+      const cur = { rotY: base.rotY, rotX: base.rotX, camX: 0, camY: 0 }
       const lerp = (a, b, t) => a + (b - a) * t
 
       // pause rendering while the hero is scrolled out of view — no point
@@ -252,9 +258,10 @@ export default function CameraStage({
         camera.position.y = cur.camY
         camera.lookAt(0, 0, 0)
 
-        // scroll parallax → translateY of the model (velocity 0.4)
-        cur.scrollY = lerp(cur.scrollY, window.scrollY || 0, 0.1)
-        modelGroup.position.y = -(cur.scrollY * 0.4) * 0.01
+        // NOTE: no scroll-driven translateY of the model — moving it inside the
+        // fixed canvas slid it past the canvas edge and clipped it on scroll.
+        // The fade is handled outside (Hero opacity on mobile, opacity+sink of
+        // the whole stage on desktop), so the model stays centred and uncut.
 
         // slow constant particle spin
         particles.rotation.y += 0.0003
