@@ -101,7 +101,7 @@ export default function CameraStage({
       const modelGroup = new THREE.Group()
       scene.add(modelGroup)
 
-      // fit the model to ~40% of the screen height, recenter, base 3/4 pose
+      // fit the model to ~52% of the screen height, recenter, base 3/4 pose
       const fitAndMount = (obj) => {
         while (modelGroup.children.length) modelGroup.remove(modelGroup.children[0])
         const box = new THREE.Box3().setFromObject(obj)
@@ -109,7 +109,7 @@ export default function CameraStage({
         const center = box.getCenter(new THREE.Vector3())
         obj.position.sub(center) // recenter to origin
         const visibleH = 2 * Math.tan((45 * Math.PI) / 180 / 2) * camera.position.z
-        const scale = (visibleH * 0.4) / (size.y || 1)
+        const scale = (visibleH * 0.58) / (size.y || 1)
         obj.scale.setScalar(scale)
         obj.traverse((o) => {
           if (o.isMesh) {
@@ -159,8 +159,10 @@ export default function CameraStage({
           warm: 10,
           fill: 0,
           particle: { color: 0xffffff, opacity: 0.4 },
-          env: 0, // no IBL in dark — keep the original glow
-          tone: THREE.NoToneMapping,
+          env: 0, // no IBL irradiance in dark — keeps the moody dark + purple glow
+          satin: 0.26, // soften the glossy trim so the purple/pink lights read as
+          // a broad satin sheen (not a sharp mirror highlight)
+          tone: THREE.NoToneMapping, // keep the original dark glow/exposure
           exposure: 1,
         },
         light: {
@@ -171,6 +173,7 @@ export default function CameraStage({
           fill: 2.6, // strong front fill so the body reads bright, not a silhouette
           particle: { color: 0x6d5bd0, opacity: 0.55 },
           env: 1.1, // subtle reflections on the metal trim/lens — not chrome
+          satin: 0, // light mode keeps the authored roughness
           tone: THREE.NeutralToneMapping, // photographic roll-off, keeps colour
           exposure: 1.55,
         },
@@ -186,15 +189,19 @@ export default function CameraStage({
         fill.intensity = c.fill
         particleMat.color.setHex(c.particle.color)
         particleMat.opacity = c.particle.opacity
-        scene.environment = light ? envTex : null
+        scene.environment = light ? envTex : null // dark stays moody (no env lift)
         renderer.toneMapping = c.tone
         renderer.toneMappingExposure = c.exposure
-        // set env strength + force a recompile so the tone-mapping change applies
+        // env strength + satin roughness (cached original) + recompile for tone map
         modelGroup.traverse((o) => {
           if (!o.isMesh || !o.material) return
           const mats = Array.isArray(o.material) ? o.material : [o.material]
           mats.forEach((m) => {
             if ('envMapIntensity' in m) m.envMapIntensity = c.env
+            if ('roughness' in m) {
+              if (m.userData._or === undefined) m.userData._or = m.roughness
+              m.roughness = Math.min(1, m.userData._or + c.satin)
+            }
             m.needsUpdate = true
           })
         })
