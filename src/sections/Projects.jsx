@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { useApp } from '../lib/AppContext'
 import { useReveal } from '../hooks/useReveal'
+import { useSpotlight } from '../hooks/useSpotlight'
 
 const baseProjects = [
   { num: '01', videoId: 'ULrllSX12UQ', accent: '#c8553d' },
@@ -186,6 +187,7 @@ export default function Projects() {
   const listRef = useReveal({ delay: 150 })
   const reelsRef = useReveal({ delay: 100 })
   const trackRef = useRef(null)
+  const spot = useSpotlight()
 
   // Drag-to-scroll the reels shelf with inertia (GSAP Draggable + InertiaPlugin,
   // lazy-imported to stay out of the initial bundle, like the Career timeline).
@@ -256,9 +258,10 @@ export default function Projects() {
           <li key={p.num} className="project">
             <a
               href={`https://www.youtube.com/watch?v=${p.videoId}`}
-              className="project-link"
+              className="project-link card-spotlight"
               target="_blank"
               rel="noreferrer"
+              {...spot}
             >
               <div className="project-meta">
                 <span className="project-num">{p.num}</span>

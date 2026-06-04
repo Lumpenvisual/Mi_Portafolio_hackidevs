@@ -766,11 +766,13 @@ main {
   list-style: none;
   margin: 0;
   padding: 0;
-  border-top: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
 .project {
-  border-bottom: 1px solid var(--border);
+  position: relative;
 }
 
 .project-link {
@@ -778,9 +780,16 @@ main {
   grid-template-columns: 280px 100px 1fr;
   gap: 48px;
   align-items: start;
-  padding: 40px 0;
+  padding: 28px;
   position: relative;
-  transition: padding 0.35s ease;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--bg-elevated);
+  transition:
+    border-color 0.3s ease,
+    transform 0.35s ease,
+    box-shadow 0.35s ease;
 }
 
 /* All projects: thumbnail on the LEFT, then meta, then main */
@@ -797,26 +806,27 @@ main {
   grid-column: 3;
 }
 
+/* Gradient top accent that grows in on hover (matches service/skill cards) */
 .project-link::before {
   content: '';
   position: absolute;
-  left: -16px;
-  right: -16px;
-  top: 0;
-  bottom: 0;
-  background: var(--bg-elevated);
-  opacity: 0;
-  transition: opacity 0.35s ease;
-  border-radius: 6px;
-  z-index: -1;
+  inset: 0 0 auto 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.45s ease;
+  z-index: 2;
 }
 
 .project-link:hover::before {
-  opacity: 1;
+  transform: scaleX(1);
 }
 
 .project-link:hover {
-  padding: 40px 16px;
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--border-strong));
+  transform: translateY(-4px);
+  box-shadow: 0 24px 50px -30px color-mix(in srgb, var(--accent) 55%, transparent);
 }
 
 .project-meta {
@@ -954,7 +964,7 @@ main {
   .project-link {
     grid-template-columns: 1fr;
     gap: 18px;
-    padding: 32px 0;
+    padding: 24px;
   }
   /* Override explicit desktop columns/order: stack vertically */
   .project-thumb,
@@ -977,22 +987,12 @@ main {
   .project-main {
     order: 3;
   }
-  /* Disable the desktop hover bg expansion on touch screens */
-  .project-link:hover {
-    padding: 32px 0;
-  }
-  .project-link::before {
-    display: none;
-  }
 }
 
 @media (max-width: 768px) {
   .project-link {
     gap: 14px;
-    padding: 28px 0;
-  }
-  .project-link:hover {
-    padding: 28px 0;
+    padding: 20px;
   }
   .project-thumb {
     border-radius: 6px;
