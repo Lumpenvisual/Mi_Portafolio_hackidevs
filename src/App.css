@@ -2129,8 +2129,45 @@ main {
   display: flex;
   flex-direction: column;
   gap: 20px;
-  padding-top: 24px;
-  border-top: 1px solid var(--border);
+  padding: 24px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--bg-elevated);
+  transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.skill-group:hover {
+  border-color: var(--border-strong);
+  transform: translateY(-3px);
+  box-shadow: 0 16px 40px -24px color-mix(in srgb, var(--accent) 45%, transparent);
+}
+
+/* Shared interactive spotlight: an accent glow that tracks the pointer
+   (driven by the useSpotlight hook setting --spot-x/-y/-o). Decorative layer
+   sits behind card content; children are lifted above it. */
+.card-spotlight {
+  position: relative;
+}
+
+.card-spotlight > * {
+  position: relative;
+  z-index: 1;
+}
+
+.card-spotlight::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: var(--spot-o, 0);
+  transition: opacity 0.35s ease;
+  background: radial-gradient(
+    260px circle at var(--spot-x, 50%) var(--spot-y, 50%),
+    color-mix(in srgb, var(--accent) 16%, transparent),
+    transparent 65%
+  );
 }
 
 .skill-group-label {

@@ -1,5 +1,6 @@
 import { useApp } from '../lib/AppContext'
 import { useReveal } from '../hooks/useReveal'
+import { useSpotlight } from '../hooks/useSpotlight'
 
 const data = {
   es: {
@@ -53,6 +54,7 @@ export default function Skills() {
   const t = data[lang]
   const headRef = useReveal()
   const bodyRef = useReveal({ delay: 150 })
+  const spot = useSpotlight()
 
   return (
     <section className="section skills" id="skills" aria-label={t.sectionLabel}>
@@ -64,7 +66,7 @@ export default function Skills() {
 
       <ul ref={bodyRef} data-reveal className="skill-groups">
         {t.groups.map((g) => (
-          <li key={g.label} className="skill-group">
+          <li key={g.label} className="skill-group card-spotlight" {...spot}>
             <span className="skill-group-label">{g.label}</span>
             <ul className="skill-tags">
               {g.items.map((item) => (

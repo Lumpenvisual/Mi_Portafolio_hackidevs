@@ -1,5 +1,6 @@
 import { useApp } from '../lib/AppContext'
 import { useReveal } from '../hooks/useReveal'
+import { useSpotlight } from '../hooks/useSpotlight'
 
 const data = {
   es: {
@@ -114,6 +115,7 @@ export default function Services() {
   const t = data[lang]
   const headRef = useReveal()
   const bodyRef = useReveal({ delay: 150 })
+  const spot = useSpotlight()
 
   return (
     <section className="section services" id="services">
@@ -125,7 +127,7 @@ export default function Services() {
 
       <div ref={bodyRef} data-reveal className="services-grid">
         {t.services.map((s) => (
-          <article className="service" key={s.num}>
+          <article className="service card-spotlight" key={s.num} {...spot}>
             <span className="service-num">{s.num}</span>
             <h3 className="service-title">{s.title}</h3>
             <p className="service-desc">{s.description}</p>
