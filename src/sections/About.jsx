@@ -16,11 +16,12 @@ const copy = {
     body: (
       <>
         <p>
-          Antes estaba detrás de la cámara editando, escribiendo,
-          fotografiando, componiendo. Ahora aplico las{' '}
-          <strong>humanidades digitales</strong> para contar historias con
-          sentido humano. El oficio no cambia. Sigo eligiendo qué se cuenta,
-          en qué orden y para quién.
+          Soy <strong>Jacky</strong>. Comunicadora audiovisual.
+          <br />
+          Aprendí que contar historias es un acto de responsabilidad. No es
+          solo elegir qué se cuenta; es entender para quién, en qué orden, con
+          qué peso emocional. Cada frame, cada palabra, cada pausa llevaba una
+          intención.
         </p>
         <p>
           Desglosar, estructurar y saber narrar sigue siendo{' '}
@@ -48,11 +49,12 @@ const copy = {
     body: (
       <>
         <p>
-          I used to be behind the camera &mdash; editing, writing,
-          photographing, composing. Now I apply{' '}
-          <strong>digital humanities</strong> to tell stories with human
-          meaning. The craft hasn&apos;t changed. I&apos;m still choosing
-          what gets told, in what order, and for whom.
+          I&apos;m <strong>Jacky</strong>. Audiovisual communicator.
+          <br />
+          I learned that telling stories is an act of responsibility. It&apos;s
+          not just choosing what gets told; it&apos;s understanding for whom, in
+          what order, with what emotional weight. Every frame, every word, every
+          pause carried an intention.
         </p>
         <p>
           Breaking things down, structuring and knowing how to narrate is
