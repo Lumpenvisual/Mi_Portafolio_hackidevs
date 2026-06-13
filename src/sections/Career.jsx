@@ -99,7 +99,9 @@ const data = {
   },
 }
 
-export default function Career() {
+// `embedded` renders just the content (no <section>/eyebrow/reveal and no
+// scroll-scrubbed rail) so it can live inside the About disclosure panels.
+export default function Career({ embedded = false }) {
   const { lang } = useApp()
   const t = data[lang]
   const headRef = useReveal()
@@ -108,8 +110,9 @@ export default function Career() {
 
   // Scroll-scrubbed progress line that fills the timeline rail as the section
   // passes. GSAP + ScrollTrigger are lazy-imported (gsap is already a dep, kept
-  // out of the initial bundle); disabled under reduced motion.
+  // out of the initial bundle); disabled under reduced motion + when embedded.
   useEffect(() => {
+    if (embedded) return
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
     const bar = progressRef.current
     const trigger = bar?.parentElement
@@ -136,7 +139,26 @@ export default function Career() {
       cancelled = true
       if (st) st.kill()
     }
-  }, [])
+  }, [embedded])
+
+  const milestones = t.milestones.map((m, i) => (
+    <li className="timeline-row" key={i}>
+      <span className="timeline-year">{m.year}</span>
+      <div className="timeline-body">
+        <h3 className="timeline-title">{m.title}</h3>
+        <p className="timeline-desc">{m.description}</p>
+      </div>
+    </li>
+  ))
+
+  if (embedded) {
+    return (
+      <div className="embed-block">
+        <h3 className="section-title embed-title">{t.title}</h3>
+        <ol className="timeline timeline--embedded">{milestones}</ol>
+      </div>
+    )
+  }
 
   return (
     <section className="section career" id="career">
@@ -148,15 +170,7 @@ export default function Career() {
 
       <ol ref={bodyRef} data-reveal className="timeline">
         <span className="timeline-progress" ref={progressRef} aria-hidden="true" />
-        {t.milestones.map((m, i) => (
-          <li className="timeline-row" key={i}>
-            <span className="timeline-year">{m.year}</span>
-            <div className="timeline-body">
-              <h3 className="timeline-title">{m.title}</h3>
-              <p className="timeline-desc">{m.description}</p>
-            </div>
-          </li>
-        ))}
+        {milestones}
       </ol>
     </section>
   )

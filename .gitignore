@@ -32,6 +32,8 @@ _repos/
 # Raw source art — huge; optimized WebPs are committed under public/
 assests/
 hacki-perfil-real.png
+# tejidas.co brand-book source SVGs (~28 MB); optimized WebPs live in public/projects/tejidas/
+design-inspiration/editorial/TEJIDAS.CO/
 
 # Raw 3D model — 44 MB; must be optimized (Draco/meshopt) before committing
 public/models/vintage_slr_camera/

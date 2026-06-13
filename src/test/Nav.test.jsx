@@ -15,8 +15,10 @@ describe('Nav', () => {
     renderNav()
     expect(screen.getByRole('link', { name: 'Sobre mí' })).toBeInTheDocument()
     expect(screen.getByRole('link', { name: 'Servicios' })).toBeInTheDocument()
-    expect(screen.getByRole('link', { name: 'Proyectos' })).toBeInTheDocument()
-    expect(screen.getByRole('link', { name: 'Trayectoria' })).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: 'Videos' })).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: 'Fotografía' })).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: 'Diseño' })).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: 'Desarrollo' })).toBeInTheDocument()
     expect(screen.getByRole('link', { name: 'Contacto' })).toBeInTheDocument()
   })
 
@@ -24,8 +26,9 @@ describe('Nav', () => {
     renderNav()
     expect(screen.getByRole('link', { name: 'Sobre mí' })).toHaveAttribute('href', '#about')
     expect(screen.getByRole('link', { name: 'Servicios' })).toHaveAttribute('href', '#services')
-    expect(screen.getByRole('link', { name: 'Proyectos' })).toHaveAttribute('href', '#work')
-    expect(screen.getByRole('link', { name: 'Trayectoria' })).toHaveAttribute('href', '#career')
+    expect(screen.getByRole('link', { name: 'Videos' })).toHaveAttribute('href', '#work')
+    expect(screen.getByRole('link', { name: 'Diseño' })).toHaveAttribute('href', '#design')
+    expect(screen.getByRole('link', { name: 'Desarrollo' })).toHaveAttribute('href', '#dev')
     expect(screen.getByRole('link', { name: 'Contacto' })).toHaveAttribute('href', '#contact')
   })
 
@@ -44,7 +47,7 @@ describe('Nav', () => {
     renderNav()
     await user.click(screen.getByRole('button', { name: /switch to english/i }))
     expect(screen.getByRole('link', { name: 'About' })).toBeInTheDocument()
-    expect(screen.getByRole('link', { name: 'Work' })).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: 'Videos' })).toBeInTheDocument()
   })
 
   it('lang button shows ES when in English', async () => {

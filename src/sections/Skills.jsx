@@ -49,12 +49,38 @@ const data = {
   },
 }
 
-export default function Skills() {
+// `embedded` renders just the content (no <section>/eyebrow/reveal) so it can
+// live inside the About disclosure panels.
+export default function Skills({ embedded = false }) {
   const { lang } = useApp()
   const t = data[lang]
   const headRef = useReveal()
   const bodyRef = useReveal({ delay: 150 })
   const spot = useSpotlight()
+
+  const groups = (
+    <ul className="skill-groups">
+      {t.groups.map((g) => (
+        <li key={g.label} className="skill-group card-spotlight" {...spot}>
+          <span className="skill-group-label">{g.label}</span>
+          <ul className="skill-tags">
+            {g.items.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+        </li>
+      ))}
+    </ul>
+  )
+
+  if (embedded) {
+    return (
+      <div className="embed-block">
+        <h3 className="section-title embed-title">{t.title}</h3>
+        {groups}
+      </div>
+    )
+  }
 
   return (
     <section className="section skills" id="skills" aria-label={t.sectionLabel}>
@@ -64,18 +90,9 @@ export default function Skills() {
 
       <h2 className="section-title">{t.title}</h2>
 
-      <ul ref={bodyRef} data-reveal className="skill-groups">
-        {t.groups.map((g) => (
-          <li key={g.label} className="skill-group card-spotlight" {...spot}>
-            <span className="skill-group-label">{g.label}</span>
-            <ul className="skill-tags">
-              {g.items.map((item) => (
-                <li key={item}>{item}</li>
-              ))}
-            </ul>
-          </li>
-        ))}
-      </ul>
+      <div ref={bodyRef} data-reveal>
+        {groups}
+      </div>
     </section>
   )
 }

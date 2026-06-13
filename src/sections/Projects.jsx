@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { useApp } from '../lib/AppContext'
 import { useReveal } from '../hooks/useReveal'
-import { useSpotlight } from '../hooks/useSpotlight'
+import ProjectList from '../components/ProjectList'
 
 const baseProjects = [
   { num: '01', videoId: 'ULrllSX12UQ', accent: '#c8553d' },
@@ -24,11 +24,10 @@ const reelsBase = [
 
 const localized = {
   es: {
-    sectionLabel: 'Proyectos',
+    sectionLabel: 'Videos',
     title: (
       <>
-        Seis piezas de <em>cine</em>, <em>archivo</em> y{' '}
-        <em>periodismo</em> visual.
+        <em>cine</em>, <em>archivo</em> y <em>periodismo</em> visual.
       </>
     ),
     cta: 'Ver en YouTube',
@@ -98,11 +97,10 @@ const localized = {
     ],
   },
   en: {
-    sectionLabel: 'Projects',
+    sectionLabel: 'Videos',
     title: (
       <>
-        Six pieces of <em>cinema</em>, <em>archive</em> and visual{' '}
-        <em>journalism</em>.
+        <em>cinema</em>, <em>archive</em> and visual <em>journalism</em>.
       </>
     ),
     cta: 'Watch on YouTube',
@@ -173,21 +171,19 @@ const localized = {
   },
 }
 
-const handleThumbError = (e, videoId) => {
-  e.currentTarget.onerror = null
-  e.currentTarget.src = `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`
-}
-
 export default function Projects() {
   const { lang } = useApp()
   const t = localized[lang]
-  const projects = baseProjects.map((p, i) => ({ ...p, ...t.items[i] }))
+  const projects = baseProjects.map((p, i) => ({
+    ...p,
+    ...t.items[i],
+    href: `https://www.youtube.com/watch?v=${p.videoId}`,
+    cta: t.cta,
+  }))
   const reels = reelsBase.map((r, i) => ({ ...r, title: t.reelTitles[i] }))
   const headRef = useReveal()
-  const listRef = useReveal({ delay: 150 })
   const reelsRef = useReveal({ delay: 100 })
   const trackRef = useRef(null)
-  const spot = useSpotlight()
 
   // Drag-to-scroll the reels shelf with inertia (GSAP Draggable + InertiaPlugin,
   // lazy-imported to stay out of the initial bundle, like the Career timeline).
@@ -211,11 +207,6 @@ export default function Projects() {
       if (cancelled) return
       gsap.registerPlugin(Draggable, InertiaPlugin)
       gsapRef = gsap
-      // NB: don't use Draggable's `type: 'scrollLeft'` — its scrollProxy wraps the
-      // track's children in a block <div>, which breaks the flex row. Instead drag
-      // an off-DOM proxy and map its delta onto el.scrollLeft, leaving the native
-      // flex/scroll layout untouched. Disable CSS scroll-snap so it doesn't fight
-      // the inertia throw (cursor grab/grabbing stays driven by the CSS :active).
       el.style.scrollSnapType = 'none'
       const proxy = document.createElement('div')
       let startScroll = 0
@@ -253,54 +244,7 @@ export default function Projects() {
 
       <h2 className="section-title">{t.title}</h2>
 
-      <ul ref={listRef} data-reveal className="projects-list">
-        {projects.map((p) => (
-          <li key={p.num} className="project">
-            <a
-              href={`https://www.youtube.com/watch?v=${p.videoId}`}
-              className="project-link card-spotlight"
-              target="_blank"
-              rel="noreferrer"
-              {...spot}
-            >
-              <div className="project-meta">
-                <span className="project-num">{p.num}</span>
-                <span className="project-year">{p.role}</span>
-              </div>
-
-              <div className="project-main">
-                <h3 className="project-name">{p.name}</h3>
-                <p className="project-role">{p.subtitle}</p>
-                <p className="project-desc">{p.description}</p>
-                <ul className="project-tags">
-                  {p.tags.map((tag) => (
-                    <li key={tag}>{tag}</li>
-                  ))}
-                </ul>
-              </div>
-
-              <div
-                className="project-thumb"
-                style={{ '--thumb-accent': p.accent }}
-              >
-                <img
-                  src={`https://i.ytimg.com/vi/${p.videoId}/maxresdefault.jpg`}
-                  alt={p.name}
-                  width="1280"
-                  height="720"
-                  loading="lazy"
-                  decoding="async"
-                  onError={(e) => handleThumbError(e, p.videoId)}
-                  onLoad={(e) => e.currentTarget.classList.add('loaded')}
-                />
-                <span className="project-cta">
-                  {t.cta} <span className="arr">↗</span>
-                </span>
-              </div>
-            </a>
-          </li>
-        ))}
-      </ul>
+      <ProjectList items={projects} horizontal />
 
       <div ref={reelsRef} data-reveal className="reels-shelf">
         <header className="reels-head">
@@ -311,32 +255,32 @@ export default function Projects() {
         <ul className="reels-track" ref={trackRef}>
           {reels.map((r, i) => (
             <li key={i} className="reel-item">
-            <a
-              href={`https://www.youtube.com/watch?v=${r.videoId}`}
-              className="reel-card"
-              target="_blank"
-              rel="noreferrer"
-              aria-label={`${r.title} — YouTube (${t.reelsLabel})`}
-            >
-              <div className="reel-thumb">
-                <img
-                  src={`https://i.ytimg.com/vi/${r.videoId}/hqdefault.jpg`}
-                  alt={r.title}
-                  width="480"
-                  height="360"
-                  loading="lazy"
-                  decoding="async"
-                  onLoad={(e) => e.currentTarget.classList.add('loaded')}
-                />
-                <span className="reel-overlay">
-                  <span className="reel-play">▶</span>
-                </span>
-              </div>
-              <div className="reel-meta">
-                <span className="reel-title-text">{r.title}</span>
-                <span className="reel-info">{r.platform}</span>
-              </div>
-            </a>
+              <a
+                href={`https://www.youtube.com/watch?v=${r.videoId}`}
+                className="reel-card"
+                target="_blank"
+                rel="noreferrer"
+                aria-label={`${r.title} — YouTube (${t.reelsLabel})`}
+              >
+                <div className="reel-thumb">
+                  <img
+                    src={`https://i.ytimg.com/vi/${r.videoId}/hqdefault.jpg`}
+                    alt={r.title}
+                    width="480"
+                    height="360"
+                    loading="lazy"
+                    decoding="async"
+                    onLoad={(e) => e.currentTarget.classList.add('loaded')}
+                  />
+                  <span className="reel-overlay">
+                    <span className="reel-play">▶</span>
+                  </span>
+                </div>
+                <div className="reel-meta">
+                  <span className="reel-title-text">{r.title}</span>
+                  <span className="reel-info">{r.platform}</span>
+                </div>
+              </a>
             </li>
           ))}
         </ul>

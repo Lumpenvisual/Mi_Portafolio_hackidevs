@@ -1,12 +1,13 @@
 import Nav from './components/Nav'
 import Footer from './components/Footer'
+import ScrollFX from './components/ScrollFX'
+import Interactions from './components/Interactions'
 import Hero from './sections/Hero'
 import About from './sections/About'
 import Services from './sections/Services'
-import Skills from './sections/Skills'
 import Projects from './sections/Projects'
 import Fotografia from './sections/Fotografia'
-import Career from './sections/Career'
+import DesignWork from './sections/DesignWork'
 import Contact from './sections/Contact'
 import './App.css'
 
@@ -21,13 +22,14 @@ export default function App() {
         <Hero />
         <About />
         <Services />
-        <Skills />
         <Projects />
         <Fotografia />
-        <Career />
+        <DesignWork />
         <Contact />
       </main>
       <Footer />
+      <ScrollFX />
+      <Interactions />
     </>
   )
 }

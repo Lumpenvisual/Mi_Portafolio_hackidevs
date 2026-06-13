@@ -5,10 +5,10 @@ const navCopy = {
   es: {
     about: 'Sobre mí',
     services: 'Servicios',
-    skills: 'Habilidades',
-    work: 'Proyectos',
+    work: 'Videos',
     fotografia: 'Fotografía',
-    career: 'Trayectoria',
+    design: 'Diseño',
+    dev: 'Desarrollo',
     contact: 'Contacto',
     themeAria: (t) => (t === 'dark' ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro'),
     langAria: 'Switch to English',
@@ -18,10 +18,10 @@ const navCopy = {
   en: {
     about: 'About',
     services: 'Services',
-    skills: 'Skills',
-    work: 'Work',
+    work: 'Videos',
     fotografia: 'Photography',
-    career: 'Career',
+    design: 'Design',
+    dev: 'Development',
     contact: 'Contact',
     themeAria: (t) => (t === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'),
     langAria: 'Cambiar a español',
@@ -30,7 +30,7 @@ const navCopy = {
   },
 }
 
-const NAV_IDS = ['about', 'services', 'skills', 'work', 'fotografia', 'career', 'contact']
+const NAV_IDS = ['about', 'services', 'work', 'fotografia', 'design', 'dev', 'contact']
 
 const SunIcon = () => (
   <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -102,10 +102,10 @@ export default function Nav() {
   const navLinks = [
     { href: '#about', label: t.about, id: 'about' },
     { href: '#services', label: t.services, id: 'services' },
-    { href: '#skills', label: t.skills, id: 'skills' },
     { href: '#work', label: t.work, id: 'work' },
     { href: '#fotografia', label: t.fotografia, id: 'fotografia' },
-    { href: '#career', label: t.career, id: 'career' },
+    { href: '#design', label: t.design, id: 'design' },
+    { href: '#dev', label: t.dev, id: 'dev' },
     { href: '#contact', label: t.contact, id: 'contact' },
   ]
 

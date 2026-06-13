@@ -1,5 +1,8 @@
+import { useState } from 'react'
 import { useApp } from '../lib/AppContext'
 import { useReveal } from '../hooks/useReveal'
+import Skills from './Skills'
+import Career from './Career'
 
 const copy = {
   es: {
@@ -20,10 +23,8 @@ const copy = {
           en qué orden y para quién.
         </p>
         <p>
-          En la era de la <strong>inteligencia artificial</strong>, los
-          modelos pueden generar imágenes infinitas. Lo que todavía no
-          saben es cuál vale la pena. Esa parte &mdash; saber contar &mdash;
-          sigue siendo nuestra.
+          Desglosar, estructurar y saber narrar sigue siendo{' '}
+          <strong>inteligencia humana</strong>.
         </p>
       </>
     ),
@@ -34,6 +35,7 @@ const copy = {
       },
       { label: 'Idiomas', value: 'ES nativo · EN - B1' },
     ],
+    more: { skills: 'Habilidades', career: 'Trayectoria', open: 'Ver más', close: 'Cerrar' },
   },
   en: {
     sectionLabel: 'About',
@@ -53,10 +55,8 @@ const copy = {
           what gets told, in what order, and for whom.
         </p>
         <p>
-          In the era of <strong>artificial intelligence</strong>, models can
-          generate infinite images. What they still don&apos;t know is which
-          ones are worth it. That part &mdash; knowing how to tell &mdash;
-          is still ours.
+          Breaking things down, structuring and knowing how to narrate is
+          still <strong>human intelligence</strong>.
         </p>
       </>
     ),
@@ -67,6 +67,7 @@ const copy = {
       },
       { label: 'Languages', value: 'Native ES · EN - B1' },
     ],
+    more: { skills: 'Skills', career: 'Career', open: 'See more', close: 'Close' },
   },
 }
 
@@ -75,6 +76,14 @@ export default function About() {
   const t = copy[lang]
   const headRef = useReveal()
   const bodyRef = useReveal({ delay: 150 })
+  const [open, setOpen] = useState({ skills: false, career: false })
+  const toggle = (key) => setOpen((s) => ({ ...s, [key]: !s[key] }))
+
+  // Skills + Trayectoria now live inside About as click-to-expand panels.
+  const panels = [
+    { key: 'skills', label: t.more.skills, content: <Skills embedded /> },
+    { key: 'career', label: t.more.career, content: <Career embedded /> },
+  ]
 
   return (
     <section className="section about" id="about">
@@ -108,6 +117,36 @@ export default function About() {
             </li>
           ))}
         </ul>
+      </div>
+
+      <div className="about-more">
+        {panels.map(({ key, label, content }) => (
+          <div key={key} className={`about-panel${open[key] ? ' is-open' : ''}`}>
+            <button
+              type="button"
+              className="about-panel-trigger"
+              aria-expanded={open[key]}
+              aria-controls={`about-panel-${key}`}
+              onClick={() => toggle(key)}
+            >
+              <span className="about-panel-label">{label}</span>
+              <span className="about-panel-hint">
+                {open[key] ? t.more.close : t.more.open}
+                <span className="about-panel-chevron" aria-hidden="true">
+                  ↓
+                </span>
+              </span>
+            </button>
+            <div
+              className="about-panel-body"
+              id={`about-panel-${key}`}
+              role="region"
+              aria-label={label}
+            >
+              <div className="about-panel-inner">{content}</div>
+            </div>
+          </div>
+        ))}
       </div>
     </section>
   )

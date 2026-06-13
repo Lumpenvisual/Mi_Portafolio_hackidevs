@@ -8,9 +8,7 @@ const copy = {
     sectionLabel: 'Contacto',
     title: (
       <>
-        ¿Tienes algo
-        <br />
-        <em>que contar</em>?
+        Construyamos juntos y contemos <em>una nueva historia</em>.
       </>
     ),
     email: 'lumpenvisual@gmail.com',
@@ -41,9 +39,7 @@ const copy = {
     sectionLabel: 'Contact',
     title: (
       <>
-        Got something
-        <br />
-        <em>to tell</em>?
+        Let&apos;s build together and tell <em>a new story</em>.
       </>
     ),
     email: 'lumpenvisual@gmail.com',

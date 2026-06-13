@@ -2226,3 +2226,660 @@ main {
     gap: 32px;
   }
 }
+
+/* =========================================================
+   HERO — CINEMATIC OVERHAUL (2026-06-12)
+   Full-bleed dark stage with a dominant 3D camera, layered
+   glow + vignette, and a kinetic mask-reveal title. Appended
+   LAST so equal-specificity rules win over the legacy
+   retro-type block above by source order.
+   ========================================================= */
+.hero--cinematic {
+  max-width: none;
+  width: 100%;
+  min-height: 100svh;
+  margin: 0;
+  padding: calc(var(--nav-h) + 12px) var(--pad-x) 36px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* Backdrop: a glow pooled behind the camera (right) + a soft vignette.
+   Theme-aware via color-mix on the existing accent / bg tokens. */
+.hero-cine-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      58% 68% at 72% 44%,
+      color-mix(in srgb, var(--accent) 28%, transparent) 0%,
+      transparent 62%
+    ),
+    radial-gradient(
+      46% 56% at 80% 66%,
+      color-mix(in srgb, var(--accent-2) 20%, transparent) 0%,
+      transparent 58%
+    ),
+    radial-gradient(
+      130% 120% at 50% -8%,
+      transparent 58%,
+      color-mix(in srgb, var(--bg) 90%, #000) 100%
+    );
+}
+
+/* Centred copy column, layered above the camera */
+.hero-cine-inner {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: var(--max-w);
+  margin: auto auto; /* vertically centres in the flex column */
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: clamp(16px, 2.6vh, 28px);
+}
+
+.hero--cinematic .hero-eyebrow {
+  font-family: var(--font-terminal);
+}
+
+/* Kinetic title — big, tight, mask-revealed line by line */
+.hero--cinematic .hero-title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(2.4rem, 6.8vw, 6rem);
+  line-height: 0.92;
+  letter-spacing: -0.035em;
+  color: var(--ink);
+  margin: 0;
+  max-width: 15ch;
+}
+
+.hero-line {
+  display: block;
+  overflow: hidden;
+  /* room for descenders so the mask doesn't clip the 'g' in "código" */
+  padding-bottom: 0.1em;
+  margin-bottom: -0.1em;
+}
+
+.hero-line-inner {
+  display: inline-block;
+  padding-right: 0.06em;
+  will-change: transform;
+}
+
+.hero--cinematic .hero-emph {
+  color: var(--accent);
+  font-weight: 500;
+}
+
+.hero--cinematic .hero-lede {
+  font-family: var(--font-sans);
+  font-size: clamp(1rem, 1.1vw, 1.18rem);
+  line-height: 1.6;
+  color: var(--ink-soft);
+  max-width: 48ch;
+  margin: 0;
+}
+
+.hero--cinematic .hero-lede strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+/* Large camera stage — absolute on the right, behind the copy.
+   Vertically centred via negative margin (NOT transform) so the
+   GSAP intro + scroll-sink can own the transform property cleanly. */
+.hero--cinematic .hero-stage {
+  position: absolute;
+  top: 50%;
+  right: -2%;
+  margin-top: calc(min(80vh, 720px) * -0.5);
+  width: min(56vw, 740px);
+  height: min(80vh, 720px);
+  max-width: none;
+  aspect-ratio: auto;
+  margin-inline: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.hero--cinematic .hero-stage .model-3d,
+.hero--cinematic .hero-stage-fallback {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Bottom bar: meta columns + scroll cue, pinned to the foot */
+.hero-cine-foot {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: var(--max-w);
+  margin: 32px auto 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  padding-top: 28px;
+  border-top: 1px solid var(--border);
+}
+
+.hero--cinematic .hero-foot {
+  display: flex;
+  gap: clamp(24px, 4vw, 64px);
+  grid-template-columns: none;
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+
+/* Scroll indicator */
+.hero-scroll {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  color: var(--muted);
+  font-family: var(--font-terminal);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  flex-shrink: 0;
+  transition: color 0.2s ease;
+}
+
+.hero-scroll:hover {
+  color: var(--ink);
+}
+
+.hero-scroll-track {
+  position: relative;
+  width: 22px;
+  height: 36px;
+  border: 1px solid var(--border-strong);
+  border-radius: 999px;
+}
+
+.hero-scroll-dot {
+  position: absolute;
+  top: 7px;
+  left: 50%;
+  width: 4px;
+  height: 4px;
+  margin-left: -2px;
+  border-radius: 50%;
+  background: var(--accent);
+  animation: hero-scroll-bob 1.8s ease-in-out infinite;
+}
+
+@keyframes hero-scroll-bob {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  50% {
+    transform: translateY(13px);
+    opacity: 0.25;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-scroll-dot {
+    animation: none;
+  }
+}
+
+@media (max-width: 900px) {
+  .hero--cinematic {
+    padding-top: calc(var(--nav-h) + 16px);
+    padding-bottom: 32px;
+  }
+  .hero-cine-inner {
+    max-width: 100%;
+    margin-block: 8px 0;
+  }
+  .hero--cinematic .hero-title {
+    font-size: clamp(2.4rem, 12vw, 4.2rem);
+    max-width: 100%;
+  }
+  .hero--cinematic .hero-stage {
+    position: relative;
+    top: auto;
+    right: auto;
+    margin: 28px auto 0;
+    width: 100%;
+    max-width: 360px;
+    height: 320px;
+    transform: none;
+  }
+  .hero-cine-foot {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+    margin-top: 8px;
+  }
+  .hero-scroll {
+    display: none;
+  }
+}
+
+/* =========================================================
+   CINEMATIC GLOBAL LAYER (2026-06-12)
+   Propagates the Hero's cinematic language to every section
+   by elevating the SHARED primitives — reveals, section
+   heads, ambient depth, unified card glow — rather than
+   rewriting each section. Appended LAST to win source order.
+   ========================================================= */
+
+/* ---- Kinetic reveals: cinematic ease + soft focus-in ----
+   Upgrades the global [data-reveal] (base lives in index.css) with a
+   longer travel, a slight scale, a blur-to-focus and a smoother curve.
+   Propagates to every section that uses useReveal(). */
+[data-reveal] {
+  transform: translateY(40px) scale(0.985);
+  filter: blur(8px);
+  transition:
+    opacity 0.85s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.85s cubic-bezier(0.22, 1, 0.36, 1),
+    filter 0.85s ease;
+}
+[data-reveal].is-visible {
+  transform: none;
+  filter: blur(0);
+}
+
+/* ---- Cinematic section heads: big editorial titles ----
+   Overrides the small retro-pivot title sizing above. */
+.section-title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(2rem, 5.2vw, 4.25rem);
+  line-height: 1.04;
+  letter-spacing: -0.025em;
+  color: var(--ink);
+  /* widen from the inherited 16ch so long titles don't tower into many
+     lines at the new larger display size */
+  max-width: 22ch;
+}
+.section-title em {
+  color: var(--accent);
+  font-weight: 500;
+}
+.section-num {
+  color: var(--accent);
+}
+
+/* ---- Ambient stage depth: a soft glow pooled near each
+   section's heading, alternating side. Theme-aware + subtle so
+   light mode stays clean. Sits behind the content. ---- */
+.section {
+  isolation: isolate;
+}
+.section::before {
+  content: '';
+  position: absolute;
+  /* -1 keeps the glow behind the section's own content. `.section` sets
+     isolation:isolate above, so this stays contained in the section's
+     stacking context (it never sinks behind the page) and we don't need to
+     lift every child with z-index — which previously clobbered the fixed
+     `.lightbox` overlay (a direct child of the section). */
+  z-index: -1;
+  top: 4%;
+  left: -6%;
+  width: 46%;
+  height: 50%;
+  pointer-events: none;
+  background: radial-gradient(
+    50% 50% at 50% 50%,
+    color-mix(in srgb, var(--accent) 16%, transparent) 0%,
+    transparent 70%
+  );
+  filter: blur(20px);
+  opacity: 0.75;
+}
+.section:nth-of-type(even)::before {
+  left: auto;
+  right: -6%;
+  background: radial-gradient(
+    50% 50% at 50% 50%,
+    color-mix(in srgb, var(--accent-2) 14%, transparent) 0%,
+    transparent 70%
+  );
+}
+
+/* ---- Unified card glow: every interactive card lifts and
+   gains an accent halo + border on hover, coherent across
+   Services, Projects, Reels, Career. ---- */
+.service,
+.reel-card,
+.project-link,
+.timeline-row {
+  transition:
+    transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.3s ease,
+    border-color 0.3s ease;
+}
+.service:hover,
+.reel-card:hover,
+.project-link:hover {
+  box-shadow:
+    0 18px 50px -22px color-mix(in srgb, var(--accent) 60%, transparent),
+    0 0 0 1px color-mix(in srgb, var(--accent) 30%, transparent);
+}
+
+/* ---- Contact: a quiet glow behind the big closing title ---- */
+.contact-title em {
+  color: var(--accent);
+}
+
+/* ---- Honour reduced motion: no blur/scale on reveals, no
+   ambient glow animation. (index.css already flattens the
+   reveal transform/opacity; this also clears the new filter.) ---- */
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal],
+  [data-reveal].is-visible {
+    filter: none !important;
+    transform: none !important;
+  }
+}
+
+/* =========================================================
+   PROJECTS — shared card states (Audiovisual / Diseño / Desarrollo)
+   ========================================================= */
+/* Non-linked cards (e.g. a design project with no live URL yet):
+   keep the look but drop the clickable affordances. */
+.project-link--static {
+  cursor: default;
+}
+.project-link--static:hover {
+  transform: none;
+}
+
+.projects-empty {
+  padding: 40px 28px;
+  border: 1px dashed var(--border-strong);
+  border-radius: 16px;
+  color: var(--muted);
+  font-family: var(--font-terminal);
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  text-align: center;
+}
+
+/* =========================================================
+   SCROLL PROGRESS BAR (top of viewport)
+   ========================================================= */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  transform: scaleX(0);
+  transform-origin: left center;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  z-index: 300;
+  pointer-events: none;
+}
+
+/* =========================================================
+   CUSTOM CURSOR + MAGNETIC (desktop / fine-pointer only)
+   Rendered by src/components/Interactions.jsx; the .cursor-custom
+   class is toggled on <html> only when the custom cursor is active.
+   ========================================================= */
+.cursor-ring,
+.cursor-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  display: none; /* shown only when the custom cursor is active */
+  will-change: transform;
+}
+
+html.cursor-custom .cursor-ring,
+html.cursor-custom .cursor-dot {
+  display: block;
+}
+
+.cursor-ring {
+  width: 30px;
+  height: 30px;
+  /* soft translucent purple */
+  background: color-mix(in srgb, var(--accent) 32%, transparent);
+  transition:
+    width 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+    height 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 0.28s ease;
+}
+
+.cursor-dot {
+  width: 5px;
+  height: 5px;
+  background: color-mix(in srgb, var(--accent) 75%, transparent);
+  transition: opacity 0.2s ease;
+}
+
+/* Hide the native cursor only while the custom one is live */
+html.cursor-custom,
+html.cursor-custom * {
+  cursor: none !important;
+}
+
+/* Grow the ring + hide the dot over interactive targets */
+html.cursor-hover .cursor-ring {
+  width: 68px;
+  height: 68px;
+}
+html.cursor-hover .cursor-dot {
+  opacity: 0;
+}
+
+/* Magnetic elements ease back to rest; the lag while following the cursor
+   reads as the "pull". */
+[data-magnetic] {
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Gallery thumbnails (e.g. the tejidas.co cover) are wide editorial pages —
+   left-align the crop so the brand title stays in frame instead of being
+   chopped by the centred cover-fit. */
+.project-thumb--gallery img {
+  object-position: left center;
+}
+
+/* High-contrast close button: the base rule tints it translucent white,
+   which vanishes over light image content (the manual cover is cream on the
+   right). A dark fill + shadow keeps the ✕ visible over any image. */
+.lightbox-close {
+  background: rgba(8, 8, 12, 0.6);
+  border-color: rgba(255, 255, 255, 0.5);
+  box-shadow: 0 2px 14px rgba(0, 0, 0, 0.5);
+}
+.lightbox-close:hover {
+  background: rgba(8, 8, 12, 0.82);
+}
+
+/* =========================================================
+   ABOUT — Habilidades / Trayectoria disclosure panels
+   (click-to-expand submenu nested inside Sobre mí)
+   ========================================================= */
+.about-more {
+  margin-top: clamp(48px, 7vw, 88px);
+  border-top: 1px solid var(--border);
+}
+
+.about-panel {
+  border-bottom: 1px solid var(--border);
+}
+
+.about-panel-trigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: clamp(20px, 3vw, 30px) 4px;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  text-align: left;
+  color: var(--ink);
+  transition: color 0.2s ease;
+}
+.about-panel-trigger:hover,
+.about-panel.is-open .about-panel-trigger {
+  color: var(--accent);
+}
+
+.about-panel-label {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(1.5rem, 3.4vw, 2.6rem);
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+.about-panel-hint {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-terminal);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+  white-space: nowrap;
+}
+.about-panel-trigger:hover .about-panel-hint,
+.about-panel.is-open .about-panel-hint {
+  color: var(--accent);
+}
+
+.about-panel-chevron {
+  display: inline-block;
+  font-size: 14px;
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.about-panel.is-open .about-panel-chevron {
+  transform: rotate(180deg);
+}
+
+/* Smooth height reveal via animatable grid rows (0fr → 1fr) */
+.about-panel-body {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.about-panel.is-open .about-panel-body {
+  grid-template-rows: 1fr;
+}
+.about-panel-inner {
+  overflow: hidden;
+  min-height: 0;
+}
+
+/* =========================================================
+   VIDEOS — pinned horizontal scroll (desktop only)
+   The section pins and the cards slide sideways on vertical
+   scroll. Below 901px (or under reduced motion) it falls back
+   to the normal vertical list — see ProjectList.jsx gating.
+   ========================================================= */
+@media (min-width: 901px) {
+  .videos-h {
+    /* break out of the centred .section column to full viewport width */
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+  }
+
+  .projects-list--horizontal {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    width: max-content;
+    gap: 28px;
+    margin: 0;
+    padding: 0 var(--pad-x);
+    will-change: transform;
+  }
+
+  .projects-list--horizontal .project {
+    flex: 0 0 auto;
+    width: clamp(360px, 38vw, 540px);
+  }
+
+  .projects-list--horizontal .project-link {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    gap: 18px;
+    padding: 24px;
+  }
+
+  /* stack: thumb on top, then meta row, then text */
+  .projects-list--horizontal .project-thumb {
+    order: 0;
+    grid-column: auto;
+    width: 100%;
+    height: 210px;
+  }
+  .projects-list--horizontal .project-meta {
+    order: 1;
+    grid-column: auto;
+    flex-direction: row;
+    align-items: baseline;
+    gap: 14px;
+  }
+  .projects-list--horizontal .project-main {
+    order: 2;
+    grid-column: auto;
+  }
+  .projects-list--horizontal .project-name {
+    font-size: clamp(22px, 2vw, 30px);
+    margin-bottom: 8px;
+  }
+  .projects-list--horizontal .project-role {
+    margin-bottom: 14px;
+  }
+  .projects-list--horizontal .project-desc {
+    font-size: 14px;
+    margin-bottom: 14px;
+  }
+}
+
+/* Contact closing headline — sized down from the giant retro clamp so the
+   longer "Construyamos juntos…" sentence wraps into a tidy editorial block. */
+.contact-title {
+  font-size: clamp(1.9rem, 5.4vw, 4.5rem);
+  line-height: 1.06;
+  max-width: 18ch;
+}
+
+/* Embedded Skills / Career content (no section chrome) */
+.embed-block {
+  padding: 8px 0 clamp(32px, 5vw, 56px);
+}
+.section-title.embed-title {
+  font-size: clamp(1.4rem, 2.8vw, 2.1rem);
+  line-height: 1.1;
+  margin: 0 0 36px;
+  max-width: none;
+}

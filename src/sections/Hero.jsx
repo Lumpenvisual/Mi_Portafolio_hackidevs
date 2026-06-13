@@ -10,15 +10,8 @@ const CameraStage = lazy(() => import('../components/CameraStage'))
 const copy = {
   es: {
     eyebrow: 'Portafolio — 2026',
-    title: (
-      <>
-        Cuento
-        <br />
-        historias en
-        <br />
-        <span className="hero-emph">imágenes &amp; código.</span>
-      </>
-    ),
+    // Title is split into lines so each can mask-reveal on load.
+    titleLines: ['Cuento', 'historias en', { text: 'imágenes & código.', emph: true }],
     lede: (
       <>
         Soy <strong>Jacky</strong> &mdash; comunicadora audiovisual narrando
@@ -29,6 +22,7 @@ const copy = {
     ),
     primaryCta: 'Conóceme',
     linkCta: 'Hablemos',
+    scroll: 'Desliza',
     labels: { based: 'Desde', focus: 'Foco', status: 'Estado' },
     based: 'Medellín, Colombia',
     focus: 'Audiovisual · IA · Código',
@@ -36,15 +30,7 @@ const copy = {
   },
   en: {
     eyebrow: 'Portfolio — 2026',
-    title: (
-      <>
-        I tell
-        <br />
-        stories in
-        <br />
-        <span className="hero-emph">images &amp; code.</span>
-      </>
-    ),
+    titleLines: ['I tell', 'stories in', { text: 'images & code.', emph: true }],
     lede: (
       <>
         I&apos;m <strong>Jacky</strong> &mdash; an audiovisual storyteller
@@ -55,6 +41,7 @@ const copy = {
     ),
     primaryCta: 'Get to know me',
     linkCta: "Let's talk",
+    scroll: 'Scroll',
     labels: { based: 'Based in', focus: 'Focus', status: 'Status' },
     based: 'Medellín, Colombia',
     focus: 'Audiovisual · AI · Code',
@@ -65,13 +52,49 @@ const copy = {
 export default function Hero() {
   const { lang } = useApp()
   const t = copy[lang]
+  const rootRef = useRef(null)
+  const stageRef = useRef(null)
+
+  // ── Cinematic intro (GSAP, lazy-loaded so it stays out of the initial
+  // bundle). A staggered mask-reveal of the title lines + fades for the rest,
+  // and a slow scale-in of the camera. Skipped entirely under reduced motion
+  // (elements render in their final state). Runs once on mount. ──
+  useEffect(() => {
+    const root = rootRef.current
+    if (!root) return
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    let ctx
+    let killed = false
+    import('gsap').then(({ gsap }) => {
+      if (killed || !rootRef.current) return
+      ctx = gsap.context(() => {
+        const tl = gsap.timeline({ defaults: { ease: 'power3.out' } })
+        tl.from('.hero-eyebrow', { y: 16, autoAlpha: 0, duration: 0.6 })
+          .from(
+            '.hero-line-inner',
+            { yPercent: 115, duration: 0.95, stagger: 0.09 },
+            '-=0.15',
+          )
+          .from('.hero-lede', { y: 20, autoAlpha: 0, duration: 0.6 }, '-=0.45')
+          .from(
+            '.hero-actions > *',
+            { y: 14, autoAlpha: 0, duration: 0.5, stagger: 0.1 },
+            '-=0.3',
+          )
+          .from('.hero-cine-foot > *', { autoAlpha: 0, y: 12, duration: 0.6, stagger: 0.08 }, '-=0.4')
+          .from('.hero-stage', { autoAlpha: 0, scale: 0.9, duration: 1.3, ease: 'power2.out' }, 0.15)
+      }, root)
+    })
+    return () => {
+      killed = true
+      if (ctx) ctx.revert()
+    }
+  }, [])
 
   // On scroll, the camera sinks and dissolves: as the first ~70% of the
   // viewport scrolls past, translate the stage down and fade it out. Desktop
-  // only — on mobile the hero is stacked and the camera sits well below the
-  // copy, so the raw-scroll fade would hide it before it's even in view; there
-  // the stage renders normally. Skipped under reduced-motion too.
-  const stageRef = useRef(null)
+  // only — on mobile the camera fades by its own viewport position. Skipped
+  // under reduced motion.
   useEffect(() => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
     let raf = 0
@@ -79,19 +102,11 @@ export default function Hero() {
       const el = stageRef.current
       if (!el) return
       if (window.innerWidth <= 900) {
-        // Mobile: the hero is stacked and the camera sits below the copy, so a
-        // raw-scrollY fade would hide it before it's even in view. Instead fade
-        // by OPACITY only (no sink), driven by the stage's own position in the
-        // viewport: fully visible while its centre is low in the viewport, then
-        // dissolving as it scrolls up toward the top.
         const rect = el.getBoundingClientRect()
         const vh = window.innerHeight || 1
         const center = rect.top + rect.height / 2
-        // Fully visible while centred, fully faded by the time it nears the top —
-        // it dissolves completely BEFORE its top edge could slide under the
-        // sticky nav, so it never appears cut at the margin.
-        const start = vh * 0.5 // opacity 1 at/below this line
-        const end = vh * 0.3 // opacity 0 by this line (upper third)
+        const start = vh * 0.5
+        const end = vh * 0.3
         const p = Math.min(1, Math.max(0, (center - end) / (start - end)))
         el.style.opacity = String(p)
         el.style.transform = ''
@@ -99,7 +114,7 @@ export default function Hero() {
       }
       const p = Math.min(1, window.scrollY / (window.innerHeight * 0.7))
       el.style.opacity = String(1 - p)
-      el.style.transform = `translateY(${p * 140}px)`
+      el.style.transform = `translateY(${p * 160}px) scale(${1 - p * 0.06})`
     }
     const onScroll = () => {
       cancelAnimationFrame(raf)
@@ -116,57 +131,78 @@ export default function Hero() {
   }, [])
 
   return (
-    <>
-      <section className="hero hero--3d" id="top">
-        <Fireflies count={40} />
+    <section className="hero hero--cinematic" id="top" ref={rootRef}>
+      {/* Layered cinematic backdrop: vignette + centred glow */}
+      <div className="hero-cine-bg" aria-hidden="true" />
+      <Fireflies count={48} />
 
-        <div className="hero-grid">
-          <div className="hero-meta">
-            <span className="hero-eyebrow">
-              <span className="dot" />
-              {t.eyebrow}
+      <div className="hero-cine-inner">
+        <span className="hero-eyebrow">
+          <span className="dot" />
+          {t.eyebrow}
+        </span>
+
+        <h1 className="hero-title hero-title--cine">
+          {t.titleLines.map((line, i) => {
+            const isObj = typeof line === 'object'
+            const text = isObj ? line.text : line
+            return (
+              <span className="hero-line" key={i}>
+                <span className={`hero-line-inner${isObj && line.emph ? ' hero-emph' : ''}`}>
+                  {text}
+                </span>
+              </span>
+            )
+          })}
+        </h1>
+
+        <p className="hero-lede">{t.lede}</p>
+
+        <div className="hero-actions">
+          <a href="#about" className="btn btn-primary" data-magnetic="0.4">
+            {t.primaryCta}
+            <span className="btn-arrow">↓</span>
+          </a>
+          <a href="#contact" className="btn btn-link" data-magnetic="0.3">
+            {t.linkCta}
+          </a>
+        </div>
+      </div>
+
+      {/* The 3D camera fills a large stage on the right (desktop), layered
+          behind the copy via z-index; stacks below the copy on mobile. */}
+      <div className="hero-stage" ref={stageRef}>
+        <Suspense fallback={<div className="hero-stage-fallback" />}>
+          <CameraStage />
+        </Suspense>
+      </div>
+
+      <div className="hero-cine-foot">
+        <div className="hero-foot">
+          <div className="hero-foot-col">
+            <span className="label">{t.labels.based}</span>
+            <span className="value">{t.based}</span>
+          </div>
+          <div className="hero-foot-col">
+            <span className="label">{t.labels.focus}</span>
+            <span className="value">{t.focus}</span>
+          </div>
+          <div className="hero-foot-col">
+            <span className="label">{t.labels.status}</span>
+            <span className="value">
+              <span className="dot dot-on" />
+              {t.status}
             </span>
           </div>
-
-          <div className="hero-copy">
-            <h1 className="hero-title">{t.title}</h1>
-            <p className="hero-lede">{t.lede}</p>
-            <div className="hero-actions">
-              <a href="#about" className="btn btn-primary">
-                {t.primaryCta}
-                <span className="btn-arrow">↓</span>
-              </a>
-              <a href="#contact" className="btn btn-link">
-                {t.linkCta}
-              </a>
-            </div>
-          </div>
-
-          <div className="hero-stage" ref={stageRef}>
-            <Suspense fallback={<div className="hero-stage-fallback" />}>
-              <CameraStage />
-            </Suspense>
-          </div>
-
-          <div className="hero-foot">
-            <div className="hero-foot-col">
-              <span className="label">{t.labels.based}</span>
-              <span className="value">{t.based}</span>
-            </div>
-            <div className="hero-foot-col">
-              <span className="label">{t.labels.focus}</span>
-              <span className="value">{t.focus}</span>
-            </div>
-            <div className="hero-foot-col">
-              <span className="label">{t.labels.status}</span>
-              <span className="value">
-                <span className="dot dot-on" />
-                {t.status}
-              </span>
-            </div>
-          </div>
         </div>
-      </section>
-    </>
+
+        <a href="#about" className="hero-scroll" aria-label={t.scroll}>
+          <span className="hero-scroll-label">{t.scroll}</span>
+          <span className="hero-scroll-track" aria-hidden="true">
+            <span className="hero-scroll-dot" />
+          </span>
+        </a>
+      </div>
+    </section>
   )
 }

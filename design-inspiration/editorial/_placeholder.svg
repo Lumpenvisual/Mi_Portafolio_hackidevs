@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500" role="img" aria-label="Placeholder: editorial">
+  <rect width="800" height="500" fill="#0e0e12"/>
+  <rect x="16" y="16" width="768" height="468" rx="14" fill="none" stroke="#2a2a35" stroke-width="2" stroke-dasharray="8 8"/>
+  <text x="400" y="238" text-anchor="middle" font-family="'Space Grotesk', system-ui, sans-serif" font-size="34" font-weight="700" fill="#e8e8ef">🗞️ editorial</text>
+  <text x="400" y="282" text-anchor="middle" font-family="'Inter', system-ui, sans-serif" font-size="18" fill="#7a7a88">arrastra tus capturas aquí</text>
+</svg>
