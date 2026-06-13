@@ -11,15 +11,8 @@ const copy = {
   es: {
     eyebrow: 'Portafolio — 2026',
     // Title is split into lines so each can mask-reveal on load.
-    titleLines: ['Cuento', 'historias en', { text: 'imágenes & código.', emph: true }],
-    lede: (
-      <>
-        Soy <strong>Jacky</strong> &mdash; comunicadora audiovisual narrando
-        historias que importan. Hoy también construyo flujos con{' '}
-        <strong>IA</strong> y estudio Análisis y Desarrollo de Software, porque
-        las mejores narrativas del futuro se escriben con código.
-      </>
-    ),
+    titleLines: ['Hola,', { text: 'Soy Jacky', emph: true }],
+    lede: <>Cuento historias con imágenes y código.</>,
     primaryCta: 'Conóceme',
     linkCta: 'Hablemos',
     scroll: 'Desliza',
@@ -30,15 +23,8 @@ const copy = {
   },
   en: {
     eyebrow: 'Portfolio — 2026',
-    titleLines: ['I tell', 'stories in', { text: 'images & code.', emph: true }],
-    lede: (
-      <>
-        I&apos;m <strong>Jacky</strong> &mdash; an audiovisual storyteller
-        telling stories that matter. I&apos;m also building <strong>AI</strong>{' '}
-        workflows and studying Software Analysis &amp; Development, because the
-        best narratives of the future will be written in code.
-      </>
-    ),
+    titleLines: ['Hi,', { text: "I'm Jacky", emph: true }],
+    lede: <>I tell stories with images and code.</>,
     primaryCta: 'Get to know me',
     linkCta: "Let's talk",
     scroll: 'Scroll',

@@ -16,23 +16,15 @@ const copy = {
     body: (
       <>
         <p>
-          Soy <strong>Jacky</strong>. Comunicadora audiovisual.
-          <br />
-          Aprendí que contar historias es un acto de responsabilidad. No es
-          solo elegir qué se cuenta; es entender para quién, en qué orden, con
-          qué peso emocional. Cada frame, cada palabra, cada pausa llevaba una
-          intención.
+          Contar historias es un <strong>acto de responsabilidad</strong>:
+          saber qué se cuenta, para quién, en qué orden y con qué peso
+          emocional.
         </p>
         <p>
-          El código no es opuesto a la prosa, a la imagen y a la composición.
-          Es <strong>su hermano más joven</strong>. Funciona igual, contiene
-          ritmo, estructura y narrativa. Los datos y la edición se componen de
-          la misma lógica: decidir qué se ve, qué se oculta y en qué orden
-          revelo la historia para que resuene.
-        </p>
-        <p>
-          Desglosar, estructurar y saber narrar sigue siendo{' '}
-          <strong>inteligencia humana</strong>.
+          Hoy el código complementa la imagen y la composición. El ritmo, la
+          estructura, la narrativa y los datos responden a{' '}
+          <strong>la misma lógica</strong>: decidir qué se ve, qué se oculta y
+          en qué orden revelo la historia para que resuene.
         </p>
       </>
     ),
@@ -56,23 +48,15 @@ const copy = {
     body: (
       <>
         <p>
-          I&apos;m <strong>Jacky</strong>. Audiovisual communicator.
-          <br />
-          I learned that telling stories is an act of responsibility. It&apos;s
-          not just choosing what gets told; it&apos;s understanding for whom, in
-          what order, with what emotional weight. Every frame, every word, every
-          pause carried an intention.
+          Telling stories is an <strong>act of responsibility</strong>:
+          knowing what gets told, for whom, in what order and with what
+          emotional weight.
         </p>
         <p>
-          Code isn&apos;t the opposite of prose, image and composition. It&apos;s{' '}
-          <strong>their younger sibling</strong>. It works the same way — it
-          holds rhythm, structure and narrative. Data and editing are built on
-          the same logic: deciding what&apos;s shown, what&apos;s hidden, and in
-          what order I reveal the story so it resonates.
-        </p>
-        <p>
-          Breaking things down, structuring and knowing how to narrate is
-          still <strong>human intelligence</strong>.
+          Today, code complements image and composition. Rhythm, structure,
+          narrative and data answer to <strong>the same logic</strong>:
+          deciding what&apos;s shown, what&apos;s hidden, and in what order I
+          reveal the story so it resonates.
         </p>
       </>
     ),
