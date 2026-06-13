@@ -24,6 +24,13 @@ const copy = {
           intención.
         </p>
         <p>
+          El código no es opuesto a la prosa, a la imagen y a la composición.
+          Es <strong>su hermano más joven</strong>. Funciona igual, contiene
+          ritmo, estructura y narrativa. Los datos y la edición se componen de
+          la misma lógica: decidir qué se ve, qué se oculta y en qué orden
+          revelo la historia para que resuene.
+        </p>
+        <p>
           Desglosar, estructurar y saber narrar sigue siendo{' '}
           <strong>inteligencia humana</strong>.
         </p>
@@ -55,6 +62,13 @@ const copy = {
           not just choosing what gets told; it&apos;s understanding for whom, in
           what order, with what emotional weight. Every frame, every word, every
           pause carried an intention.
+        </p>
+        <p>
+          Code isn&apos;t the opposite of prose, image and composition. It&apos;s{' '}
+          <strong>their younger sibling</strong>. It works the same way — it
+          holds rhythm, structure and narrative. Data and editing are built on
+          the same logic: deciding what&apos;s shown, what&apos;s hidden, and in
+          what order I reveal the story so it resonates.
         </p>
         <p>
           Breaking things down, structuring and knowing how to narrate is
