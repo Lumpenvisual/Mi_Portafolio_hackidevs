@@ -16,14 +16,13 @@ const copy = {
     body: (
       <>
         <p>
-          Contar historias es un <strong>acto de responsabilidad</strong>: saber
-          qué se cuenta, para quién, en qué orden y con qué peso emocional.
+          Narrar es crear espacios donde otros pueden entrar, donde lo que
+          dejamos sin decir permite que cada persona complete la historia.
         </p>
         <p>
-          Hoy el código complementa la imagen y la composición. El ritmo, la
-          estructura, la narrativa y los datos responden a{' '}
-          <strong>la misma lógica</strong>: decidir qué se ve, qué se oculta y
-          en qué orden revelo la historia para que resuene.
+          Cada herramienta que uso es una manera de reconocer que ninguna
+          historia termina en quien la crea: termina en quien la recibe y{' '}
+          <strong>la vuelve suya</strong>.
         </p>
       </>
     ),
@@ -52,15 +51,13 @@ const copy = {
     body: (
       <>
         <p>
-          Telling stories is an <strong>act of responsibility</strong>: knowing
-          what gets told, for whom, in what order and with what emotional
-          weight.
+          To narrate is to create spaces others can enter — where what we leave
+          unsaid lets each person complete the story.
         </p>
         <p>
-          Today, code complements image and composition. Rhythm, structure,
-          narrative and data answer to <strong>the same logic</strong>: deciding
-          what&apos;s shown, what&apos;s hidden, and in what order I reveal the
-          story so it resonates.
+          Every tool I use is a way of acknowledging that no story ends with
+          whoever creates it: it ends with whoever receives it and{' '}
+          <strong>makes it their own</strong>.
         </p>
       </>
     ),
