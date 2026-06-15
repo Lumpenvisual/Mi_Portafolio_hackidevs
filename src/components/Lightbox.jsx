@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
+import { createPortal } from 'react-dom'
 
 // Reusable lightbox / gallery modal. Reuses the global `.lightbox*` styles
 // (defined in App.css for the Fotografía section). Full keyboard support:
@@ -56,7 +57,10 @@ export default function Lightbox({ images, startIndex = 0, onClose, labels, alt 
 
   const altText = alt ? alt(i + 1) : `${i + 1}`
 
-  return (
+  // Portal to <body> so the modal escapes any section stacking context
+  // (sections use isolation: isolate, which would otherwise trap it below the
+  // fixed nav and block clicks on the top-right close button).
+  return createPortal(
     <div
       ref={dialogRef}
       className="lightbox"
@@ -102,6 +106,7 @@ export default function Lightbox({ images, startIndex = 0, onClose, labels, alt 
       <span className="lightbox-counter">
         {String(i + 1).padStart(2, '0')} / {String(images.length).padStart(2, '0')}
       </span>
-    </div>
+    </div>,
+    document.body,
   )
 }

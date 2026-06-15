@@ -18,6 +18,7 @@
     "generate:3d": "node scripts/image-to-3d.mjs"
   },
   "dependencies": {
+    "animejs": "^4.4.1",
     "gsap": "^3.15.0",
     "react": "^19.2.5",
     "react-dom": "^19.2.5",

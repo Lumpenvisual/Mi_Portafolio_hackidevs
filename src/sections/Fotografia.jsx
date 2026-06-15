@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
+import { createPortal } from 'react-dom'
 import { useApp } from '../lib/AppContext'
 import { useReveal } from '../hooks/useReveal'
 
@@ -129,7 +130,7 @@ export default function Fotografia() {
         ))}
       </ul>
 
-      {isOpen && (
+      {isOpen && createPortal(
         <div
           ref={dialogRef}
           className="lightbox"
@@ -171,7 +172,8 @@ export default function Fotografia() {
           <span className="lightbox-counter">
             {String(active + 1).padStart(2, '0')} / {String(PHOTOS.length).padStart(2, '0')}
           </span>
-        </div>
+        </div>,
+        document.body,
       )}
     </section>
   )
