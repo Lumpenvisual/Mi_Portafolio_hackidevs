@@ -11,7 +11,6 @@ const HOVER_SELECTOR =
 
 export default function Interactions() {
   const ringRef = useRef(null)
-  const dotRef = useRef(null)
 
   useEffect(() => {
     if (typeof window === 'undefined') return
@@ -20,7 +19,6 @@ export default function Interactions() {
     if (!fine || reduce) return
 
     const ring = ringRef.current
-    const dot = dotRef.current
     const root = document.documentElement
     root.classList.add('cursor-custom')
 
@@ -34,7 +32,6 @@ export default function Interactions() {
     const onMove = (e) => {
       mx = e.clientX
       my = e.clientY
-      if (dot) dot.style.transform = `translate(${mx}px, ${my}px) translate(-50%, -50%)`
     }
     const tick = () => {
       rx += (mx - rx) * 0.18
@@ -93,10 +90,5 @@ export default function Interactions() {
     }
   }, [])
 
-  return (
-    <>
-      <div ref={ringRef} className="cursor-ring" aria-hidden="true" />
-      <div ref={dotRef} className="cursor-dot" aria-hidden="true" />
-    </>
-  )
+  return <div ref={ringRef} className="cursor-ring" aria-hidden="true" />
 }

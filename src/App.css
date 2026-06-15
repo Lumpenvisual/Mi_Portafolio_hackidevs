@@ -2639,8 +2639,7 @@ main {
    Rendered by src/components/Interactions.jsx; the .cursor-custom
    class is toggled on <html> only when the custom cursor is active.
    ========================================================= */
-.cursor-ring,
-.cursor-dot {
+.cursor-ring {
   position: fixed;
   top: 0;
   left: 0;
@@ -2649,29 +2648,20 @@ main {
   z-index: 9999;
   display: none; /* shown only when the custom cursor is active */
   will-change: transform;
-}
-
-html.cursor-custom .cursor-ring,
-html.cursor-custom .cursor-dot {
-  display: block;
-}
-
-.cursor-ring {
-  width: 30px;
-  height: 30px;
-  /* soft translucent purple */
-  background: color-mix(in srgb, var(--accent) 32%, transparent);
+  width: 40px;
+  height: 40px;
+  /* soft, defocused purple orb */
+  background: color-mix(in srgb, var(--accent) 55%, transparent);
+  filter: blur(6px);
   transition:
-    width 0.28s cubic-bezier(0.22, 1, 0.36, 1),
-    height 0.28s cubic-bezier(0.22, 1, 0.36, 1),
-    background-color 0.28s ease;
+    width 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+    height 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 0.3s ease,
+    filter 0.3s ease;
 }
 
-.cursor-dot {
-  width: 5px;
-  height: 5px;
-  background: color-mix(in srgb, var(--accent) 75%, transparent);
-  transition: opacity 0.2s ease;
+html.cursor-custom .cursor-ring {
+  display: block;
 }
 
 /* Hide the native cursor only while the custom one is live */
@@ -2680,13 +2670,12 @@ html.cursor-custom * {
   cursor: none !important;
 }
 
-/* Grow the ring + hide the dot over interactive targets */
+/* Grow + soften the orb further over interactive targets */
 html.cursor-hover .cursor-ring {
-  width: 68px;
-  height: 68px;
-}
-html.cursor-hover .cursor-dot {
-  opacity: 0;
+  width: 78px;
+  height: 78px;
+  background: color-mix(in srgb, var(--accent) 42%, transparent);
+  filter: blur(9px);
 }
 
 /* Magnetic elements ease back to rest; the lag while following the cursor
