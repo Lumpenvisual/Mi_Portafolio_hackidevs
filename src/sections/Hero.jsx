@@ -67,8 +67,16 @@ export default function Hero() {
             { y: 14, autoAlpha: 0, duration: 0.5, stagger: 0.1 },
             '-=0.3',
           )
-          .from('.hero-cine-foot > *', { autoAlpha: 0, y: 12, duration: 0.6, stagger: 0.08 }, '-=0.4')
-          .from('.hero-stage', { autoAlpha: 0, scale: 0.9, duration: 1.3, ease: 'power2.out' }, 0.15)
+          .from(
+            '.hero-cine-foot > *',
+            { autoAlpha: 0, y: 12, duration: 0.6, stagger: 0.08 },
+            '-=0.4',
+          )
+          .from(
+            '.hero-stage',
+            { autoAlpha: 0, scale: 0.9, duration: 1.3, ease: 'power2.out' },
+            0.15,
+          )
       }, root)
     })
     return () => {
@@ -134,7 +142,9 @@ export default function Hero() {
             const text = isObj ? line.text : line
             return (
               <span className="hero-line" key={i}>
-                <span className={`hero-line-inner${isObj && line.emph ? ' hero-emph' : ''}`}>
+                <span
+                  className={`hero-line-inner${isObj && line.emph ? ' hero-emph' : ''}`}
+                >
                   {text}
                 </span>
               </span>

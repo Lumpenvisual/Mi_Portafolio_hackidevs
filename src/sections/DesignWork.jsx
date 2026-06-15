@@ -139,7 +139,11 @@ export default function DesignWork() {
 
   return (
     <>
-      <section className="section design-work" id="design" aria-label={t.design.label}>
+      <section
+        className="section design-work"
+        id="design"
+        aria-label={t.design.label}
+      >
         <header ref={designHead} data-reveal className="section-head">
           <span className="section-label">{t.design.label}</span>
         </header>
@@ -151,7 +155,11 @@ export default function DesignWork() {
         />
       </section>
 
-      <section className="section design-work" id="dev" aria-label={t.dev.label}>
+      <section
+        className="section design-work"
+        id="dev"
+        aria-label={t.dev.label}
+      >
         <header ref={devHead} data-reveal className="section-head">
           <span className="section-label">{t.dev.label}</span>
         </header>

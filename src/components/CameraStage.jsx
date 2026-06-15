@@ -82,9 +82,13 @@ export default function CameraStage({
       // PARTICLES — 80 white points in a -15..15 cube, slow constant spin
       const COUNT = 80
       const positions = new Float32Array(COUNT * 3)
-      for (let i = 0; i < COUNT * 3; i++) positions[i] = (Math.random() * 2 - 1) * 15
+      for (let i = 0; i < COUNT * 3; i++)
+        positions[i] = (Math.random() * 2 - 1) * 15
       const particleGeo = new THREE.BufferGeometry()
-      particleGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3))
+      particleGeo.setAttribute(
+        'position',
+        new THREE.BufferAttribute(positions, 3),
+      )
       const particleMat = new THREE.PointsMaterial({
         color: 0xffffff,
         size: 0.04,
@@ -103,7 +107,8 @@ export default function CameraStage({
 
       // fit the model to ~52% of the screen height, recenter, base 3/4 pose
       const fitAndMount = (obj) => {
-        while (modelGroup.children.length) modelGroup.remove(modelGroup.children[0])
+        while (modelGroup.children.length)
+          modelGroup.remove(modelGroup.children[0])
         const box = new THREE.Box3().setFromObject(obj)
         const center = box.getCenter(new THREE.Vector3())
         const sphere = box.getBoundingSphere(new THREE.Sphere())
@@ -112,7 +117,8 @@ export default function CameraStage({
         // bounding sphere (rotation-invariant), so the wide camera never clips
         // against the square canvas edge at any parallax rotation — it only fades
         // out. 0.95 leaves a small margin so it never touches the edge.
-        const visibleH = 2 * Math.tan((45 * Math.PI) / 180 / 2) * camera.position.z
+        const visibleH =
+          2 * Math.tan((45 * Math.PI) / 180 / 2) * camera.position.z
         const visibleW = visibleH * (camera.aspect || 1)
         const fitDim = Math.min(visibleH, visibleW)
         const scale = (fitDim * 0.95) / (sphere.radius * 2 || 1)
@@ -135,9 +141,8 @@ export default function CameraStage({
       // mode; dark mode keeps the original point-light glow (no IBL).
       let envTex = null
       try {
-        const { RoomEnvironment } = await import(
-          'three/examples/jsm/environments/RoomEnvironment.js'
-        )
+        const { RoomEnvironment } =
+          await import('three/examples/jsm/environments/RoomEnvironment.js')
         const pmrem = new THREE.PMREMGenerator(renderer)
         envTex = pmrem.fromScene(new RoomEnvironment(), 0.04).texture
         pmrem.dispose()
@@ -315,7 +320,11 @@ export default function CameraStage({
     <div className={className} ref={stageRef}>
       {loading && (
         <div className="ch-overlay">
-          <div className="ch-spinner" role="status" aria-label="Cargando modelo" />
+          <div
+            className="ch-spinner"
+            role="status"
+            aria-label="Cargando modelo"
+          />
         </div>
       )}
       {error && (

@@ -7,8 +7,8 @@ const data = {
     sectionLabel: 'Trayectoria',
     title: (
       <>
-        Una década entre <em>cámaras</em>, <em>luces</em> e historias
-        contadas con <em>sentido humano</em>.
+        Una década entre <em>cámaras</em>, <em>luces</em> e historias contadas
+        con <em>sentido humano</em>.
       </>
     ),
     milestones: [
@@ -54,8 +54,8 @@ const data = {
     sectionLabel: 'Career',
     title: (
       <>
-        A decade between <em>cameras</em>, <em>lights</em> and stories told
-        with <em>human meaning</em>.
+        A decade between <em>cameras</em>, <em>lights</em> and stories told with{' '}
+        <em>human meaning</em>.
       </>
     ),
     milestones: [
@@ -68,8 +68,7 @@ const data = {
       {
         year: '2025',
         title: 'EAFIT Hackathon',
-        description:
-          'Participated in EAFIT University’s FindHub Hackathon.',
+        description: 'Participated in EAFIT University’s FindHub Hackathon.',
       },
       {
         year: '2024 — 25',
@@ -132,7 +131,7 @@ export default function Career({ embedded = false }) {
           scrub: true,
           onUpdate: (self) => gsap.set(bar, { scaleY: self.progress }),
         })
-      }
+      },
     )
 
     return () => {
@@ -169,7 +168,11 @@ export default function Career({ embedded = false }) {
       <h2 className="section-title">{t.title}</h2>
 
       <ol ref={bodyRef} data-reveal className="timeline">
-        <span className="timeline-progress" ref={progressRef} aria-hidden="true" />
+        <span
+          className="timeline-progress"
+          ref={progressRef}
+          aria-hidden="true"
+        />
         {milestones}
       </ol>
     </section>

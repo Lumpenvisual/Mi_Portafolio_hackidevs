@@ -30,14 +30,14 @@ Portafolio de una sola página con **seis secciones** (Hero, Sobre mí, Servicio
 
 ## Tecnologías
 
-| Capa | Stack | Versión |
-|---|---|---|
-| Build & dev server | [Vite](https://vite.dev) | 8.0.11 |
-| Framework | [React](https://react.dev) (StrictMode) | 19.2 |
-| Estilos | CSS moderno con custom properties, `color-mix`, `clamp`, `aspect-ratio`, `scroll-snap-type`, `mask-image`, `backdrop-filter` | — |
-| Tipografía | [Fraunces](https://fonts.google.com/specimen/Fraunces) (display, axis variable `SOFT`) + [Inter Tight](https://fonts.google.com/specimen/Inter+Tight) (sans) | Google Fonts |
-| Linting | [ESLint](https://eslint.org) + plugins `react-hooks` y `react-refresh` | 10 |
-| Deploy | [Vercel](https://vercel.com) (build estático desde Vite) | — |
+| Capa               | Stack                                                                                                                                                        | Versión      |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------ |
+| Build & dev server | [Vite](https://vite.dev)                                                                                                                                     | 8.0.11       |
+| Framework          | [React](https://react.dev) (StrictMode)                                                                                                                      | 19.2         |
+| Estilos            | CSS moderno con custom properties, `color-mix`, `clamp`, `aspect-ratio`, `scroll-snap-type`, `mask-image`, `backdrop-filter`                                 | —            |
+| Tipografía         | [Fraunces](https://fonts.google.com/specimen/Fraunces) (display, axis variable `SOFT`) + [Inter Tight](https://fonts.google.com/specimen/Inter+Tight) (sans) | Google Fonts |
+| Linting            | [ESLint](https://eslint.org) + plugins `react-hooks` y `react-refresh`                                                                                       | 10           |
+| Deploy             | [Vercel](https://vercel.com) (build estático desde Vite)                                                                                                     | —            |
 
 **Lo que NO usa el proyecto** (intencional): Tailwind, MUI, Bootstrap, styled-components, GSAP, Framer Motion, i18next, react-i18next, Three.js, Lottie, ni ninguna librería de iconos. Todo se resuelve con primitivas web.
 
@@ -82,14 +82,14 @@ src/
 
 Modo claro (default):
 
-| Token | Valor | Uso |
-|---|---|---|
-| `--bg` | `#f7f5f0` | Fondo cálido crema |
-| `--ink` | `#0e0e10` | Tinta principal |
-| `--muted` | `#6b6b6e` | Eyebrows, meta |
-| `--accent` | `#c8553d` | Terracota, italics editoriales |
-| `--accent-soft` | `#f1e3dc` | Backgrounds suaves |
-| `--border` / `--border-strong` | `#e4e0d6` / `#cfcabb` | Divisores |
+| Token                          | Valor                 | Uso                            |
+| ------------------------------ | --------------------- | ------------------------------ |
+| `--bg`                         | `#f7f5f0`             | Fondo cálido crema             |
+| `--ink`                        | `#0e0e10`             | Tinta principal                |
+| `--muted`                      | `#6b6b6e`             | Eyebrows, meta                 |
+| `--accent`                     | `#c8553d`             | Terracota, italics editoriales |
+| `--accent-soft`                | `#f1e3dc`             | Backgrounds suaves             |
+| `--border` / `--border-strong` | `#e4e0d6` / `#cfcabb` | Divisores                      |
 
 Modo oscuro: paleta cálida invertida (`--bg: #16140f`, `--ink: #f0ece2`, `--accent: #e8704f`). Las variables se intercambian via `[data-theme='dark']` en `<html>`.
 
@@ -111,16 +111,16 @@ Mismo patrón: `useApp().theme` y `toggleTheme`. Persiste en `localStorage`. Aut
 
 Para cambiar contenido sin tocar layout:
 
-| Qué | Dónde |
-|---|---|
-| Título principal del hero | `src/sections/Hero.jsx` → `copy.es.title` y `copy.en.title` |
-| Bio y facts (Aprendiendo, Idiomas) | `src/sections/About.jsx` → `copy.es.facts` y `copy.en.facts` |
-| Lista de 6 servicios | `src/sections/Services.jsx` → `data.es.services` y `data.en.services` |
+| Qué                                         | Dónde                                                                   |
+| ------------------------------------------- | ----------------------------------------------------------------------- |
+| Título principal del hero                   | `src/sections/Hero.jsx` → `copy.es.title` y `copy.en.title`             |
+| Bio y facts (Aprendiendo, Idiomas)          | `src/sections/About.jsx` → `copy.es.facts` y `copy.en.facts`            |
+| Lista de 6 servicios                        | `src/sections/Services.jsx` → `data.es.services` y `data.en.services`   |
 | 6 proyectos largos (videoId, accent, ES/EN) | `src/sections/Projects.jsx` → `baseProjects` + `localized.[lang].items` |
-| 6 reels (videoId + título por idioma) | `src/sections/Projects.jsx` → `reelsBase` + `reelTitles` |
-| Hitos de trayectoria | `src/sections/Career.jsx` → `data.es.milestones` y `data.en.milestones` |
-| Redes sociales | `src/sections/Contact.jsx` → `links` |
-| Imagen de perfil | `public/hackidevs.png` |
+| 6 reels (videoId + título por idioma)       | `src/sections/Projects.jsx` → `reelsBase` + `reelTitles`                |
+| Hitos de trayectoria                        | `src/sections/Career.jsx` → `data.es.milestones` y `data.en.milestones` |
+| Redes sociales                              | `src/sections/Contact.jsx` → `links`                                    |
+| Imagen de perfil                            | `public/hackidevs.png`                                                  |
 
 ## Convenciones de proyectos
 

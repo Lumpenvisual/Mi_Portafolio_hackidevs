@@ -12,7 +12,13 @@ import { createPortal } from 'react-dom'
 //   onClose    — called to close the modal
 //   labels     — { close, prev, next }
 //   alt        — (n) => string, alt/aria text for image number n (1-based)
-export default function Lightbox({ images, startIndex = 0, onClose, labels, alt }) {
+export default function Lightbox({
+  images,
+  startIndex = 0,
+  onClose,
+  labels,
+  alt,
+}) {
   const [i, setI] = useState(startIndex)
   const dialogRef = useRef(null)
 
@@ -104,7 +110,8 @@ export default function Lightbox({ images, startIndex = 0, onClose, labels, alt 
         </button>
       )}
       <span className="lightbox-counter">
-        {String(i + 1).padStart(2, '0')} / {String(images.length).padStart(2, '0')}
+        {String(i + 1).padStart(2, '0')} /{' '}
+        {String(images.length).padStart(2, '0')}
       </span>
     </div>,
     document.body,

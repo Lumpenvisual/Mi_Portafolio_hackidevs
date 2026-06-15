@@ -10,7 +10,8 @@ const navCopy = {
     design: 'Diseño',
     dev: 'Desarrollo',
     contact: 'Contacto',
-    themeAria: (t) => (t === 'dark' ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro'),
+    themeAria: (t) =>
+      t === 'dark' ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro',
     langAria: 'Switch to English',
     openMenu: 'Abrir menú',
     closeMenu: 'Cerrar menú',
@@ -23,14 +24,23 @@ const navCopy = {
     design: 'Design',
     dev: 'Development',
     contact: 'Contact',
-    themeAria: (t) => (t === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'),
+    themeAria: (t) =>
+      t === 'dark' ? 'Switch to light mode' : 'Switch to dark mode',
     langAria: 'Cambiar a español',
     openMenu: 'Open menu',
     closeMenu: 'Close menu',
   },
 }
 
-const NAV_IDS = ['about', 'services', 'work', 'fotografia', 'design', 'dev', 'contact']
+const NAV_IDS = [
+  'about',
+  'services',
+  'work',
+  'fotografia',
+  'design',
+  'dev',
+  'contact',
+]
 
 const SunIcon = () => (
   <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -75,8 +85,11 @@ export default function Nav() {
 
   useEffect(() => {
     const observer = new IntersectionObserver(
-      (entries) => entries.forEach((e) => { if (e.isIntersecting) setActiveSection(e.target.id) }),
-      { rootMargin: '-40% 0px -55% 0px', threshold: 0 }
+      (entries) =>
+        entries.forEach((e) => {
+          if (e.isIntersecting) setActiveSection(e.target.id)
+        }),
+      { rootMargin: '-40% 0px -55% 0px', threshold: 0 },
     )
     NAV_IDS.forEach((id) => {
       const el = document.getElementById(id)
@@ -87,14 +100,18 @@ export default function Nav() {
 
   useEffect(() => {
     if (!isOpen) return
-    const onKey = (e) => { if (e.key === 'Escape') setIsOpen(false) }
+    const onKey = (e) => {
+      if (e.key === 'Escape') setIsOpen(false)
+    }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
   }, [isOpen])
 
   useEffect(() => {
     document.body.style.overflow = isOpen ? 'hidden' : ''
-    return () => { document.body.style.overflow = '' }
+    return () => {
+      document.body.style.overflow = ''
+    }
   }, [isOpen])
 
   const closeMenu = () => setIsOpen(false)

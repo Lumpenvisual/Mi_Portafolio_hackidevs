@@ -16,9 +16,8 @@ const copy = {
     body: (
       <>
         <p>
-          Contar historias es un <strong>acto de responsabilidad</strong>:
-          saber qué se cuenta, para quién, en qué orden y con qué peso
-          emocional.
+          Contar historias es un <strong>acto de responsabilidad</strong>: saber
+          qué se cuenta, para quién, en qué orden y con qué peso emocional.
         </p>
         <p>
           Hoy el código complementa la imagen y la composición. El ritmo, la
@@ -35,7 +34,12 @@ const copy = {
       },
       { label: 'Idiomas', value: 'ES nativo · EN - B1' },
     ],
-    more: { skills: 'Habilidades', career: 'Trayectoria', open: 'Ver más', close: 'Cerrar' },
+    more: {
+      skills: 'Habilidades',
+      career: 'Trayectoria',
+      open: 'Ver más',
+      close: 'Cerrar',
+    },
   },
   en: {
     sectionLabel: 'About',
@@ -48,15 +52,15 @@ const copy = {
     body: (
       <>
         <p>
-          Telling stories is an <strong>act of responsibility</strong>:
-          knowing what gets told, for whom, in what order and with what
-          emotional weight.
+          Telling stories is an <strong>act of responsibility</strong>: knowing
+          what gets told, for whom, in what order and with what emotional
+          weight.
         </p>
         <p>
           Today, code complements image and composition. Rhythm, structure,
-          narrative and data answer to <strong>the same logic</strong>:
-          deciding what&apos;s shown, what&apos;s hidden, and in what order I
-          reveal the story so it resonates.
+          narrative and data answer to <strong>the same logic</strong>: deciding
+          what&apos;s shown, what&apos;s hidden, and in what order I reveal the
+          story so it resonates.
         </p>
       </>
     ),
@@ -67,7 +71,12 @@ const copy = {
       },
       { label: 'Languages', value: 'Native ES · EN - B1' },
     ],
-    more: { skills: 'Skills', career: 'Career', open: 'See more', close: 'Close' },
+    more: {
+      skills: 'Skills',
+      career: 'Career',
+      open: 'See more',
+      close: 'Close',
+    },
   },
 }
 
@@ -121,7 +130,10 @@ export default function About() {
 
       <div className="about-more">
         {panels.map(({ key, label, content }) => (
-          <div key={key} className={`about-panel${open[key] ? ' is-open' : ''}`}>
+          <div
+            key={key}
+            className={`about-panel${open[key] ? ' is-open' : ''}`}
+          >
             <button
               type="button"
               className="about-panel-trigger"

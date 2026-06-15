@@ -36,7 +36,8 @@ export default function Interactions() {
     const tick = () => {
       rx += (mx - rx) * 0.18
       ry += (my - ry) * 0.18
-      if (ring) ring.style.transform = `translate(${rx}px, ${ry}px) translate(-50%, -50%)`
+      if (ring)
+        ring.style.transform = `translate(${rx}px, ${ry}px) translate(-50%, -50%)`
       raf = requestAnimationFrame(tick)
     }
 

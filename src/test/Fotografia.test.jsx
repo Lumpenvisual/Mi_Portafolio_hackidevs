@@ -4,11 +4,12 @@ import { describe, it, expect, beforeEach } from 'vitest'
 import Fotografia from '../sections/Fotografia'
 import { AppProvider } from '../lib/AppContext'
 
-const renderSection = () => render(
-  <AppProvider>
-    <Fotografia />
-  </AppProvider>
-)
+const renderSection = () =>
+  render(
+    <AppProvider>
+      <Fotografia />
+    </AppProvider>,
+  )
 
 describe('Fotografia lightbox accessibility', () => {
   beforeEach(() => {

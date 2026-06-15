@@ -8,8 +8,7 @@ const data = {
     sectionLabel: 'Servicios',
     title: (
       <>
-        Maneras de <em>contar</em>, <em>conectar</em> y{' '}
-        <em>automatizar</em>.
+        Maneras de <em>contar</em>, <em>conectar</em> y <em>automatizar</em>.
       </>
     ),
     services: [

@@ -18,7 +18,9 @@ const copy = {
       <>
         Abierta a colaboraciones, proyectos y conversaciones interesantes.
         <br />
-        Tel <em className="contact-phone">+57&nbsp;323&nbsp;437&nbsp;42&nbsp;00</em>.
+        Tel{' '}
+        <em className="contact-phone">+57&nbsp;323&nbsp;437&nbsp;42&nbsp;00</em>
+        .
       </>
     ),
     form: {
@@ -49,7 +51,9 @@ const copy = {
       <>
         Open to collaborations, projects and interesting conversations.
         <br />
-        Phone <em className="contact-phone">+57&nbsp;323&nbsp;437&nbsp;42&nbsp;00</em>.
+        Phone{' '}
+        <em className="contact-phone">+57&nbsp;323&nbsp;437&nbsp;42&nbsp;00</em>
+        .
       </>
     ),
     form: {
@@ -62,8 +66,9 @@ const copy = {
       messagePlaceholder: 'How can I help you?',
       submit: 'Send message',
       submitting: 'Sending…',
-      success: 'Message sent. I\'ll get back to you soon.',
-      error: 'Something went wrong. Try again or write directly to the email above.',
+      success: "Message sent. I'll get back to you soon.",
+      error:
+        'Something went wrong. Try again or write directly to the email above.',
     },
   },
 }
@@ -100,7 +105,10 @@ export default function Contact() {
     try {
       const res = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
         body: JSON.stringify({ access_key: WEB3FORMS_KEY, ...fields }),
       })
       if (res.ok) {
@@ -179,7 +187,9 @@ export default function Contact() {
           >
             {status === 'loading' ? t.form.submitting : t.form.submit}
             {status !== 'loading' && (
-              <span className="arr" aria-hidden="true">↗</span>
+              <span className="arr" aria-hidden="true">
+                ↗
+              </span>
             )}
           </button>
           {(status === 'success' || status === 'error') && (
@@ -203,7 +213,9 @@ export default function Contact() {
                   aria-label={`${l.label} (${newTabLabel[lang]})`}
                 >
                   {l.label}
-                  <span className="arr" aria-hidden="true">↗</span>
+                  <span className="arr" aria-hidden="true">
+                    ↗
+                  </span>
                 </a>
               </li>
             ))}
@@ -215,7 +227,9 @@ export default function Contact() {
           <p>{t.availabilityCopy}</p>
           <a className="contact-mail" href={`mailto:${t.email}`}>
             {t.email}
-            <span className="arr" aria-hidden="true">↗</span>
+            <span className="arr" aria-hidden="true">
+              ↗
+            </span>
           </a>
         </div>
       </div>

@@ -5,12 +5,12 @@ Arrastra capturas a la subcarpeta que corresponda; los `_placeholder.svg` son so
 
 ## 📁 Convención de carpetas
 
-| Carpeta | Para qué |
-|---|---|
-| `micro-interactions/` | hovers, transiciones, estados de carga, feedback |
-| `data-visualization/` | gráficos, mapas, dashboards, narrativa con datos |
-| `editorial/` | layouts editoriales, retículas, tipografía, revistas |
-| `graphic-design/` | pósters, identidad visual, color, composición |
+| Carpeta               | Para qué                                             |
+| --------------------- | ---------------------------------------------------- |
+| `micro-interactions/` | hovers, transiciones, estados de carga, feedback     |
+| `data-visualization/` | gráficos, mapas, dashboards, narrativa con datos     |
+| `editorial/`          | layouts editoriales, retículas, tipografía, revistas |
+| `graphic-design/`     | pósters, identidad visual, color, composición        |
 
 > Naming sugerido: `fuente_tema_NN.png` (ej. `awwwards_hover-card_01.png`).
 

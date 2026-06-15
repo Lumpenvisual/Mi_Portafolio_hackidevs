@@ -19,7 +19,7 @@ const make = (i) => ({
 export default function Fireflies({ count = 12 }) {
   const flies = useMemo(
     () => Array.from({ length: count }, (_, i) => make(i)),
-    [count]
+    [count],
   )
 
   return (

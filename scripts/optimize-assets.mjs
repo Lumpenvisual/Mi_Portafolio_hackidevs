@@ -70,4 +70,6 @@ for (const j of jobs) {
   total += info.size
   console.log(`${j.out}  ${(info.size / 1024).toFixed(0)} KB`)
 }
-console.log(`\nTOTAL: ${(total / 1024).toFixed(0)} KB across ${jobs.length} files`)
+console.log(
+  `\nTOTAL: ${(total / 1024).toFixed(0)} KB across ${jobs.length} files`,
+)

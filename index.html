@@ -4,8 +4,16 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#f7f3ec" media="(prefers-color-scheme: light)" />
-    <meta name="theme-color" content="#15131e" media="(prefers-color-scheme: dark)" />
+    <meta
+      name="theme-color"
+      content="#f7f3ec"
+      media="(prefers-color-scheme: light)"
+    />
+    <meta
+      name="theme-color"
+      content="#15131e"
+      media="(prefers-color-scheme: dark)"
+    />
     <meta name="color-scheme" content="light dark" />
     <meta name="author" content="Jacky Gutiérrez" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -23,7 +31,7 @@
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap"
       media="print"
-      onload="this.media='all'"
+      onload="this.media = 'all'"
     />
     <noscript>
       <link
@@ -33,12 +41,17 @@
     </noscript>
     <!-- Prevent dark/light mode flash before React hydrates -->
     <script>
-      (function () {
+      ;(function () {
         try {
           var d = document.documentElement
           var t = localStorage.getItem('theme')
-          if (t === 'dark' || t === 'light') { d.dataset.theme = t }
-          else if (window.matchMedia('(prefers-color-scheme: dark)').matches) { d.dataset.theme = 'dark' }
+          if (t === 'dark' || t === 'light') {
+            d.dataset.theme = t
+          } else if (
+            window.matchMedia('(prefers-color-scheme: dark)').matches
+          ) {
+            d.dataset.theme = 'dark'
+          }
           var l = localStorage.getItem('lang')
           if (l === 'es' || l === 'en') d.lang = l
         } catch (e) {}
@@ -46,16 +59,31 @@
     </script>
 
     <title>Jacky Gutiérrez — Comunicadora Audiovisual · IA · Código</title>
-    <meta name="description" content="Portafolio de Jacky Gutiérrez, comunicadora audiovisual de Medellín. Documental, edición, storytelling, IA generativa y automatización de procesos." />
+    <meta
+      name="description"
+      content="Portafolio de Jacky Gutiérrez, comunicadora audiovisual de Medellín. Documental, edición, storytelling, IA generativa y automatización de procesos."
+    />
     <meta name="robots" content="index, follow" />
     <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
 
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://mi-portafolio-hackidevs.vercel.app/" />
+    <meta
+      property="og:url"
+      content="https://mi-portafolio-hackidevs.vercel.app/"
+    />
     <link rel="canonical" href="https://mi-portafolio-hackidevs.vercel.app/" />
-    <meta property="og:title" content="Jacky Gutiérrez — Comunicadora Audiovisual · IA · Código" />
-    <meta property="og:description" content="Portafolio de Jacky Gutiérrez, comunicadora audiovisual de Medellín. Documental, edición, storytelling, IA generativa y automatización de procesos." />
-    <meta property="og:image" content="https://mi-portafolio-hackidevs.vercel.app/hackidevs.png" />
+    <meta
+      property="og:title"
+      content="Jacky Gutiérrez — Comunicadora Audiovisual · IA · Código"
+    />
+    <meta
+      property="og:description"
+      content="Portafolio de Jacky Gutiérrez, comunicadora audiovisual de Medellín. Documental, edición, storytelling, IA generativa y automatización de procesos."
+    />
+    <meta
+      property="og:image"
+      content="https://mi-portafolio-hackidevs.vercel.app/hackidevs.png"
+    />
     <meta property="og:image:alt" content="Jacky Gutiérrez — portafolio" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
@@ -63,33 +91,42 @@
     <meta property="og:locale:alternate" content="en_US" />
 
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Jacky Gutiérrez — Comunicadora Audiovisual · IA · Código" />
-    <meta name="twitter:description" content="Portafolio de Jacky Gutiérrez, comunicadora audiovisual de Medellín." />
-    <meta name="twitter:image" content="https://mi-portafolio-hackidevs.vercel.app/hackidevs.png" />
+    <meta
+      name="twitter:title"
+      content="Jacky Gutiérrez — Comunicadora Audiovisual · IA · Código"
+    />
+    <meta
+      name="twitter:description"
+      content="Portafolio de Jacky Gutiérrez, comunicadora audiovisual de Medellín."
+    />
+    <meta
+      name="twitter:image"
+      content="https://mi-portafolio-hackidevs.vercel.app/hackidevs.png"
+    />
     <meta name="twitter:image:alt" content="Jacky Gutiérrez — portafolio" />
 
     <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Person",
-      "name": "Jacky Gutiérrez",
-      "alternateName": "hackidevs",
-      "jobTitle": "Comunicadora Audiovisual",
-      "description": "Comunicadora audiovisual, storyteller, IA generativa y automatización de procesos. Medellín, Colombia.",
-      "image": "/hackidevs.png",
-      "email": "lumpenvisual@gmail.com",
-      "address": {
-        "@type": "PostalAddress",
-        "addressLocality": "Medellín",
-        "addressCountry": "CO"
-      },
-      "sameAs": [
-        "https://www.instagram.com/jacky.visual/",
-        "https://linkedin.com/in/jackygutierrez/",
-        "https://github.com/Lumpenvisual",
-        "https://www.youtube.com/@Jackie.visual"
-      ]
-    }
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Jacky Gutiérrez",
+        "alternateName": "hackidevs",
+        "jobTitle": "Comunicadora Audiovisual",
+        "description": "Comunicadora audiovisual, storyteller, IA generativa y automatización de procesos. Medellín, Colombia.",
+        "image": "/hackidevs.png",
+        "email": "lumpenvisual@gmail.com",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Medellín",
+          "addressCountry": "CO"
+        },
+        "sameAs": [
+          "https://www.instagram.com/jacky.visual/",
+          "https://linkedin.com/in/jackygutierrez/",
+          "https://github.com/Lumpenvisual",
+          "https://www.youtube.com/@Jackie.visual"
+        ]
+      }
     </script>
   </head>
   <body>

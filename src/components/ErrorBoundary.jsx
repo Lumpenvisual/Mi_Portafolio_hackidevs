@@ -13,7 +13,13 @@ export default class ErrorBoundary extends Component {
   render() {
     if (this.state.hasError) {
       return (
-        <div style={{ padding: '48px', textAlign: 'center', fontFamily: 'system-ui' }}>
+        <div
+          style={{
+            padding: '48px',
+            textAlign: 'center',
+            fontFamily: 'system-ui',
+          }}
+        >
           <p>Algo salió mal. Recarga la página para continuar.</p>
         </div>
       )

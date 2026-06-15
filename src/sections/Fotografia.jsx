@@ -57,8 +57,11 @@ export default function Fotografia() {
   }, [])
   const close = useCallback(() => setActive(null), [])
   const step = useCallback(
-    (dir) => setActive((i) => (i === null ? i : (i + dir + PHOTOS.length) % PHOTOS.length)),
-    []
+    (dir) =>
+      setActive((i) =>
+        i === null ? i : (i + dir + PHOTOS.length) % PHOTOS.length,
+      ),
+    [],
   )
 
   // Modal dialog behaviour: trap focus inside the lightbox, move focus in on
@@ -75,7 +78,7 @@ export default function Fotografia() {
       if (e.key === 'ArrowLeft') return step(-1)
       if (e.key === 'Tab' && dialog) {
         const f = dialog.querySelectorAll(
-          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
         )
         if (!f.length) return
         const first = f[0]
@@ -102,7 +105,11 @@ export default function Fotografia() {
   }, [isOpen, close, step])
 
   return (
-    <section className="section fotografia" id="fotografia" aria-label={t.sectionLabel}>
+    <section
+      className="section fotografia"
+      id="fotografia"
+      aria-label={t.sectionLabel}
+    >
       <header ref={headRef} data-reveal className="section-head">
         <span className="section-label">{t.sectionLabel}</span>
       </header>
@@ -130,51 +137,57 @@ export default function Fotografia() {
         ))}
       </ul>
 
-      {isOpen && createPortal(
-        <div
-          ref={dialogRef}
-          className="lightbox"
-          role="dialog"
-          aria-modal="true"
-          aria-label={t.alt(active + 1)}
-        >
-          <button
-            type="button"
-            className="lightbox-backdrop"
-            onClick={close}
-            aria-label={t.close}
-          />
-          <button
-            type="button"
-            className="lightbox-close"
-            onClick={close}
-            aria-label={t.close}
+      {isOpen &&
+        createPortal(
+          <div
+            ref={dialogRef}
+            className="lightbox"
+            role="dialog"
+            aria-modal="true"
+            aria-label={t.alt(active + 1)}
           >
-            ✕
-          </button>
-          <button
-            type="button"
-            className="lightbox-nav lightbox-prev"
-            onClick={() => step(-1)}
-            aria-label={t.prev}
-          >
-            ‹
-          </button>
-          <img className="lightbox-img" src={PHOTOS[active].src} alt={t.alt(active + 1)} />
-          <button
-            type="button"
-            className="lightbox-nav lightbox-next"
-            onClick={() => step(1)}
-            aria-label={t.next}
-          >
-            ›
-          </button>
-          <span className="lightbox-counter">
-            {String(active + 1).padStart(2, '0')} / {String(PHOTOS.length).padStart(2, '0')}
-          </span>
-        </div>,
-        document.body,
-      )}
+            <button
+              type="button"
+              className="lightbox-backdrop"
+              onClick={close}
+              aria-label={t.close}
+            />
+            <button
+              type="button"
+              className="lightbox-close"
+              onClick={close}
+              aria-label={t.close}
+            >
+              ✕
+            </button>
+            <button
+              type="button"
+              className="lightbox-nav lightbox-prev"
+              onClick={() => step(-1)}
+              aria-label={t.prev}
+            >
+              ‹
+            </button>
+            <img
+              className="lightbox-img"
+              src={PHOTOS[active].src}
+              alt={t.alt(active + 1)}
+            />
+            <button
+              type="button"
+              className="lightbox-nav lightbox-next"
+              onClick={() => step(1)}
+              aria-label={t.next}
+            >
+              ›
+            </button>
+            <span className="lightbox-counter">
+              {String(active + 1).padStart(2, '0')} /{' '}
+              {String(PHOTOS.length).padStart(2, '0')}
+            </span>
+          </div>,
+          document.body,
+        )}
     </section>
   )
 }

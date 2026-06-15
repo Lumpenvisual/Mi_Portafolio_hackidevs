@@ -1,6 +1,6 @@
 # 🎨 UX & Design References
 
-Catálogo curado de referencias para la evolución visual del portafolio de **Jacky Gutiérrez** (audiovisual / fotografía documental — *hackidevs*).
+Catálogo curado de referencias para la evolución visual del portafolio de **Jacky Gutiérrez** (audiovisual / fotografía documental — _hackidevs_).
 Para volcar capturas rápidas sin curar, usa la carpeta oculta `.design-references/`.
 
 ---

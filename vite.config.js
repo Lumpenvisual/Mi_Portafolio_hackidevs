@@ -8,7 +8,12 @@ export default defineConfig({
     // Don't watch external folders (reference clones, agent skill dirs). They
     // contain other projects' files and trip the Windows file watcher (EBUSY).
     watch: {
-      ignored: ['**/_repos/**', '**/.claude/**', '**/.agents/**', '**/allan-pinot/**'],
+      ignored: [
+        '**/_repos/**',
+        '**/.claude/**',
+        '**/.agents/**',
+        '**/allan-pinot/**',
+      ],
     },
   },
   build: {

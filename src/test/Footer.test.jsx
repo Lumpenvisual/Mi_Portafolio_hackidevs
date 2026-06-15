@@ -3,12 +3,19 @@ import { describe, it, expect } from 'vitest'
 import Footer from '../components/Footer'
 import { AppProvider } from '../lib/AppContext'
 
-const renderFooter = () => render(<AppProvider><Footer /></AppProvider>)
+const renderFooter = () =>
+  render(
+    <AppProvider>
+      <Footer />
+    </AppProvider>,
+  )
 
 describe('Footer', () => {
   it('renders the current year', () => {
     renderFooter()
-    expect(screen.getByText(new RegExp(String(new Date().getFullYear())))).toBeInTheDocument()
+    expect(
+      screen.getByText(new RegExp(String(new Date().getFullYear()))),
+    ).toBeInTheDocument()
   })
 
   it('renders Medellín, Colombia', () => {

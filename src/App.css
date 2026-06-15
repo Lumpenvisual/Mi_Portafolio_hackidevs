@@ -826,7 +826,8 @@ main {
 .project-link:hover {
   border-color: color-mix(in srgb, var(--accent) 45%, var(--border-strong));
   transform: translateY(-4px);
-  box-shadow: 0 24px 50px -30px color-mix(in srgb, var(--accent) 55%, transparent);
+  box-shadow: 0 24px 50px -30px
+    color-mix(in srgb, var(--accent) 55%, transparent);
 }
 
 .project-meta {
@@ -1240,7 +1241,8 @@ main {
 .service:hover {
   border-color: color-mix(in srgb, var(--accent) 45%, var(--border-strong));
   transform: translateY(-4px);
-  box-shadow: 0 24px 50px -30px color-mix(in srgb, var(--accent) 60%, transparent);
+  box-shadow: 0 24px 50px -30px
+    color-mix(in srgb, var(--accent) 60%, transparent);
 }
 
 /* Gradient top accent that grows in from the left on hover */
@@ -1272,7 +1274,9 @@ main {
   color: var(--accent);
   opacity: 0.12;
   pointer-events: none;
-  transition: opacity 0.35s ease, transform 0.45s ease;
+  transition:
+    opacity 0.35s ease,
+    transform 0.45s ease;
 }
 
 .service:hover .service-num {
@@ -1316,7 +1320,9 @@ main {
   padding: 4px 10px;
   border: 1px solid var(--border-strong);
   border-radius: 999px;
-  transition: border-color 0.3s ease, color 0.3s ease;
+  transition:
+    border-color 0.3s ease,
+    color 0.3s ease;
 }
 
 .service:hover .service-tags li {
@@ -1662,12 +1668,16 @@ main {
   font-weight: 500;
   letter-spacing: 0.02em;
   cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    filter 0.2s ease;
 }
 
 .contact-submit:hover:not(:disabled) {
   transform: translateY(-2px);
-  box-shadow: 0 10px 26px -10px color-mix(in srgb, var(--accent) 65%, transparent);
+  box-shadow: 0 10px 26px -10px
+    color-mix(in srgb, var(--accent) 65%, transparent);
   filter: brightness(1.06);
 }
 
@@ -2138,7 +2148,8 @@ main {
 .skill-group:hover {
   border-color: color-mix(in srgb, var(--accent) 45%, var(--border-strong));
   transform: translateY(-4px);
-  box-shadow: 0 24px 50px -30px color-mix(in srgb, var(--accent) 55%, transparent);
+  box-shadow: 0 24px 50px -30px
+    color-mix(in srgb, var(--accent) 55%, transparent);
 }
 
 /* Gradient top accent, matches the service cards */
@@ -2537,7 +2548,7 @@ main {
      `.lightbox` overlay (a direct child of the section). */
   z-index: -1;
   top: 4%;
-  left: -6%;
+  left: 0;
   width: 46%;
   height: 50%;
   pointer-events: none;
@@ -2551,7 +2562,7 @@ main {
 }
 .section:nth-of-type(even)::before {
   left: auto;
-  right: -6%;
+  right: 0;
   background: radial-gradient(
     50% 50% at 50% 50%,
     color-mix(in srgb, var(--accent-2) 14%, transparent) 0%,

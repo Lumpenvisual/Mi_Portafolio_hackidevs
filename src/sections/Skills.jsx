@@ -13,7 +13,12 @@ const data = {
     groups: [
       {
         label: 'Imagen',
-        items: ['Fotografía documental', 'Retrato', 'Dirección de arte', 'Luz natural y artificial'],
+        items: [
+          'Fotografía documental',
+          'Retrato',
+          'Dirección de arte',
+          'Luz natural y artificial',
+        ],
       },
       {
         label: 'Edición',
@@ -21,7 +26,12 @@ const data = {
       },
       {
         label: 'Narrativa',
-        items: ['Storytelling visual', 'Video documental', 'Guion', 'Composición de escena'],
+        items: [
+          'Storytelling visual',
+          'Video documental',
+          'Guion',
+          'Composición de escena',
+        ],
       },
     ],
   },
@@ -35,7 +45,12 @@ const data = {
     groups: [
       {
         label: 'Image',
-        items: ['Documentary photography', 'Portrait', 'Art direction', 'Natural & artificial light'],
+        items: [
+          'Documentary photography',
+          'Portrait',
+          'Art direction',
+          'Natural & artificial light',
+        ],
       },
       {
         label: 'Editing',
@@ -43,7 +58,12 @@ const data = {
       },
       {
         label: 'Storytelling',
-        items: ['Visual storytelling', 'Documentary video', 'Scriptwriting', 'Scene composition'],
+        items: [
+          'Visual storytelling',
+          'Documentary video',
+          'Scriptwriting',
+          'Scene composition',
+        ],
       },
     ],
   },

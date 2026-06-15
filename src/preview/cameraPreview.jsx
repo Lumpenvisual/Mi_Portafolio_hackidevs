@@ -7,5 +7,5 @@ import CameraHero from '../components/CameraHero'
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <CameraHero />
-  </StrictMode>
+  </StrictMode>,
 )

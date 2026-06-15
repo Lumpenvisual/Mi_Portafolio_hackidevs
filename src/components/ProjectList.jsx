@@ -154,7 +154,9 @@ export default function ProjectList({
                 alt={p.name}
                 loading="lazy"
                 decoding="async"
-                onError={p.videoId ? (e) => handleThumbError(e, p.videoId) : undefined}
+                onError={
+                  p.videoId ? (e) => handleThumbError(e, p.videoId) : undefined
+                }
                 onLoad={(e) => e.currentTarget.classList.add('loaded')}
               />
             )}

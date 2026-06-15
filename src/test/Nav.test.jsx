@@ -4,7 +4,12 @@ import { describe, it, expect, beforeEach } from 'vitest'
 import Nav from '../components/Nav'
 import { AppProvider } from '../lib/AppContext'
 
-const renderNav = () => render(<AppProvider><Nav /></AppProvider>)
+const renderNav = () =>
+  render(
+    <AppProvider>
+      <Nav />
+    </AppProvider>,
+  )
 
 describe('Nav', () => {
   beforeEach(() => {
@@ -24,12 +29,30 @@ describe('Nav', () => {
 
   it('nav links point to correct section anchors', () => {
     renderNav()
-    expect(screen.getByRole('link', { name: 'Sobre mí' })).toHaveAttribute('href', '#about')
-    expect(screen.getByRole('link', { name: 'Servicios' })).toHaveAttribute('href', '#services')
-    expect(screen.getByRole('link', { name: 'Videos' })).toHaveAttribute('href', '#work')
-    expect(screen.getByRole('link', { name: 'Diseño' })).toHaveAttribute('href', '#design')
-    expect(screen.getByRole('link', { name: 'Desarrollo' })).toHaveAttribute('href', '#dev')
-    expect(screen.getByRole('link', { name: 'Contacto' })).toHaveAttribute('href', '#contact')
+    expect(screen.getByRole('link', { name: 'Sobre mí' })).toHaveAttribute(
+      'href',
+      '#about',
+    )
+    expect(screen.getByRole('link', { name: 'Servicios' })).toHaveAttribute(
+      'href',
+      '#services',
+    )
+    expect(screen.getByRole('link', { name: 'Videos' })).toHaveAttribute(
+      'href',
+      '#work',
+    )
+    expect(screen.getByRole('link', { name: 'Diseño' })).toHaveAttribute(
+      'href',
+      '#design',
+    )
+    expect(screen.getByRole('link', { name: 'Desarrollo' })).toHaveAttribute(
+      'href',
+      '#dev',
+    )
+    expect(screen.getByRole('link', { name: 'Contacto' })).toHaveAttribute(
+      'href',
+      '#contact',
+    )
   })
 
   it('theme button has accessible aria-label', () => {
@@ -39,7 +62,9 @@ describe('Nav', () => {
 
   it('lang button shows EN when in Spanish', () => {
     renderNav()
-    expect(screen.getByRole('button', { name: /switch to english/i })).toBeInTheDocument()
+    expect(
+      screen.getByRole('button', { name: /switch to english/i }),
+    ).toBeInTheDocument()
   })
 
   it('switches to English on lang button click', async () => {
@@ -54,11 +79,16 @@ describe('Nav', () => {
     const user = userEvent.setup()
     renderNav()
     await user.click(screen.getByRole('button', { name: /switch to english/i }))
-    expect(screen.getByRole('button', { name: /cambiar a español/i })).toBeInTheDocument()
+    expect(
+      screen.getByRole('button', { name: /cambiar a español/i }),
+    ).toBeInTheDocument()
   })
 
   it('logo link points to #top', () => {
     renderNav()
-    expect(screen.getByRole('link', { name: /jacky/i })).toHaveAttribute('href', '#top')
+    expect(screen.getByRole('link', { name: /jacky/i })).toHaveAttribute(
+      'href',
+      '#top',
+    )
   })
 })

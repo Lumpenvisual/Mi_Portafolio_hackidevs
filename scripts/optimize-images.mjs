@@ -1,9 +1,7 @@
 import sharp from 'sharp'
 import { extname, basename } from 'path'
 
-const targets = [
-  { input: 'public/hackidevs.png', maxSize: 640 },
-]
+const targets = [{ input: 'public/hackidevs.png', maxSize: 640 }]
 
 for (const { input, maxSize } of targets) {
   const ext = extname(input)

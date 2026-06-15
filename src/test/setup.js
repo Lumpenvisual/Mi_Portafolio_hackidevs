@@ -38,7 +38,9 @@ vi.mock('gsap', () => {
 
 // IntersectionObserver not implemented in jsdom
 global.IntersectionObserver = class {
-  constructor(cb) { this._cb = cb }
+  constructor(cb) {
+    this._cb = cb
+  }
   observe() {}
   unobserve() {}
   disconnect() {}

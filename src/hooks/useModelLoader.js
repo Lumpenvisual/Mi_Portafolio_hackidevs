@@ -11,10 +11,19 @@ import { useEffect, useState } from 'react'
 //
 // `basePath` is the folder (e.g. '/models/vintage_slr_camera'); `candidates`
 // are the filenames to probe in order (first one that exists wins).
-const DEFAULT_CANDIDATES = ['scene.gltf', 'scene.glb', 'model.gltf', 'model.glb']
+const DEFAULT_CANDIDATES = [
+  'scene.gltf',
+  'scene.glb',
+  'model.gltf',
+  'model.glb',
+]
 
 export function useModelLoader(basePath, candidates = DEFAULT_CANDIDATES) {
-  const [state, setState] = useState({ model: null, loading: true, error: null })
+  const [state, setState] = useState({
+    model: null,
+    loading: true,
+    error: null,
+  })
   // stable dependency for the candidate list (avoids effect re-runs on new array identity)
   const candKey = candidates.join('|')
 
@@ -82,7 +91,7 @@ export function useModelLoader(basePath, candidates = DEFAULT_CANDIDATES) {
         (err) => {
           if (!disposed) setState({ model: null, loading: false, error: err })
           draco.dispose()
-        }
+        },
       )
     }
 

@@ -27,13 +27,15 @@ test('hero loads with title and CTAs, no critical console errors', async ({
 
 test('all main sections are present', async ({ page }) => {
   await gotoApp(page)
+  // Skills + Career now live inside About (disclosure panels), so they're not
+  // top-level sections; Diseño (#design) + Desarrollo (#dev) sit below Fotografía.
   for (const id of [
     'about',
     'services',
-    'skills',
     'work',
     'fotografia',
-    'career',
+    'design',
+    'dev',
     'contact',
   ]) {
     await expect(page.locator(`#${id}`)).toHaveCount(1)
@@ -43,7 +45,10 @@ test('all main sections are present', async ({ page }) => {
 test('theme toggle switches data-theme', async ({ page }) => {
   await gotoApp(page)
   const before = await page.locator('html').getAttribute('data-theme')
-  await page.getByRole('button', { name: /modo|mode/i }).first().click()
+  await page
+    .getByRole('button', { name: /modo|mode/i })
+    .first()
+    .click()
   await expect
     .poll(() => page.locator('html').getAttribute('data-theme'))
     .not.toBe(before)
@@ -60,11 +65,11 @@ test('language toggle switches ES <-> EN', async ({ page }) => {
   await expect.poll(() => firstNavLink.textContent()).not.toBe(before)
 })
 
-test('nav link jumps to the projects section', async ({ page }) => {
+test('nav link jumps to the videos section', async ({ page }) => {
   await gotoApp(page)
   await page
     .getByRole('navigation', { name: 'Primary' })
-    .getByRole('link', { name: /Proyectos|Work/ })
+    .getByRole('link', { name: /Videos/ })
     .click()
   await expect(page).toHaveURL(/#work$/)
 })
@@ -77,6 +82,30 @@ test('photography renders 8 photos', async ({ page }) => {
 test('contact section is present', async ({ page }) => {
   await gotoApp(page)
   await expect(page.locator('#contact')).toBeVisible()
+})
+
+test('tejidas gallery opens and the close X actually closes it', async ({
+  page,
+}) => {
+  await gotoApp(page)
+  // open the brand-book gallery (the design card opens a lightbox)
+  await page.locator('#design .project-link[role="button"]').first().click()
+  const lightbox = page.locator('.lightbox')
+  await expect(lightbox).toBeVisible()
+  // the close X must be the top element at its spot (it's portalled to <body>,
+  // not trapped under the fixed nav) and must close the modal
+  await page.locator('.lightbox-close').click()
+  await expect(lightbox).toHaveCount(0)
+})
+
+test('About discloses Skills + Career on click', async ({ page }) => {
+  await gotoApp(page)
+  const skillsTrigger = page
+    .locator('#about .about-panel-trigger')
+    .filter({ hasText: /Habilidades|Skills/ })
+  await expect(skillsTrigger).toHaveAttribute('aria-expanded', 'false')
+  await skillsTrigger.click()
+  await expect(skillsTrigger).toHaveAttribute('aria-expanded', 'true')
 })
 
 test.describe('mobile (390px)', () => {
