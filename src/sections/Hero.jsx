@@ -11,7 +11,7 @@ const copy = {
   es: {
     eyebrow: 'Portafolio — 2026',
     // Title is split into lines so each can mask-reveal on load.
-    titleLines: ['Hola,', { text: 'Soy Jacky', emph: true }],
+    titleLines: ['Hola,', { text: 'soy Jacky', emph: true }],
     lede: <>Cuento historias con imágenes y código.</>,
     primaryCta: 'Conóceme',
     linkCta: 'Hablemos',
