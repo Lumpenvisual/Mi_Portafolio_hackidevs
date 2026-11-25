@@ -12,8 +12,20 @@ const baseProjects = [
   { num: '06', videoId: 'hmnJYny92L8', accent: '#4a3f5d' },
 ]
 
-// Reels — YouTube Shorts. Titles taken from each video's oEmbed metadata.
+// Reels — YouTube Shorts, newest first. The first block mirrors the public
+// Shorts tab of the channel (UChEBpjK98xcF6VRMK8fXJSg, synced 2026-11-24);
+// titles are cleaned-up versions of the upload titles. Keep reelTitles (es/en)
+// index-aligned with this array.
 const reelsBase = [
+  { videoId: '8Qel-m_Z7Do', platform: 'YT · Short' },
+  { videoId: 'OyOpxs01_7I', platform: 'YT · Short' },
+  { videoId: 'tYXlG6ggERU', platform: 'YT · Short' },
+  { videoId: 'QR-Ib_6ikIk', platform: 'YT · Short' },
+  { videoId: 'B48cL9SRmYE', platform: 'YT · Short' },
+  { videoId: 'MD0NtElmNSQ', platform: 'YT · Short' },
+  { videoId: 'uN9s4tyUeLM', platform: 'YT · Short' },
+  { videoId: 'l_Fi1brDKB0', platform: 'YT · Short' },
+  { videoId: 'eotWJ5tufmQ', platform: 'YT · Short' },
   { videoId: 'NtAlZCkbkh8', platform: 'YT · Short' },
   { videoId: 'rqbNBqjMtEA', platform: 'YT · Short' },
   { videoId: 'wrhCjN-KxBM', platform: 'YT · Short' },
@@ -38,6 +50,15 @@ const localized = {
       </>
     ),
     reelTitles: [
+      'Video marketing · marca personal',
+      'Video marketing · producto marca blanca',
+      'Video marketing · odontología',
+      'Promo La Gilipolla',
+      'Real estate · edición',
+      'Real estate · edición II',
+      'Reel real estate',
+      'Proceso de edición de un reel',
+      'Real estate',
       'Casa en venta Ricaurte',
       '¿Quiénes son los verdaderos millonarios?',
       'Estilos de vida saludable',
@@ -111,6 +132,15 @@ const localized = {
       </>
     ),
     reelTitles: [
+      'Video marketing · personal brand',
+      'Video marketing · white-label product',
+      'Video marketing · dentistry',
+      'La Gilipolla promo',
+      'Real estate · editing',
+      'Real estate · editing II',
+      'Real estate reel',
+      'Editing process of a reel',
+      'Real estate',
       'Casa en venta Ricaurte',
       'Who are the real millionaires?',
       'Healthy lifestyles',
