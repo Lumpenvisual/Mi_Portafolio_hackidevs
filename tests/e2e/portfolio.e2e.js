@@ -28,13 +28,12 @@ test('hero loads with title and CTAs, no critical console errors', async ({
 test('all main sections are present', async ({ page }) => {
   await gotoApp(page)
   // Skills + Career now live inside About (disclosure panels), so they're not
-  // top-level sections; Diseño (#design) + Desarrollo (#dev) sit below Fotografía.
+  // top-level sections; Desarrollo (#dev) sits below Fotografía (Diseño was removed).
   for (const id of [
     'about',
     'services',
     'work',
     'fotografia',
-    'design',
     'dev',
     'contact',
   ]) {
@@ -84,12 +83,11 @@ test('contact section is present', async ({ page }) => {
   await expect(page.locator('#contact')).toBeVisible()
 })
 
-test('tejidas gallery opens and the close X actually closes it', async ({
+test('photo lightbox opens and the close X actually closes it', async ({
   page,
 }) => {
   await gotoApp(page)
-  // open the brand-book gallery (the design card opens a lightbox)
-  await page.locator('#design .project-link[role="button"]').first().click()
+  await page.locator('#fotografia .foto-btn').first().click()
   const lightbox = page.locator('.lightbox')
   await expect(lightbox).toBeVisible()
   // the close X must be the top element at its spot (it's portalled to <body>,

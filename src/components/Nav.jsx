@@ -7,7 +7,6 @@ const navCopy = {
     services: 'Servicios',
     work: 'Videos',
     fotografia: 'Fotografía',
-    design: 'Diseño',
     dev: 'Desarrollo',
     contact: 'Contacto',
     themeAria: (t) =>
@@ -21,7 +20,6 @@ const navCopy = {
     services: 'Services',
     work: 'Videos',
     fotografia: 'Photography',
-    design: 'Design',
     dev: 'Development',
     contact: 'Contact',
     themeAria: (t) =>
@@ -32,15 +30,7 @@ const navCopy = {
   },
 }
 
-const NAV_IDS = [
-  'about',
-  'services',
-  'work',
-  'fotografia',
-  'design',
-  'dev',
-  'contact',
-]
+const NAV_IDS = ['about', 'services', 'work', 'fotografia', 'dev', 'contact']
 
 const SunIcon = () => (
   <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -121,7 +111,6 @@ export default function Nav() {
     { href: '#services', label: t.services, id: 'services' },
     { href: '#work', label: t.work, id: 'work' },
     { href: '#fotografia', label: t.fotografia, id: 'fotografia' },
-    { href: '#design', label: t.design, id: 'design' },
     { href: '#dev', label: t.dev, id: 'dev' },
     { href: '#contact', label: t.contact, id: 'contact' },
   ]

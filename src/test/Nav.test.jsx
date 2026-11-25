@@ -22,7 +22,9 @@ describe('Nav', () => {
     expect(screen.getByRole('link', { name: 'Servicios' })).toBeInTheDocument()
     expect(screen.getByRole('link', { name: 'Videos' })).toBeInTheDocument()
     expect(screen.getByRole('link', { name: 'Fotografía' })).toBeInTheDocument()
-    expect(screen.getByRole('link', { name: 'Diseño' })).toBeInTheDocument()
+    expect(
+      screen.queryByRole('link', { name: 'Diseño' }),
+    ).not.toBeInTheDocument()
     expect(screen.getByRole('link', { name: 'Desarrollo' })).toBeInTheDocument()
     expect(screen.getByRole('link', { name: 'Contacto' })).toBeInTheDocument()
   })
@@ -40,10 +42,6 @@ describe('Nav', () => {
     expect(screen.getByRole('link', { name: 'Videos' })).toHaveAttribute(
       'href',
       '#work',
-    )
-    expect(screen.getByRole('link', { name: 'Diseño' })).toHaveAttribute(
-      'href',
-      '#design',
     )
     expect(screen.getByRole('link', { name: 'Desarrollo' })).toHaveAttribute(
       'href',
