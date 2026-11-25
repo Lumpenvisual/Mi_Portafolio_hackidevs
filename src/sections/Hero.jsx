@@ -51,10 +51,16 @@ export default function Hero() {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
     let ctx
     let killed = false
+    let safety = 0
     import('gsap').then(({ gsap }) => {
       if (killed || !rootRef.current) return
       ctx = gsap.context(() => {
         const tl = gsap.timeline({ defaults: { ease: 'power3.out' } })
+        // Safety net: on a starved main thread (slow device, software WebGL
+        // for the 3D camera) GSAP's lag smoothing can stretch this ~2s intro
+        // into many seconds, leaving the CTAs invisible. Snap to the end state
+        // if it hasn't finished in time.
+        safety = window.setTimeout(() => tl.progress(1), 2600)
         tl.from('.hero-eyebrow', { y: 16, autoAlpha: 0, duration: 0.6 })
           .from(
             '.hero-line-inner',
@@ -81,6 +87,7 @@ export default function Hero() {
     })
     return () => {
       killed = true
+      window.clearTimeout(safety)
       if (ctx) ctx.revert()
     }
   }, [])
