@@ -12,7 +12,7 @@ const baseProjects = [
   { num: '06', videoId: 'hmnJYny92L8', accent: '#4a3f5d' },
 ]
 
-// Reels — YouTube Shorts (39), grouped for the shelf:
+// Reels — YouTube Shorts (45), grouped for the shelf:
 //   ba   → Antes y después: white-background split-screen edits (before/after)
 //   ai   → Avatares con IA: AI-generated avatar pieces
 //   reel → everything else
@@ -44,7 +44,48 @@ const reelsBase = [
     en: 'Editing process of a reel',
   },
   { videoId: 'eotWJ5tufmQ', group: 'ba', es: 'Real estate', en: 'Real estate' },
-  { videoId: '7DhxVtRFuYI', group: 'ai', es: 'Reel avatar', en: 'Avatar reel' },
+  {
+    videoId: '7DhxVtRFuYI',
+    group: 'ai',
+    es: 'Reel avatar · 01',
+    en: 'Avatar reel · 01',
+  },
+  {
+    videoId: 'Z-LG5UVXeso',
+    group: 'ai',
+    es: 'APEX IA · 01',
+    en: 'APEX AI · 01',
+  },
+  {
+    videoId: 'W-DJnFDVxJo',
+    group: 'ai',
+    es: 'APEX IA · 02',
+    en: 'APEX AI · 02',
+  },
+  {
+    videoId: 'ERlh3ZaOOuU',
+    group: 'ai',
+    es: 'APEX IA · Halloween 01',
+    en: 'APEX AI · Halloween 01',
+  },
+  {
+    videoId: 'NQ2Pc2QPlc0',
+    group: 'ai',
+    es: 'APEX IA · Halloween 02',
+    en: 'APEX AI · Halloween 02',
+  },
+  {
+    videoId: '3LTignHsNWY',
+    group: 'ai',
+    es: 'Reel avatar · 02',
+    en: 'Avatar reel · 02',
+  },
+  {
+    videoId: 'TXt6Z6YN7QM',
+    group: 'ai',
+    es: 'Reel avatar · 03',
+    en: 'Avatar reel · 03',
+  },
   {
     videoId: 'XGEJHvUsJQ0',
     group: 'ai',
