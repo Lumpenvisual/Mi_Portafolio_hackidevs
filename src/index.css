@@ -15,10 +15,12 @@
   --accent: #5a52d5;
   --accent-hover: #4840bf;
   --accent-soft: #e8e4f7;
-  --accent-2: #e67e9b;
-  --accent-2-soft: #f8e3ea;
+  /* Single-accent palette (2026-11-24): the old guava pink secondary is
+     retired. --accent-2 is kept as an alias so existing rules resolve. */
+  --accent-2: var(--accent);
+  --accent-2-soft: var(--accent-soft);
   --thumb-overlay: rgba(20, 16, 36, 0.6);
-  --firefly: #cf5e84; /* deeper guava so the glow reads on the cream bg */
+  --firefly: #7b73d9; /* accent-family glow that reads on the cream bg */
 }
 
 [data-theme='dark'] {
@@ -33,10 +35,10 @@
   --accent: #8e86f0;
   --accent-hover: #a8a1f7;
   --accent-soft: #241f3a;
-  --accent-2: #f0a0b8;
-  --accent-2-soft: #321f2b;
+  --accent-2: var(--accent);
+  --accent-2-soft: var(--accent-soft);
   --thumb-overlay: rgba(0, 0, 0, 0.55);
-  --firefly: #f3b0c4; /* bright guava glow on the dark bg */
+  --firefly: #c9c3f7; /* soft lavender glow on the dark bg */
 }
 
 :root {
@@ -220,3 +222,12 @@ svg {
 
 /* (Tailwind + shadcn token system removed 2026-06-12 — the site uses plain
    CSS with the design tokens in :root / [data-theme] above.) */
+
+/* Full-bleed pieces (the hero camera bleeding off the right edge, the
+   100vw pinned Videos stage) would otherwise add a few px of sideways
+   scroll on desktops with a classic scrollbar. `clip` (unlike `hidden`)
+   doesn't create a scroll container, so GSAP pinning keeps working. */
+html,
+body {
+  overflow-x: clip;
+}

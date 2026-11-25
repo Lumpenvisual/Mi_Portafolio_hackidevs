@@ -4,10 +4,24 @@ import { useApp } from '../lib/AppContext'
 import { useReveal } from '../hooks/useReveal'
 
 // foto-02 y foto-04 quedaron fuera de la selección (los archivos siguen en
-// /public/fotos por si se reincorporan). Quedan 8 → grid 4×2 parejo.
-const PHOTO_NUMS = [1, 3, 5, 6, 7, 8, 9, 10]
-const PHOTOS = PHOTO_NUMS.map((n) => ({
-  src: `/fotos/foto-${String(n).padStart(2, '0')}.webp`,
+// /public/fotos por si se reincorporan).
+// Editorial montage: the ORDER below is the reading order (and the lightbox
+// order). `shape` picks the slot in the asymmetric grid (see App.css
+// .foto-item--*). `pos` is the object-position for the crop, since the
+// source files are square. Add `caption: { es, en }` (e.g. lugar · año) to
+// show a line under the plate number.
+const PHOTOS = [
+  { n: 7, shape: 'lead', pos: '40% 50%' },
+  { n: 9, shape: 'wide', pos: '50% 35%' },
+  { n: 6, shape: 'wide', pos: '50% 60%' },
+  { n: 1, shape: 'land', pos: '50% 70%' },
+  { n: 8, shape: 'tall', pos: '45% 50%' },
+  { n: 5, shape: 'square', pos: '40% 60%' },
+  { n: 10, shape: 'pano', pos: '55% 40%' },
+  { n: 3, shape: 'land', pos: '50% 45%' },
+].map((p) => ({
+  ...p,
+  src: `/fotos/foto-${String(p.n).padStart(2, '0')}.webp`,
 }))
 
 const copy = {
@@ -117,7 +131,7 @@ export default function Fotografia() {
 
       <ul ref={gridRef} data-reveal className="foto-bento">
         {PHOTOS.map((p, i) => (
-          <li key={p.src} className="foto-item">
+          <li key={p.src} className={`foto-item foto-item--${p.shape}`}>
             <button
               type="button"
               className="foto-btn"
@@ -130,8 +144,17 @@ export default function Fotografia() {
                 alt={t.alt(i + 1)}
                 loading="lazy"
                 decoding="async"
+                style={{ objectPosition: p.pos }}
                 onLoad={handleThumbLoad}
               />
+              <span className="foto-plate" aria-hidden="true">
+                <span className="foto-plate-num">
+                  N.º {String(i + 1).padStart(2, '0')}
+                </span>
+                {p.caption && (
+                  <span className="foto-plate-cap">{p.caption[lang]}</span>
+                )}
+              </span>
             </button>
           </li>
         ))}

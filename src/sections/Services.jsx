@@ -1,7 +1,6 @@
 import { useEffect, useRef } from 'react'
 import { useApp } from '../lib/AppContext'
 import { useReveal } from '../hooks/useReveal'
-import { useSpotlight } from '../hooks/useSpotlight'
 
 const data = {
   es: {
@@ -14,42 +13,42 @@ const data = {
     services: [
       {
         num: '01',
-        title: 'Producción & Edición de Video',
+        title: 'Producción y edición de video',
         description:
           'Corto, documental, reel o pieza institucional. Storytelling que conecta desde la preproducción hasta la entrega final.',
         tags: ['Producción', 'Edición', 'Motion graphics', 'Sonido'],
       },
       {
         num: '02',
-        title: 'Imagen & Video Generativo con IA',
+        title: 'Imagen y video generativo con IA',
         description:
           'Conceptos visuales, assets y piezas audiovisuales generadas con herramientas de inteligencia artificial.',
         tags: ['Midjourney', 'ComfyUI', 'IA Generativa'],
       },
       {
         num: '03',
-        title: 'Automatización de Procesos con IA',
+        title: 'Automatización de procesos con IA',
         description:
           'Flujos de trabajo que ahorran horas: automatización de contenido, datos y tareas repetitivas.',
         tags: ['n8n', 'Make', 'Python', 'LLMs'],
       },
       {
         num: '04',
-        title: 'Fotografía & Dirección de Arte',
+        title: 'Fotografía y dirección de arte',
         description:
           'Sesiones fotográficas con dirección visual coherente para marcas, eventos y proyectos editoriales.',
         tags: ['Retrato', 'Editorial', 'Arte', 'Marcas'],
       },
       {
         num: '05',
-        title: 'Marketing Automatizado',
+        title: 'Marketing automatizado',
         description:
           'Campañas digitales conectadas con herramientas que trabajan las 24 horas.',
         tags: ['Email', 'Social', 'SEO', 'Analytics'],
       },
       {
         num: '06',
-        title: 'Gestión Cultural & Proyectos',
+        title: 'Gestión cultural y de proyectos',
         description:
           'Coordinación de proyectos culturales, festivales y residencias con enfoque en comunidad e impacto.',
         tags: ['Eventos', 'Cultura', 'Gestión', 'Medios'],
@@ -66,42 +65,42 @@ const data = {
     services: [
       {
         num: '01',
-        title: 'Video Production & Editing',
+        title: 'Video production and editing',
         description:
           'Short film, documentary, reel or institutional piece. Storytelling that connects from pre-production to final delivery.',
         tags: ['Production', 'Editing', 'Motion graphics', 'Sound'],
       },
       {
         num: '02',
-        title: 'AI-Generated Image & Video',
+        title: 'AI-generated image and video',
         description:
           'Visual concepts, assets and audiovisual pieces created with artificial intelligence tools.',
         tags: ['Midjourney', 'ComfyUI', 'Generative AI'],
       },
       {
         num: '03',
-        title: 'AI Process Automation',
+        title: 'AI process automation',
         description:
           'Workflows that save hours: content automation, data and repetitive tasks.',
         tags: ['n8n', 'Make', 'Python', 'LLMs'],
       },
       {
         num: '04',
-        title: 'Photography & Art Direction',
+        title: 'Photography and art direction',
         description:
           'Photo sessions with coherent visual direction for brands, events and editorial projects.',
         tags: ['Portrait', 'Editorial', 'Art', 'Brands'],
       },
       {
         num: '05',
-        title: 'Marketing Automation',
+        title: 'Marketing automation',
         description:
           'Digital campaigns connected with tools that work around the clock.',
         tags: ['Email', 'Social', 'SEO', 'Analytics'],
       },
       {
         num: '06',
-        title: 'Cultural Project Management',
+        title: 'Cultural project management',
         description:
           'Coordination of cultural projects, festivals and residencies focused on community and impact.',
         tags: ['Events', 'Culture', 'Management', 'Media'],
@@ -114,7 +113,6 @@ export default function Services() {
   const { lang } = useApp()
   const t = data[lang]
   const headRef = useReveal()
-  const spot = useSpotlight()
   const gridRef = useRef(null)
 
   // Staggered card entrance with anime.js when the grid scrolls into view.
@@ -170,20 +168,22 @@ export default function Services() {
 
       <h2 className="section-title">{t.title}</h2>
 
-      <div ref={gridRef} className="services-grid">
+      <ol ref={gridRef} className="services-grid">
         {t.services.map((s) => (
-          <article className="service card-spotlight" key={s.num} {...spot}>
+          <li className="service" key={s.num}>
             <span className="service-num">{s.num}</span>
             <h3 className="service-title">{s.title}</h3>
-            <p className="service-desc">{s.description}</p>
-            <ul className="service-tags">
-              {s.tags.map((tag) => (
-                <li key={tag}>{tag}</li>
-              ))}
-            </ul>
-          </article>
+            <div className="service-body">
+              <p className="service-desc">{s.description}</p>
+              <ul className="service-tags">
+                {s.tags.map((tag) => (
+                  <li key={tag}>{tag}</li>
+                ))}
+              </ul>
+            </div>
+          </li>
         ))}
-      </div>
+      </ol>
     </section>
   )
 }

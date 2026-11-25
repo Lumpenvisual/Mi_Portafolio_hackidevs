@@ -1214,125 +1214,130 @@ main {
 }
 
 /* =========================================================
-   SERVICES — uniform 2-column grid (all cards equal)
+   SERVICES — editorial index (2026-11-24)
+   A ruled list instead of a card grid: each row reads
+   number · title · description/tags, like a magazine contents
+   page. Hover slides the title and lights it in the accent.
    ========================================================= */
 .services-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 16px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--border-strong);
 }
 
 .service {
   position: relative;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  padding: 34px 30px;
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  background: var(--bg-elevated);
-  transition:
-    border-color 0.3s ease,
-    transform 0.35s ease,
-    box-shadow 0.35s ease;
+  display: grid;
+  grid-template-columns: 4.5rem minmax(0, 1.1fr) minmax(0, 1fr);
+  column-gap: clamp(20px, 3vw, 48px);
+  align-items: baseline;
+  padding: clamp(26px, 3.2vw, 40px) 4px;
+  border-bottom: 1px solid var(--border);
+  transition: background-color 0.35s ease;
 }
 
 .service:hover {
-  border-color: color-mix(in srgb, var(--accent) 45%, var(--border-strong));
-  transform: translateY(-4px);
-  box-shadow: 0 24px 50px -30px
-    color-mix(in srgb, var(--accent) 60%, transparent);
+  background: color-mix(in srgb, var(--accent) 5%, transparent);
 }
 
-/* Gradient top accent that grows in from the left on hover */
-.service::before {
+/* Accent hairline that draws across the row's foot on hover */
+.service::after {
   content: '';
   position: absolute;
-  inset: 0 0 auto 0;
-  height: 2px;
-  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 1px;
+  background: var(--accent);
   transform: scaleX(0);
   transform-origin: left;
-  transition: transform 0.45s ease;
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
 }
-
-.service:hover::before {
+.service:hover::after {
   transform: scaleX(1);
 }
 
-/* Oversized ghost-number watermark. Higher-specificity selector so the
-   absolute positioning wins over .card-spotlight > * { position: relative }. */
 .service .service-num {
-  position: absolute;
-  top: 12px;
-  right: 22px;
-  font-family: var(--font-display);
-  font-style: italic;
-  font-size: 56px;
-  line-height: 1;
+  font-family: var(--font-terminal);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  font-variant-numeric: tabular-nums;
   color: var(--accent);
-  opacity: 0.12;
-  pointer-events: none;
-  transition:
-    opacity 0.35s ease,
-    transform 0.45s ease;
-}
-
-.service:hover .service-num {
-  opacity: 0.28;
-  transform: translateY(-3px);
 }
 
 .service-title {
   font-family: var(--font-display);
-  font-weight: 700;
-  font-size: clamp(22px, 2.4vw, 30px);
-  line-height: 1.15;
-  letter-spacing: -0.015em;
+  font-weight: 600;
+  font-size: clamp(1.5rem, 2.6vw, 2.25rem);
+  line-height: 1.08;
+  letter-spacing: -0.025em;
   color: var(--ink);
   margin: 0;
-  padding-right: 52px;
+  text-wrap: balance;
+  transition:
+    color 0.3s ease,
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.service:hover .service-title {
+  color: var(--accent);
+  transform: translateX(8px);
+}
+
+.service-body {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
 }
 
 .service-desc {
   font-size: 15px;
-  line-height: 1.6;
+  line-height: 1.65;
   color: var(--ink-soft);
   margin: 0;
-  max-width: 50ch;
+  max-width: 46ch;
 }
 
 .service-tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
+  gap: 4px 14px;
   list-style: none;
-  margin: auto 0 0;
-  padding: 8px 0 0;
+  margin: 0;
+  padding: 0;
 }
 
 .service-tags li {
+  font-family: var(--font-terminal);
   font-size: 11px;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--muted);
-  padding: 4px 10px;
-  border: 1px solid var(--border-strong);
-  border-radius: 999px;
-  transition:
-    border-color 0.3s ease,
-    color 0.3s ease;
+}
+.service-tags li:not(:last-child)::after {
+  content: '/';
+  margin-left: 14px;
+  color: var(--border-strong);
 }
 
-.service:hover .service-tags li {
-  border-color: color-mix(in srgb, var(--accent) 45%, var(--border-strong));
-  color: var(--ink-soft);
+@media (max-width: 900px) {
+  .service {
+    grid-template-columns: 3rem minmax(0, 1fr);
+    row-gap: 14px;
+  }
+  .service-body {
+    grid-column: 2;
+  }
 }
 
-@media (max-width: 768px) {
-  .services-grid {
-    grid-template-columns: 1fr;
+@media (prefers-reduced-motion: reduce) {
+  .service-title,
+  .service::after {
+    transition: none;
+  }
+  .service:hover .service-title {
+    transform: none;
   }
 }
 
@@ -1913,24 +1918,49 @@ main {
 }
 
 /* =========================================================
-   FOTOGRAFÍA — bento grid + lightbox
+   FOTOGRAFÍA — editorial montage + lightbox
+   An asymmetric 12-col grid on a fixed row unit: one large lead
+   frame, then mixed landscape / portrait / panoramic slots so it
+   reads like a photobook spread rather than a thumbnail grid.
+   Slots are set by .foto-item--{shape} (see Fotografia.jsx).
    ========================================================= */
 .foto-bento {
   list-style: none;
   margin: 0;
   padding: 0;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 12px;
+  grid-template-columns: repeat(12, 1fr);
+  grid-auto-rows: clamp(110px, 12.5vw, 172px);
+  grid-auto-flow: dense;
+  gap: clamp(8px, 1vw, 14px);
 }
 
 .foto-item {
   position: relative;
   overflow: hidden;
-  border-radius: 6px;
+  border-radius: 4px;
   background: var(--bg-elevated);
-  border: 1px solid var(--border);
-  aspect-ratio: 1 / 1;
+  grid-column: span 4;
+  grid-row: span 2;
+}
+.foto-item--lead {
+  grid-column: span 7;
+  grid-row: span 4;
+}
+.foto-item--wide {
+  grid-column: span 5;
+}
+.foto-item--land {
+  grid-column: span 5;
+}
+.foto-item--tall {
+  grid-column: span 3;
+}
+.foto-item--square {
+  grid-column: span 4;
+}
+.foto-item--pano {
+  grid-column: span 7;
 }
 
 .foto-btn {
@@ -1951,25 +1981,78 @@ main {
   object-fit: cover;
   opacity: 0;
   transition:
-    transform 0.5s ease,
-    opacity 0.4s ease;
+    transform 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.4s ease,
+    filter 0.6s ease;
 }
 .foto-thumb.loaded {
   opacity: 1;
 }
 .foto-item:hover .foto-thumb {
-  transform: scale(1.05);
+  transform: scale(1.04);
 }
 
-@media (max-width: 900px) {
+/* Plate label: a small mono figure number (+ optional caption) on a
+   soft gradient at the foot of each frame — always on, brightens on hover. */
+.foto-plate {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  padding: 28px 14px 12px;
+  background: linear-gradient(to top, rgba(8, 7, 12, 0.62), transparent);
+  color: rgba(255, 255, 255, 0.78);
+  font-family: var(--font-terminal);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  text-align: left;
+  pointer-events: none;
+  transition: color 0.3s ease;
+}
+.foto-item:hover .foto-plate,
+.foto-btn:focus-visible .foto-plate {
+  color: #fff;
+}
+.foto-plate-cap {
+  letter-spacing: 0.08em;
+  text-transform: none;
+  font-family: var(--font-sans);
+  font-size: 12px;
+}
+
+@media (max-width: 768px) {
   .foto-bento {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
+    grid-auto-rows: 44vw;
+  }
+  .foto-item,
+  .foto-item--wide,
+  .foto-item--land,
+  .foto-item--tall,
+  .foto-item--square {
+    grid-column: span 1;
+    grid-row: span 1;
+  }
+  .foto-item--lead {
+    grid-column: span 2;
+    grid-row: span 2;
+  }
+  .foto-item--pano {
+    grid-column: span 2;
+    grid-row: span 1;
   }
 }
 
-@media (max-width: 480px) {
-  .foto-bento {
-    grid-template-columns: repeat(2, 1fr);
+@media (prefers-reduced-motion: reduce) {
+  .foto-thumb {
+    transition: none;
+  }
+  .foto-item:hover .foto-thumb {
+    transform: none;
   }
 }
 
@@ -2226,14 +2309,9 @@ main {
   pointer-events: none;
   background:
     radial-gradient(
-      58% 68% at 72% 44%,
-      color-mix(in srgb, var(--accent) 28%, transparent) 0%,
+      58% 68% at 72% 46%,
+      color-mix(in srgb, var(--accent) 22%, transparent) 0%,
       transparent 62%
-    ),
-    radial-gradient(
-      46% 56% at 80% 66%,
-      color-mix(in srgb, var(--accent-2) 20%, transparent) 0%,
-      transparent 58%
     ),
     radial-gradient(
       130% 120% at 50% -8%,
@@ -2491,48 +2569,16 @@ main {
   color: var(--accent);
 }
 
-/* ---- Ambient stage depth: a soft glow pooled near each
-   section's heading, alternating side. Theme-aware + subtle so
-   light mode stays clean. Sits behind the content. ---- */
+/* ---- (Removed 2026-11-24) The per-section ambient glows
+   (.section::before) were dropped for a calmer, single-accent
+   palette — depth now comes from the film grain + photography. */
 .section {
   isolation: isolate;
-}
-.section::before {
-  content: '';
-  position: absolute;
-  /* -1 keeps the glow behind the section's own content. `.section` sets
-     isolation:isolate above, so this stays contained in the section's
-     stacking context (it never sinks behind the page) and we don't need to
-     lift every child with z-index — which previously clobbered the fixed
-     `.lightbox` overlay (a direct child of the section). */
-  z-index: -1;
-  top: 4%;
-  left: 0;
-  width: 46%;
-  height: 50%;
-  pointer-events: none;
-  background: radial-gradient(
-    50% 50% at 50% 50%,
-    color-mix(in srgb, var(--accent) 16%, transparent) 0%,
-    transparent 70%
-  );
-  filter: blur(20px);
-  opacity: 0.75;
-}
-.section:nth-of-type(even)::before {
-  left: auto;
-  right: 0;
-  background: radial-gradient(
-    50% 50% at 50% 50%,
-    color-mix(in srgb, var(--accent-2) 14%, transparent) 0%,
-    transparent 70%
-  );
 }
 
 /* ---- Unified card glow: every interactive card lifts and
    gains an accent halo + border on hover, coherent across
    Services, Projects, Reels, Career. ---- */
-.service,
 .reel-card,
 .project-link,
 .timeline-row {
@@ -2541,12 +2587,11 @@ main {
     box-shadow 0.3s ease,
     border-color 0.3s ease;
 }
-.service:hover,
 .reel-card:hover,
 .project-link:hover {
   box-shadow:
-    0 18px 50px -22px color-mix(in srgb, var(--accent) 60%, transparent),
-    0 0 0 1px color-mix(in srgb, var(--accent) 30%, transparent);
+    0 18px 40px -26px color-mix(in srgb, var(--accent) 40%, transparent),
+    0 0 0 1px color-mix(in srgb, var(--accent) 26%, transparent);
 }
 
 /* ---- Contact: a quiet glow behind the big closing title ---- */
@@ -2878,4 +2923,36 @@ html.cursor-hover .cursor-ring {
   line-height: 1.1;
   margin: 0 0 36px;
   max-width: none;
+}
+
+/* =========================================================
+   FILM GRAIN — a fixed, static noise layer over the whole page
+   (SVG feTurbulence, no JS / no deps). Breaks the flat digital
+   surface with a photographic texture. Static, so it's fine under
+   reduced motion; pointer-events off so it never blocks input.
+   ========================================================= */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 250; /* above content + lightbox, below scroll bar (300) + cursor */
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.5  0 0 0 0 0.5  0 0 0 0 0.5  0 0 0 0.9 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 220px 220px;
+  opacity: 0.07;
+  mix-blend-mode: overlay;
+}
+[data-theme='light'] body::after,
+:root:not([data-theme='dark']) body::after {
+  opacity: 0.05;
+  mix-blend-mode: multiply;
+}
+[data-theme='dark'] body::after {
+  opacity: 0.07;
+  mix-blend-mode: overlay;
+}
+@media print {
+  body::after {
+    display: none;
+  }
 }
