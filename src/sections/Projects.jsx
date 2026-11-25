@@ -10,6 +10,9 @@ const baseProjects = [
   { num: '04', videoId: '9dQOVCt28E8', accent: '#a87836' },
   { num: '05', videoId: 'ig_583LphJU', accent: '#3f5d6b' },
   { num: '06', videoId: 'hmnJYny92L8', accent: '#4a3f5d' },
+  { num: '07', videoId: 'Vxf5bPYRVE0', accent: '#5b4a3f' },
+  { num: '08', videoId: 'eoIdupSK13U', accent: '#6b3f4a' },
+  { num: '09', videoId: '5BTBSCyh89w', accent: '#3f5b4a' },
 ]
 
 // Reels — YouTube Shorts (45), grouped for the shelf:
@@ -308,6 +311,30 @@ const localized = {
           'Registro audiovisual de Mandrágora, proyecto cultural que cruza collage y música en vivo. Atmósfera, ritmo y memoria de una noche irrepetible.',
         tags: ['Registro', 'Cultura', 'Música'],
       },
+      {
+        name: 'Fragmentos de podcast',
+        subtitle: 'Cortes para redes',
+        role: 'Grabación y edición',
+        description:
+          'Grabación y edición de fragmentos de un podcast: momentos clave de la conversación en piezas cortas.',
+        tags: ['Podcast', 'Grabación', 'Edición'],
+      },
+      {
+        name: 'Resumen de evento',
+        subtitle: 'Taller con mujeres en cárcel — Hermosillo, México',
+        role: 'Registro de evento',
+        description:
+          'Grabación y edición del resumen de un taller con mujeres privadas de la libertad en Hermosillo, México.',
+        tags: ['Registro', 'Edición', 'Impacto social'],
+      },
+      {
+        name: 'Certificado TurboSteps',
+        subtitle: 'Activación de campaña',
+        role: 'Edición',
+        description:
+          'Edición de un video para la activación de una campaña. Cámara y sonido a cargo de otro equipo.',
+        tags: ['Campaña', 'Edición', 'Marca'],
+      },
     ],
   },
   en: {
@@ -377,6 +404,30 @@ const localized = {
         description:
           'Audiovisual documentation of Mandrágora, a cultural project where collage meets live music. Atmosphere, rhythm and the memory of a one-of-a-kind night.',
         tags: ['Documentation', 'Culture', 'Music'],
+      },
+      {
+        name: 'Podcast clips',
+        subtitle: 'Cuts for social media',
+        role: 'Recording & editing',
+        description:
+          'Recording and editing of podcast clips: key moments of the conversation in short pieces.',
+        tags: ['Podcast', 'Recording', 'Editing'],
+      },
+      {
+        name: 'Event recap',
+        subtitle: 'Workshop with women in prison — Hermosillo, Mexico',
+        role: 'Event documentation',
+        description:
+          'Recording and editing of the recap of a workshop with incarcerated women in Hermosillo, Mexico.',
+        tags: ['Documentation', 'Editing', 'Social impact'],
+      },
+      {
+        name: 'TurboSteps certificate',
+        subtitle: 'Campaign activation',
+        role: 'Editing',
+        description:
+          'Editing of a video for a campaign activation. Camera and sound by another team.',
+        tags: ['Campaign', 'Editing', 'Brand'],
       },
     ],
   },
