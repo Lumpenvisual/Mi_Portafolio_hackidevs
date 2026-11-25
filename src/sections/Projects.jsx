@@ -12,27 +12,191 @@ const baseProjects = [
   { num: '06', videoId: 'hmnJYny92L8', accent: '#4a3f5d' },
 ]
 
-// Reels — YouTube Shorts, newest first. The first block mirrors the public
-// Shorts tab of the channel (UChEBpjK98xcF6VRMK8fXJSg, synced 2026-11-24);
-// titles are cleaned-up versions of the upload titles. Keep reelTitles (es/en)
-// index-aligned with this array.
+// Reels — YouTube Shorts (39), grouped for the shelf:
+//   ba   → Antes y después: white-background split-screen edits (before/after)
+//   ai   → Avatares con IA: AI-generated avatar pieces
+//   reel → everything else
+// Each group renders sorted by its localized title (see REEL_GROUPS below).
+// Some APEX shorts are unlisted on YouTube (they play from the link).
 const reelsBase = [
-  { videoId: '8Qel-m_Z7Do', platform: 'YT · Short' },
-  { videoId: 'OyOpxs01_7I', platform: 'YT · Short' },
-  { videoId: 'tYXlG6ggERU', platform: 'YT · Short' },
-  { videoId: 'QR-Ib_6ikIk', platform: 'YT · Short' },
-  { videoId: 'B48cL9SRmYE', platform: 'YT · Short' },
-  { videoId: 'MD0NtElmNSQ', platform: 'YT · Short' },
-  { videoId: 'uN9s4tyUeLM', platform: 'YT · Short' },
-  { videoId: 'l_Fi1brDKB0', platform: 'YT · Short' },
-  { videoId: 'eotWJ5tufmQ', platform: 'YT · Short' },
-  { videoId: 'NtAlZCkbkh8', platform: 'YT · Short' },
-  { videoId: 'rqbNBqjMtEA', platform: 'YT · Short' },
-  { videoId: 'wrhCjN-KxBM', platform: 'YT · Short' },
-  { videoId: 'GAcKzQ28XI0', platform: 'YT · Short' },
-  { videoId: 'octP-msK8pY', platform: 'YT · Short' },
-  { videoId: 'ilzk5sFPpFE', platform: 'YT · Short' },
+  {
+    videoId: '8Qel-m_Z7Do',
+    group: 'ba',
+    es: 'Video marketing · marca personal',
+    en: 'Video marketing · personal brand',
+  },
+  {
+    videoId: 'OyOpxs01_7I',
+    group: 'ba',
+    es: 'Video marketing · producto marca blanca',
+    en: 'Video marketing · white-label product',
+  },
+  {
+    videoId: 'tYXlG6ggERU',
+    group: 'ba',
+    es: 'Video marketing · odontología',
+    en: 'Video marketing · dentistry',
+  },
+  {
+    videoId: 'l_Fi1brDKB0',
+    group: 'ba',
+    es: 'Proceso de edición de un reel',
+    en: 'Editing process of a reel',
+  },
+  { videoId: 'eotWJ5tufmQ', group: 'ba', es: 'Real estate', en: 'Real estate' },
+  { videoId: '7DhxVtRFuYI', group: 'ai', es: 'Reel avatar', en: 'Avatar reel' },
+  {
+    videoId: 'XGEJHvUsJQ0',
+    group: 'ai',
+    es: 'Generación de avatar',
+    en: 'Avatar generation',
+  },
+  {
+    videoId: 'QR-Ib_6ikIk',
+    group: 'reel',
+    es: 'Promo La Gilipolla',
+    en: 'La Gilipolla promo',
+  },
+  {
+    videoId: 'B48cL9SRmYE',
+    group: 'reel',
+    es: 'Real estate · edición',
+    en: 'Real estate · editing',
+  },
+  {
+    videoId: 'MD0NtElmNSQ',
+    group: 'reel',
+    es: 'Real estate · edición II',
+    en: 'Real estate · editing II',
+  },
+  {
+    videoId: 'uN9s4tyUeLM',
+    group: 'reel',
+    es: 'Reel real estate',
+    en: 'Real estate reel',
+  },
+  {
+    videoId: 'NtAlZCkbkh8',
+    group: 'reel',
+    es: 'Casa en venta Ricaurte',
+    en: 'Casa en venta Ricaurte',
+  },
+  {
+    videoId: 'rqbNBqjMtEA',
+    group: 'reel',
+    es: '¿Quiénes son los verdaderos millonarios?',
+    en: 'Who are the real millionaires?',
+  },
+  {
+    videoId: 'wrhCjN-KxBM',
+    group: 'reel',
+    es: 'Estilos de vida saludable',
+    en: 'Healthy lifestyles',
+  },
+  {
+    videoId: 'GAcKzQ28XI0',
+    group: 'reel',
+    es: 'Alquimia con tijeras',
+    en: 'Alchemy with scissors',
+  },
+  {
+    videoId: 'octP-msK8pY',
+    group: 'reel',
+    es: 'Blusa Mily Pink',
+    en: 'Blusa Mily Pink',
+  },
+  {
+    videoId: 'ilzk5sFPpFE',
+    group: 'reel',
+    es: 'Reel para redes sociales',
+    en: 'Reel for social media',
+  },
+  {
+    videoId: 'AovDubqG0wE',
+    group: 'reel',
+    es: 'ZONADENT · 01',
+    en: 'ZONADENT · 01',
+  },
+  {
+    videoId: '-TTzOwwXxKM',
+    group: 'reel',
+    es: 'ZONADENT · 02',
+    en: 'ZONADENT · 02',
+  },
+  {
+    videoId: '6wewrbanfxw',
+    group: 'reel',
+    es: 'Posada · 01',
+    en: 'Posada · 01',
+  },
+  {
+    videoId: 'kMnqQhTWnCw',
+    group: 'reel',
+    es: 'Posada · 02',
+    en: 'Posada · 02',
+  },
+  { videoId: 'YL_9e7PdlmQ', group: 'reel', es: 'APEX · 01', en: 'APEX · 01' },
+  { videoId: 'urrgWz-EmLY', group: 'reel', es: 'APEX · 02', en: 'APEX · 02' },
+  { videoId: 's2FjUSSAkKQ', group: 'reel', es: 'APEX · 03', en: 'APEX · 03' },
+  { videoId: 'ZLir5KBHMlE', group: 'reel', es: 'APEX · 04', en: 'APEX · 04' },
+  { videoId: 'oSBrAIi8Uaw', group: 'reel', es: 'APEX · 05', en: 'APEX · 05' },
+  { videoId: '5W1Sm4H6kl8', group: 'reel', es: 'APEX · 06', en: 'APEX · 06' },
+  { videoId: 'gqft_rl7AwU', group: 'reel', es: 'APEX · 07', en: 'APEX · 07' },
+  { videoId: 'RxlUKrFsijI', group: 'reel', es: 'APEX · 08', en: 'APEX · 08' },
+  { videoId: 'OxyAa3EwGzA', group: 'reel', es: 'APEX · 09', en: 'APEX · 09' },
+  { videoId: 'zNiadGHzNRE', group: 'reel', es: 'APEX · 10', en: 'APEX · 10' },
+  { videoId: 'vGy8LnHbIsM', group: 'reel', es: 'APEX · 11', en: 'APEX · 11' },
+  {
+    videoId: 'AmB00CCM7NU',
+    group: 'reel',
+    es: 'Promo de evento',
+    en: 'Event promo',
+  },
+  {
+    videoId: 'j63P3BoVY7o',
+    group: 'reel',
+    es: 'Cadena · 01',
+    en: 'Cadena · 01',
+  },
+  {
+    videoId: 'xNiLXRx2YfU',
+    group: 'reel',
+    es: 'Cadena · 02',
+    en: 'Cadena · 02',
+  },
+  {
+    videoId: 'qPDYAeMalcU',
+    group: 'reel',
+    es: 'Auténticas · Oigan un momento',
+    en: 'Auténticas · Listen up',
+  },
+  {
+    videoId: 'CCRm2AbzW_c',
+    group: 'reel',
+    es: 'Auténticas · Hay una cárcel',
+    en: 'Auténticas · There is a prison',
+  },
+  {
+    videoId: 'L8X66ELxaSg',
+    group: 'reel',
+    es: 'Auténticas · ¿Controlas tus emociones?',
+    en: 'Auténticas · Do you control your emotions?',
+  },
+  {
+    videoId: 'caH4g6yz0IU',
+    group: 'reel',
+    es: 'Auténticas · Reel',
+    en: 'Auténticas · Reel',
+  },
 ]
+
+// Group order + per-language copy for the shelf sub-headings.
+const REEL_GROUPS = ['ba', 'ai', 'reel']
+const byTitle = new Intl.Collator('es', {
+  sensitivity: 'base',
+  ignorePunctuation: true,
+  numeric: true,
+})
 
 const localized = {
   es: {
@@ -49,23 +213,11 @@ const localized = {
         Piezas en <em>vertical</em> &mdash; ritmo corto.
       </>
     ),
-    reelTitles: [
-      'Video marketing · marca personal',
-      'Video marketing · producto marca blanca',
-      'Video marketing · odontología',
-      'Promo La Gilipolla',
-      'Real estate · edición',
-      'Real estate · edición II',
-      'Reel real estate',
-      'Proceso de edición de un reel',
-      'Real estate',
-      'Casa en venta Ricaurte',
-      '¿Quiénes son los verdaderos millonarios?',
-      'Estilos de vida saludable',
-      'Alquimia con tijeras',
-      'Blusa Mily Pink',
-      'Reel para redes sociales',
-    ],
+    reelGroups: {
+      ba: 'Antes y después · procesos de edición',
+      ai: 'Avatares generados con IA',
+      reel: 'Reels',
+    },
     items: [
       {
         name: 'COMER',
@@ -131,23 +283,11 @@ const localized = {
         Pieces in <em>vertical</em> &mdash; short rhythm.
       </>
     ),
-    reelTitles: [
-      'Video marketing · personal brand',
-      'Video marketing · white-label product',
-      'Video marketing · dentistry',
-      'La Gilipolla promo',
-      'Real estate · editing',
-      'Real estate · editing II',
-      'Real estate reel',
-      'Editing process of a reel',
-      'Real estate',
-      'Casa en venta Ricaurte',
-      'Who are the real millionaires?',
-      'Healthy lifestyles',
-      'Alchemy with scissors',
-      'Blusa Mily Pink',
-      'Reel for social media',
-    ],
+    reelGroups: {
+      ba: 'Before & after · editing process',
+      ai: 'AI-generated avatars',
+      reel: 'Reels',
+    },
     items: [
       {
         name: 'COMER',
@@ -201,24 +341,13 @@ const localized = {
   },
 }
 
-export default function Projects() {
-  const { lang } = useApp()
-  const t = localized[lang]
-  const projects = baseProjects.map((p, i) => ({
-    ...p,
-    ...t.items[i],
-    href: `https://www.youtube.com/watch?v=${p.videoId}`,
-    cta: t.cta,
-  }))
-  const reels = reelsBase.map((r, i) => ({ ...r, title: t.reelTitles[i] }))
-  const headRef = useReveal()
-  const reelsRef = useReveal({ delay: 100 })
+// One draggable row of reels. Drag-to-scroll with inertia (GSAP Draggable +
+// InertiaPlugin, lazy-imported to stay out of the initial bundle). Touch
+// devices already scroll natively, so only wire it up for fine pointers;
+// skipped entirely under reduced motion.
+function ReelTrack({ reels, label }) {
   const trackRef = useRef(null)
 
-  // Drag-to-scroll the reels shelf with inertia (GSAP Draggable + InertiaPlugin,
-  // lazy-imported to stay out of the initial bundle, like the Career timeline).
-  // Touch devices already scroll natively, so only wire it up for fine pointers;
-  // skipped entirely under reduced motion. Snaps to the 220px card step.
   useEffect(() => {
     const el = trackRef.current
     if (!el) return
@@ -267,6 +396,62 @@ export default function Projects() {
   }, [])
 
   return (
+    <ul className="reels-track" ref={trackRef}>
+      {reels.map((r) => (
+        <li key={r.videoId} className="reel-item">
+          <a
+            href={`https://www.youtube.com/shorts/${r.videoId}`}
+            className="reel-card"
+            target="_blank"
+            rel="noreferrer"
+            aria-label={`${r.title} — YouTube (${label})`}
+          >
+            <div className="reel-thumb">
+              <img
+                src={`https://i.ytimg.com/vi/${r.videoId}/hqdefault.jpg`}
+                alt={r.title}
+                width="480"
+                height="360"
+                loading="lazy"
+                decoding="async"
+                onLoad={(e) => e.currentTarget.classList.add('loaded')}
+              />
+              <span className="reel-overlay">
+                <span className="reel-play">▶</span>
+              </span>
+            </div>
+            <div className="reel-meta">
+              <span className="reel-title-text">{r.title}</span>
+              <span className="reel-info">YT · Short</span>
+            </div>
+          </a>
+        </li>
+      ))}
+    </ul>
+  )
+}
+
+export default function Projects() {
+  const { lang } = useApp()
+  const t = localized[lang]
+  const projects = baseProjects.map((p, i) => ({
+    ...p,
+    ...t.items[i],
+    href: `https://www.youtube.com/watch?v=${p.videoId}`,
+    cta: t.cta,
+  }))
+  const groups = REEL_GROUPS.map((g) => ({
+    id: g,
+    label: t.reelGroups[g],
+    reels: reelsBase
+      .filter((r) => r.group === g)
+      .map((r) => ({ videoId: r.videoId, title: r[lang] }))
+      .sort((a, b) => byTitle.compare(a.title, b.title)),
+  }))
+  const headRef = useReveal()
+  const reelsRef = useReveal({ delay: 100 })
+
+  return (
     <section className="section projects" id="work">
       <header ref={headRef} data-reveal className="section-head">
         <span className="section-label">{t.sectionLabel}</span>
@@ -284,38 +469,15 @@ export default function Projects() {
           <h3 className="reels-title">{t.reelsHeadline}</h3>
         </header>
 
-        <ul className="reels-track" ref={trackRef}>
-          {reels.map((r, i) => (
-            <li key={i} className="reel-item">
-              <a
-                href={`https://www.youtube.com/watch?v=${r.videoId}`}
-                className="reel-card"
-                target="_blank"
-                rel="noreferrer"
-                aria-label={`${r.title} — YouTube (${t.reelsLabel})`}
-              >
-                <div className="reel-thumb">
-                  <img
-                    src={`https://i.ytimg.com/vi/${r.videoId}/hqdefault.jpg`}
-                    alt={r.title}
-                    width="480"
-                    height="360"
-                    loading="lazy"
-                    decoding="async"
-                    onLoad={(e) => e.currentTarget.classList.add('loaded')}
-                  />
-                  <span className="reel-overlay">
-                    <span className="reel-play">▶</span>
-                  </span>
-                </div>
-                <div className="reel-meta">
-                  <span className="reel-title-text">{r.title}</span>
-                  <span className="reel-info">{r.platform}</span>
-                </div>
-              </a>
-            </li>
-          ))}
-        </ul>
+        {groups.map((g) => (
+          <section key={g.id} className="reels-group" aria-label={g.label}>
+            <h4 className="reels-group-title">
+              {g.label}
+              <span className="reels-group-count">{g.reels.length}</span>
+            </h4>
+            <ReelTrack reels={g.reels} label={g.label} />
+          </section>
+        ))}
       </div>
     </section>
   )
