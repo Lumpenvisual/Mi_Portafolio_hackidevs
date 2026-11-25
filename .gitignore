@@ -51,3 +51,7 @@ allan-pinot/
 /playwright-report/
 /blob-report/
 /playwright/.cache/
+
+# Reel de presentación (videos generados, ~1 GB) y capturas de revisión — viven solo en local
+reel-presentacion/
+capturas_avance/

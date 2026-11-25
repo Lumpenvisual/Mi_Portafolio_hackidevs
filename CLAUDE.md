@@ -46,11 +46,23 @@ npm run optimize:images # WebP optimization (scripts/)
 - **Design refresh (2026-11-24):** **single accent** — `--accent-2` is now an alias of `--accent` (the guava pink is retired; fireflies are lavender) and the per-section `.section::before` glows were removed. A static **film-grain** layer (`body::after`, inline SVG noise) sits over the page. **Fotografía** is an editorial montage on a 12-col grid with slot shapes (`lead`/`wide`/`land`/`tall`/`square`/`pano`) set per photo in `Fotografia.jsx` (+ `pos` crop and optional `caption: { es, en }`). **Services** is a ruled editorial index (`<ol>` rows: title · description/tags), titles in sentence case. `html, body { overflow-x: clip }` stops full-bleed pieces adding sideways scroll.
 - **Videos** is a pinned horizontal scroll (desktop/fine-pointer): the section title renders *inside* the pinned stage via `ProjectList`'s `head` prop, with a scrub progress bar (`.videos-h-progress`). Skills is a clean tag grid. Reference clones live in `_repos/` (Next.js + R3F — adapt patterns, don't merge).
 
-Earlier work (3D camera hero, CWV fixes, Playwright E2E) shipped to production on 2026-06-01. Note: Vercel's "Production Branch" isn't wired to `react-version`, so pushes deploy as _preview_; promote to prod with `vercel --prod` (or set the production branch in the Vercel dashboard).
+Earlier work (3D camera hero, CWV fixes, Playwright E2E) shipped to production on 2026-06-01.
+
+## Deploy (Vercel)
+
+- Live project: **`mi-portafolio-hackidevs`** (scope `jacky-s-projects-e67fc5a7`). A second project, `mi-portafolio`, is also hooked to this repo and builds every push — not the live site.
+- Vercel's Production Branch isn't `react-version`, so a push only creates a **Preview**. `VITE_WEB3FORMS_KEY` exists in Production/Development but **not Preview**, so never just "promote" a preview (the contact form would ship without its key). Instead, once the git preview of the commit is ready:
+  `vercel redeploy <preview-url> --target production --scope jacky-s-projects-e67fc5a7` — rebuilds with Production env and aliases the fixed domain. Find the preview URL with `gh api repos/Lumpenvisual/Mi_Portafolio_hackidevs/deployments`.
+- The stored key starts with an invisible BOM; `Contact.jsx` strips it with a runtime regex (a plain `.trim()` is constant-folded by the minifier and does nothing).
+- Push / deploy only after Jacky's explicit OK; then verify the live bundle.
+
+## Outside the site
+
+- `reel-presentacion/` (gitignored, ~1 GB) — her code-generated presentation reel (Python + ffmpeg). See its `README.md`; not part of the web build.
 
 ## Conventions / guardrails
 
-- **Before any commit:** `npm run lint` + `npm run build` + `npm run test:run` must pass. Deploy after pushing.
+- **Before any commit:** `npm run lint` + `npm run build` + `npm run test:run` must pass (plus `npx playwright test` for UI changes). Push/deploy with her OK (see Deploy).
 - **Keep heavy libs lazy-loaded** — the cinematic pivot accepts more 3D/animation weight, but gsap/three/ScrollTrigger must stay `import()`-split out of the initial bundle (they already are). Still flag the weight of _new_ deps and prefer CSS/SVG when it gives the same effect.
 - Form inputs are borderless (only `border-bottom`) — never add `border`/`border-radius`/`background` to them.
 - Keep `_repos/`, `.claude/`, `.agents/` out of tooling (already ignored in `eslint.config.js` and Vite `server.watch.ignored`).
