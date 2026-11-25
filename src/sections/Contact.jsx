@@ -87,7 +87,7 @@ const newTabLabel = { es: 'abre en nueva pestaña', en: 'opens in new tab' }
 // whitespace from copy-paste) with an explicit regex: a plain .trim() gets
 // constant-folded by the minifier at build time and the BOM survives.
 const WEB3FORMS_KEY = String(import.meta.env.VITE_WEB3FORMS_KEY || '').replace(
-  /[﻿\s]/g,
+  /[\uFEFF\s]/g,
   '',
 )
 
