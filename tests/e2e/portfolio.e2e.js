@@ -121,4 +121,42 @@ test.describe('mobile (390px)', () => {
       page.getByRole('button', { name: /Abrir menú|Open menu|menu/i }),
     ).toBeVisible()
   })
+
+  test('menu opens and closes; hidden links stay out of reach', async ({
+    page,
+  }) => {
+    await gotoApp(page)
+    const link = page.locator('.nav-links a').first()
+    await expect(link).toBeHidden()
+    await page.getByRole('button', { name: /Abrir menú|Open menu/i }).click()
+    await expect(link).toBeVisible()
+    await link.click()
+    await expect(link).toBeHidden()
+  })
+
+  test('nav bar is opaque (content never shows through)', async ({ page }) => {
+    await gotoApp(page)
+    const bg = await page
+      .locator('.nav')
+      .evaluate((el) => getComputedStyle(el).backgroundColor)
+    // rgb(...) has no alpha channel; rgba/color(... / a) would be translucent
+    expect(bg).toMatch(/^rgb\(/)
+  })
+})
+
+test.describe('tablet (820px)', () => {
+  test.use({ viewport: { width: 820, height: 1180 } })
+
+  test('uses the hamburger instead of a wrapped two-line bar', async ({
+    page,
+  }) => {
+    await gotoApp(page)
+    await expect(
+      page.getByRole('button', { name: /Abrir menú|Open menu/i }),
+    ).toBeVisible()
+    const navH = await page
+      .locator('.nav')
+      .evaluate((el) => el.getBoundingClientRect().height)
+    expect(navH).toBeLessThan(70)
+  })
 })

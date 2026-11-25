@@ -67,6 +67,8 @@ Earlier work (3D camera hero, CWV fixes, Playwright E2E) shipped to production o
 - Form inputs are borderless (only `border-bottom`) — never add `border`/`border-radius`/`background` to them.
 - Keep `_repos/`, `.claude/`, `.agents/` out of tooling (already ignored in `eslint.config.js` and Vite `server.watch.ignored`).
 - Respect `prefers-reduced-motion` in every animation.
+- **Old phones must get the mobile layout (2026-11-25).** With `build.target: 'esnext'` the CSS minifier rewrote every `@media (max-width: …)` into range syntax `(width<=…)`, which Chrome <104 / Safari <16.4 ignore — Jacky's own phone (Chrome that can't update) showed the cropped desktop layout. Now `vite.config.js` targets `BROWSERS` (es2020 · chrome87 · edge88 · firefox78 · safari14) for JS **and** CSS, and `npm run build` runs `scripts/check-legacy-css.mjs`, which fails on range queries or on any `color-mix()` / `svh` declaration without a plain fallback declared just before it in the same rule (decorative hover/shadow uses are exempt). When adding `color-mix()`, put a token-based fallback line first.
+- **Nav:** solid `var(--bg)` background (no translucency/backdrop blur — content must never show through while scrolling); hamburger menu up to **960px** (six links + tools need ~850–890px), and `--nav-h: 64px` in `index.css` uses the same breakpoint. The closed dropdown is `visibility: hidden` (not focusable).
 
 ## Skills available
 

@@ -110,6 +110,7 @@ footer,
 }
 
 #root {
+  min-height: 100vh; /* fallback for browsers without svh */
   min-height: 100svh;
   display: flex;
   flex-direction: column;
@@ -133,10 +134,15 @@ svg {
   text-shadow: none;
 }
 
+@media (max-width: 960px) {
+  :root {
+    --nav-h: 64px; /* single-row nav with hamburger (see .nav in App.css) */
+  }
+}
+
 @media (max-width: 768px) {
   :root {
     --pad-x: 24px;
-    --nav-h: 64px; /* single-row nav with hamburger */
   }
 }
 
@@ -230,4 +236,12 @@ svg {
 html,
 body {
   overflow-x: clip;
+}
+
+/* Browsers without `clip` (Chrome <90, Safari <16): hidden on <html> only —
+   it propagates to the viewport, so it never turns <body> into a scroller. */
+@supports not (overflow-x: clip) {
+  html {
+    overflow-x: hidden;
+  }
 }

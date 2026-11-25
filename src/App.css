@@ -120,9 +120,9 @@ main {
   left: 0;
   right: 0;
   z-index: 100;
-  background: color-mix(in srgb, var(--bg) 88%, transparent);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  /* Solid, not translucent: content scrolling up must never show through
+     the bar (and color-mix() made it fully transparent on older phones). */
+  background: var(--bg);
   border-bottom: 1px solid var(--border);
 }
 
@@ -267,7 +267,10 @@ main {
   stroke-width: 1.6;
 }
 
-@media (max-width: 768px) {
+/* Hamburger up to 960px: six links + tools need ~850px (ES) / ~890px (EN),
+   so tablets (768–960) got a wrapped two-line bar. Keep in sync with the
+   --nav-h breakpoint in index.css. */
+@media (max-width: 960px) {
   .nav-inner {
     padding: 14px var(--pad-x);
   }
@@ -277,7 +280,10 @@ main {
     display: inline-flex;
   }
 
-  /* Mobile dropdown — always in DOM for a11y, visually toggled */
+  /* Mobile dropdown — always in DOM, visually toggled. Closed: no border
+     (it drew a second hairline under the bar) and visibility:hidden so the
+     links can't be tabbed to while invisible; visibility flips after the
+     collapse finishes. */
   .nav-links {
     position: fixed;
     top: var(--nav-h);
@@ -285,20 +291,27 @@ main {
     right: 0;
     z-index: 48;
     background: var(--bg);
-    border-bottom: 1px solid var(--border);
+    border-bottom: 1px solid transparent;
     flex-direction: column;
     gap: 0;
     font-size: 16px;
     max-height: 0;
     overflow: hidden;
+    visibility: hidden;
     transition:
       max-height 0.3s ease,
-      padding 0.3s ease;
+      padding 0.3s ease,
+      visibility 0s linear 0.3s;
   }
 
   .nav--open .nav-links {
     max-height: 400px;
     padding: 8px var(--pad-x) 24px;
+    border-bottom-color: var(--border);
+    visibility: visible;
+    transition:
+      max-height 0.3s ease,
+      padding 0.3s ease;
   }
 
   .nav-links a {
@@ -501,6 +514,12 @@ main {
   width: var(--fly-size, 6px);
   height: var(--fly-size, 6px);
   border-radius: 50%;
+  /* fallback without color-mix(): same soft dot, one stop simpler */
+  background: radial-gradient(
+    50% 50% at 50% 50%,
+    var(--firefly) 0%,
+    transparent 72%
+  );
   background: radial-gradient(
     50% 50% at 50% 50%,
     color-mix(in srgb, var(--firefly) 92%, #fff) 0%,
@@ -824,6 +843,7 @@ main {
 }
 
 .project-link:hover {
+  border-color: var(--accent); /* fallback: no color-mix() */
   border-color: color-mix(in srgb, var(--accent) 45%, var(--border-strong));
   transform: translateY(-4px);
   box-shadow: 0 24px 50px -30px
@@ -895,6 +915,7 @@ main {
 .project-thumb {
   height: 200px;
   border-radius: 4px;
+  background: var(--thumb-accent, var(--accent)); /* fallback: no color-mix() */
   background: linear-gradient(
     135deg,
     var(--thumb-accent, var(--accent)) 0%,
@@ -1657,6 +1678,9 @@ main {
   display: inline-flex;
   align-items: center;
   gap: 8px;
+  background: var(
+    --accent
+  ); /* fallback: white text must never sit on nothing */
   background: linear-gradient(
     135deg,
     var(--accent),
@@ -2185,6 +2209,7 @@ main {
 }
 
 .skill-group:hover {
+  border-color: var(--accent); /* fallback: no color-mix() */
   border-color: color-mix(in srgb, var(--accent) 45%, var(--border-strong));
   transform: translateY(-4px);
   box-shadow: 0 24px 50px -30px
@@ -2287,6 +2312,7 @@ main {
 .hero--cinematic {
   max-width: none;
   width: 100%;
+  min-height: 100vh; /* fallback for browsers without svh */
   min-height: 100svh;
   margin: 0;
   padding: calc(var(--nav-h) + 12px) var(--pad-x) 36px;
@@ -2304,6 +2330,12 @@ main {
   inset: 0;
   z-index: 0;
   pointer-events: none;
+  /* fallback glow for browsers without color-mix() */
+  background: radial-gradient(
+    58% 68% at 72% 46%,
+    var(--accent-soft) 0%,
+    transparent 62%
+  );
   background:
     radial-gradient(
       58% 68% at 72% 46%,
@@ -2488,6 +2520,9 @@ main {
 
 @media (max-width: 900px) {
   .hero--cinematic {
+    /* stacked layout: let the content set the height — a full-viewport hero
+       left a tall empty band under the meta row on portrait tablets */
+    min-height: 0;
     padding-top: calc(var(--nav-h) + 16px);
     padding-bottom: 32px;
   }
@@ -2505,8 +2540,9 @@ main {
     right: auto;
     margin: 28px auto 0;
     width: 100%;
-    max-width: 360px;
-    height: 320px;
+    /* grows with the screen: phones ~300px, portrait tablets up to 440px */
+    max-width: 520px;
+    height: clamp(300px, 56vw, 440px);
     transform: none;
   }
   .hero-cine-foot {
@@ -2517,6 +2553,20 @@ main {
   }
   .hero-scroll {
     display: none;
+  }
+}
+
+/* Small phones: three meta columns squeezed "Abierta a proyectos" into one
+   word per line — use two columns so each value keeps its phrase. */
+@media (max-width: 480px) {
+  .hero--cinematic .hero-foot {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px 24px;
+    width: 100%;
+  }
+  .hero--cinematic .hero-foot-col:last-child {
+    grid-column: 1 / -1; /* status sits alone on its row: give it the width */
   }
 }
 
@@ -2662,7 +2712,9 @@ main {
   will-change: transform;
   width: 40px;
   height: 40px;
-  /* soft, defocused purple orb */
+  /* soft, defocused purple orb (solid fallback: the native cursor is hidden,
+     so the orb must never be invisible) */
+  background: var(--accent);
   background: color-mix(in srgb, var(--accent) 55%, transparent);
   filter: blur(6px);
   transition:
