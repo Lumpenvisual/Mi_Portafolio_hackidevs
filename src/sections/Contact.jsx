@@ -82,10 +82,14 @@ const links = [
 
 const newTabLabel = { es: 'abre en nueva pestaña', en: 'opens in new tab' }
 
-// trim(): the value stored in Vercel carries an invisible BOM (U+FEFF) at the
-// start, which would make Web3Forms reject the access key. trim() strips it
-// (and any stray whitespace/newline from copy-paste).
-const WEB3FORMS_KEY = (import.meta.env.VITE_WEB3FORMS_KEY || '').trim()
+// The value stored in Vercel carries an invisible BOM (U+FEFF) at the start,
+// which would make Web3Forms reject the access key. Strip it (plus any stray
+// whitespace from copy-paste) with an explicit regex: a plain .trim() gets
+// constant-folded by the minifier at build time and the BOM survives.
+const WEB3FORMS_KEY = String(import.meta.env.VITE_WEB3FORMS_KEY || '').replace(
+  /[﻿\s]/g,
+  '',
+)
 
 export default function Contact() {
   const { lang } = useApp()
