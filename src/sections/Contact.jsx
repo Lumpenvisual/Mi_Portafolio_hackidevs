@@ -82,7 +82,10 @@ const links = [
 
 const newTabLabel = { es: 'abre en nueva pestaña', en: 'opens in new tab' }
 
-const WEB3FORMS_KEY = import.meta.env.VITE_WEB3FORMS_KEY
+// trim(): the value stored in Vercel carries an invisible BOM (U+FEFF) at the
+// start, which would make Web3Forms reject the access key. trim() strips it
+// (and any stray whitespace/newline from copy-paste).
+const WEB3FORMS_KEY = (import.meta.env.VITE_WEB3FORMS_KEY || '').trim()
 
 export default function Contact() {
   const { lang } = useApp()
