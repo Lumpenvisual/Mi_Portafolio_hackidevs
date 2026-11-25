@@ -1772,86 +1772,59 @@ main {
 }
 
 /* =========================================================
-   RETRO / TERMINAL TYPE PIVOT
-   Only CSS values change here — JSX class names stay intact.
-   Appended last so equal-specificity rules win by source order.
+   TYPE SYSTEM (2026-11-24) — replaces the old retro/terminal pivot.
+   One coherent hierarchy for the cinematic direction:
+     · Display (Space Grotesk) → titles, card titles, numbers
+     · Sans (Inter)            → body copy, nav, forms
+     · Mono (JetBrains Mono)   → small metadata only (eyebrows,
+                                 labels, roles, timecodes)
    ========================================================= */
 
-/* ---- Eyebrows, labels, section meta → pixel (Silkscreen) ---- */
+/* ---- Metadata: eyebrows, labels, roles → small mono caps ---- */
 .section-head,
 .section-label,
 .label,
 .reels-head .section-label,
 .contact-field label,
 .project-role,
+.project-year,
 .reel-info {
-  font-family: var(--font-pixel);
-  letter-spacing: 0.05em;
-}
-
-/* ---- Section titles (h2) → pixel, small + spaced per spec ---- */
-.section-title {
-  font-family: var(--font-pixel);
-  font-weight: 400;
-  font-size: clamp(1rem, 2.5vw, 1.8rem);
-  line-height: 1.5;
-  letter-spacing: 0.05em;
-}
-.section-title em {
-  font-style: normal;
-  font-variation-settings: normal;
-  color: var(--accent);
-}
-
-/* ---- Nav → pixel ---- */
-.nav-logo,
-.nav-links,
-.nav-cta,
-.icon-btn {
-  font-family: var(--font-pixel);
-}
-.nav-logo {
-  font-size: 13px;
-  letter-spacing: 0.04em;
-}
-.nav-logo em {
-  font-style: normal;
-}
-.nav-links {
+  font-family: var(--font-terminal);
   font-size: 11px;
-  letter-spacing: 0.05em;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
 }
 
-/* ---- Hero name → Nova Mono (display), resized for mono width ---- */
-.hero-title {
+/* ---- Nav: readable sans, display logo ---- */
+.nav-logo {
   font-family: var(--font-display);
-  font-weight: 400;
-  font-size: clamp(2rem, 6vw, 5rem);
-  line-height: 1.12;
-  letter-spacing: 0.01em;
+  font-weight: 600;
+  font-size: 16px;
+  letter-spacing: -0.01em;
 }
-.hero-title em,
-.hero-italic {
-  font-style: normal;
-  font-variation-settings: normal;
-  font-weight: 400;
+.nav-links,
+.nav-cta {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0;
 }
 
-/* ---- Subtitles (h3-level) → terminal mono, keep responsive sizes ---- */
+/* ---- Card / sub titles → display, tight ---- */
 .service-title,
 .timeline-title,
 .project-name,
 .reels-title {
-  font-family: var(--font-terminal);
-  font-weight: 400;
-  letter-spacing: 0;
-}
-.reels-title em {
-  font-style: normal;
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.12;
 }
 
-/* ---- Big display + numeric/italic accents → kill synthetic italics ---- */
-.contact-title,
+/* ---- Accent words use colour, not synthetic italics ---- */
+.nav-logo em,
+.reels-title em,
 .contact-title em,
 .section-num,
 .project-num,
@@ -1860,25 +1833,23 @@ main {
 .contact-mail,
 .contact-col p em,
 .footer-meta em,
-.nav-logo em {
+.hero-title em,
+.hero-italic {
   font-style: normal;
   font-variation-settings: normal;
 }
-.contact-title {
-  font-family: var(--font-display);
-  font-weight: 400;
-  font-size: clamp(2.4rem, 9vw, 7rem);
-  letter-spacing: 0.01em;
-}
-
-/* ---- Numeric accents → Nova Mono in phosphor-friendly accent ---- */
 .section-num,
 .project-num,
 .service-num {
   font-family: var(--font-display);
 }
+.contact-title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+}
 
-/* ---- Narrative / body → Courier Prime, airy line-height ---- */
+/* ---- Body copy → Inter, comfortable measure ---- */
 .about-body p,
 .project-desc,
 .service-desc,
@@ -1887,31 +1858,19 @@ main {
 .contact-col p,
 .reel-title-text,
 .value {
-  font-family: var(--font-typewriter);
-  line-height: 1.8;
+  font-family: var(--font-sans);
+  line-height: 1.7;
 }
 
-/* ---- Form fields → terminal; placeholder stays typewriter ---- */
+/* ---- Form fields → sans (inputs stay borderless) ---- */
 .contact-field input,
 .contact-field textarea,
 .contact-submit {
-  font-family: var(--font-terminal);
+  font-family: var(--font-sans);
 }
 .contact-field input,
 .contact-field textarea {
-  caret-color: var(--phosphor);
-}
-.contact-field input::placeholder,
-.contact-field textarea::placeholder {
-  font-family: var(--font-typewriter);
-}
-
-/* ---- Live "online / active" status → phosphor (terminal semantics) ---- */
-.dot-on {
-  background: var(--phosphor);
-  box-shadow:
-    0 0 0 4px color-mix(in srgb, var(--phosphor) 22%, transparent),
-    0 0 8px rgba(0, 255, 65, 0.5);
+  caret-color: var(--accent);
 }
 
 /* =========================================================
@@ -2105,7 +2064,7 @@ main {
   transform: translateX(-50%);
   font-family: var(--font-display);
   font-size: 0.9rem;
-  color: var(--phosphor);
+  color: var(--accent);
   letter-spacing: 0.1em;
 }
 
@@ -2804,10 +2763,45 @@ html.cursor-hover .cursor-ring {
     /* break out of the centred .section column to full viewport width */
     width: 100vw;
     margin-left: calc(50% - 50vw);
-    min-height: 100vh;
+    height: 100vh;
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    gap: clamp(24px, 4vh, 48px);
+    padding-top: var(--nav-h);
     overflow: hidden;
+  }
+
+  /* Title rides inside the pinned stage so the cards never slide by
+     without context. Aligned to the page column. */
+  .videos-h-head {
+    width: 100%;
+    max-width: var(--max-w);
+    margin: 0 auto;
+    padding: 0 var(--pad-x);
+    box-sizing: border-box;
+  }
+  .videos-h-head .section-title {
+    margin: 0;
+    font-size: clamp(1.8rem, 3.6vw, 3.25rem);
+    max-width: 24ch;
+  }
+
+  /* Scrub progress: how far through the reel you are */
+  .videos-h-progress {
+    width: calc(100% - 2 * var(--pad-x));
+    max-width: calc(var(--max-w) - 2 * var(--pad-x));
+    margin: 0 auto;
+    height: 1px;
+    background: var(--border);
+    overflow: hidden;
+  }
+  .videos-h-progress span {
+    display: block;
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    transform: scaleX(0);
+    transform-origin: left center;
   }
 
   .projects-list--horizontal {
@@ -2817,7 +2811,9 @@ html.cursor-hover .cursor-ring {
     width: max-content;
     gap: 28px;
     margin: 0;
-    padding: 0 var(--pad-x);
+    /* first card lines up with the page column (title above) */
+    padding: 0
+      max(var(--pad-x), calc((100vw - var(--max-w)) / 2 + var(--pad-x)));
     will-change: transform;
   }
 

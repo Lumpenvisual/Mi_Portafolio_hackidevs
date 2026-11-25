@@ -19,7 +19,7 @@ const copy = {
         Abierta a colaboraciones, proyectos y conversaciones interesantes.
         <br />
         Tel{' '}
-        <em className="contact-phone">+57&nbsp;323&nbsp;437&nbsp;42&nbsp;00</em>
+        <em className="contact-phone">+57&nbsp;310&nbsp;326&nbsp;47&nbsp;76</em>
         .
       </>
     ),
@@ -52,7 +52,7 @@ const copy = {
         Open to collaborations, projects and interesting conversations.
         <br />
         Phone{' '}
-        <em className="contact-phone">+57&nbsp;323&nbsp;437&nbsp;42&nbsp;00</em>
+        <em className="contact-phone">+57&nbsp;310&nbsp;326&nbsp;47&nbsp;76</em>
         .
       </>
     ),
@@ -74,7 +74,7 @@ const copy = {
 }
 
 const links = [
-  { label: 'Instagram', href: 'https://www.instagram.com/jacky.visual/' },
+  { label: 'Instagram', href: 'https://www.instagram.com/lumpenvisual/' },
   { label: 'LinkedIn', href: 'https://linkedin.com/in/jackygutierrez/' },
   { label: 'GitHub', href: 'https://github.com/Lumpenvisual' },
   { label: 'YouTube', href: 'https://www.youtube.com/@Jackie.visual' },

@@ -242,9 +242,11 @@ export default function Projects() {
         <span className="section-label">{t.sectionLabel}</span>
       </header>
 
-      <h2 className="section-title">{t.title}</h2>
-
-      <ProjectList items={projects} horizontal />
+      <ProjectList
+        items={projects}
+        horizontal
+        head={<h2 className="section-title">{t.title}</h2>}
+      />
 
       <div ref={reelsRef} data-reveal className="reels-shelf">
         <header className="reels-head">

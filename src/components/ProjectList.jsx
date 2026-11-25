@@ -27,6 +27,7 @@ export default function ProjectList({
   galleryLabels,
   emptyLabel,
   horizontal = false,
+  head = null,
 }) {
   const listRef = useReveal({ delay: 150 })
   const spot = useSpotlight()
@@ -56,6 +57,7 @@ export default function ProjectList({
   )
   const pinRef = useRef(null)
   const trackRef = useRef(null)
+  const progressRef = useRef(null)
 
   useEffect(() => {
     if (!horizOn) return
@@ -82,6 +84,10 @@ export default function ProjectList({
             scrub: 1,
             anticipatePin: 1,
             invalidateOnRefresh: true,
+            onUpdate: (self) => {
+              if (progressRef.current)
+                progressRef.current.style.transform = `scaleX(${self.progress})`
+            },
           },
         })
         st = tween.scrollTrigger
@@ -190,10 +196,17 @@ export default function ProjectList({
     <>
       {horizOn ? (
         <div className="videos-h" ref={pinRef}>
+          {head && <div className="videos-h-head">{head}</div>}
           {list}
+          <div className="videos-h-progress" aria-hidden="true">
+            <span ref={progressRef} />
+          </div>
         </div>
       ) : (
-        list
+        <>
+          {head}
+          {list}
+        </>
       )}
 
       {gallery && (
