@@ -11,7 +11,7 @@ import { useEffect, useRef } from 'react'
 // they stay out of the initial bundle.
 const LAYERS = [
   // Big faint index numbers drift the most — the clearest depth cue
-  { selector: '.section-num, .project-num, .service-num', strength: 0.22 },
+  { selector: '.section-num', strength: 0.22 },
   // Section titles drift just slightly, so the whole page feels alive
   { selector: '.section-title', strength: 0.05 },
 ]

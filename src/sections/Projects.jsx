@@ -47,44 +47,44 @@ const reelsBase = [
   {
     videoId: '7DhxVtRFuYI',
     group: 'ai',
-    es: 'Reel avatar · 01',
-    en: 'Avatar reel · 01',
+    es: 'Reel avatar',
+    en: 'Avatar reel',
   },
   {
     videoId: 'Z-LG5UVXeso',
     group: 'ai',
-    es: 'APEX IA · 01',
-    en: 'APEX AI · 01',
+    es: 'APEX IA',
+    en: 'APEX AI',
   },
   {
     videoId: 'W-DJnFDVxJo',
     group: 'ai',
-    es: 'APEX IA · 02',
-    en: 'APEX AI · 02',
+    es: 'APEX IA',
+    en: 'APEX AI',
   },
   {
     videoId: 'ERlh3ZaOOuU',
     group: 'ai',
-    es: 'APEX IA · Halloween 01',
-    en: 'APEX AI · Halloween 01',
+    es: 'APEX IA · Halloween',
+    en: 'APEX AI · Halloween',
   },
   {
     videoId: 'NQ2Pc2QPlc0',
     group: 'ai',
-    es: 'APEX IA · Halloween 02',
-    en: 'APEX AI · Halloween 02',
+    es: 'APEX IA · Halloween',
+    en: 'APEX AI · Halloween',
   },
   {
     videoId: '3LTignHsNWY',
     group: 'ai',
-    es: 'Reel avatar · 02',
-    en: 'Avatar reel · 02',
+    es: 'Reel avatar',
+    en: 'Avatar reel',
   },
   {
     videoId: 'TXt6Z6YN7QM',
     group: 'ai',
-    es: 'Reel avatar · 03',
-    en: 'Avatar reel · 03',
+    es: 'Reel avatar',
+    en: 'Avatar reel',
   },
   {
     videoId: 'XGEJHvUsJQ0',
@@ -107,8 +107,8 @@ const reelsBase = [
   {
     videoId: 'MD0NtElmNSQ',
     group: 'reel',
-    es: 'Real estate · edición II',
-    en: 'Real estate · editing II',
+    es: 'Real estate · edición',
+    en: 'Real estate · editing',
   },
   {
     videoId: 'uN9s4tyUeLM',
@@ -155,38 +155,38 @@ const reelsBase = [
   {
     videoId: 'AovDubqG0wE',
     group: 'reel',
-    es: 'ZONADENT · 01',
-    en: 'ZONADENT · 01',
+    es: 'ZONADENT',
+    en: 'ZONADENT',
   },
   {
     videoId: '-TTzOwwXxKM',
     group: 'reel',
-    es: 'ZONADENT · 02',
-    en: 'ZONADENT · 02',
+    es: 'ZONADENT',
+    en: 'ZONADENT',
   },
   {
     videoId: '6wewrbanfxw',
     group: 'reel',
-    es: 'Posada · 01',
-    en: 'Posada · 01',
+    es: 'Posada',
+    en: 'Posada',
   },
   {
     videoId: 'kMnqQhTWnCw',
     group: 'reel',
-    es: 'Posada · 02',
-    en: 'Posada · 02',
+    es: 'Posada',
+    en: 'Posada',
   },
-  { videoId: 'YL_9e7PdlmQ', group: 'reel', es: 'APEX · 01', en: 'APEX · 01' },
-  { videoId: 'urrgWz-EmLY', group: 'reel', es: 'APEX · 02', en: 'APEX · 02' },
-  { videoId: 's2FjUSSAkKQ', group: 'reel', es: 'APEX · 03', en: 'APEX · 03' },
-  { videoId: 'ZLir5KBHMlE', group: 'reel', es: 'APEX · 04', en: 'APEX · 04' },
-  { videoId: 'oSBrAIi8Uaw', group: 'reel', es: 'APEX · 05', en: 'APEX · 05' },
-  { videoId: '5W1Sm4H6kl8', group: 'reel', es: 'APEX · 06', en: 'APEX · 06' },
-  { videoId: 'gqft_rl7AwU', group: 'reel', es: 'APEX · 07', en: 'APEX · 07' },
-  { videoId: 'RxlUKrFsijI', group: 'reel', es: 'APEX · 08', en: 'APEX · 08' },
-  { videoId: 'OxyAa3EwGzA', group: 'reel', es: 'APEX · 09', en: 'APEX · 09' },
-  { videoId: 'zNiadGHzNRE', group: 'reel', es: 'APEX · 10', en: 'APEX · 10' },
-  { videoId: 'vGy8LnHbIsM', group: 'reel', es: 'APEX · 11', en: 'APEX · 11' },
+  { videoId: 'YL_9e7PdlmQ', group: 'reel', es: 'APEX', en: 'APEX' },
+  { videoId: 'urrgWz-EmLY', group: 'reel', es: 'APEX', en: 'APEX' },
+  { videoId: 's2FjUSSAkKQ', group: 'reel', es: 'APEX', en: 'APEX' },
+  { videoId: 'ZLir5KBHMlE', group: 'reel', es: 'APEX', en: 'APEX' },
+  { videoId: 'oSBrAIi8Uaw', group: 'reel', es: 'APEX', en: 'APEX' },
+  { videoId: '5W1Sm4H6kl8', group: 'reel', es: 'APEX', en: 'APEX' },
+  { videoId: 'gqft_rl7AwU', group: 'reel', es: 'APEX', en: 'APEX' },
+  { videoId: 'RxlUKrFsijI', group: 'reel', es: 'APEX', en: 'APEX' },
+  { videoId: 'OxyAa3EwGzA', group: 'reel', es: 'APEX', en: 'APEX' },
+  { videoId: 'zNiadGHzNRE', group: 'reel', es: 'APEX', en: 'APEX' },
+  { videoId: 'vGy8LnHbIsM', group: 'reel', es: 'APEX', en: 'APEX' },
   {
     videoId: 'AmB00CCM7NU',
     group: 'reel',
@@ -196,14 +196,14 @@ const reelsBase = [
   {
     videoId: 'j63P3BoVY7o',
     group: 'reel',
-    es: 'Cadena · 01',
-    en: 'Cadena · 01',
+    es: 'Cadena',
+    en: 'Cadena',
   },
   {
     videoId: 'xNiLXRx2YfU',
     group: 'reel',
-    es: 'Cadena · 02',
-    en: 'Cadena · 02',
+    es: 'Cadena',
+    en: 'Cadena',
   },
   {
     videoId: 'qPDYAeMalcU',
@@ -512,10 +512,7 @@ export default function Projects() {
 
         {groups.map((g) => (
           <section key={g.id} className="reels-group" aria-label={g.label}>
-            <h4 className="reels-group-title">
-              {g.label}
-              <span className="reels-group-count">{g.reels.length}</span>
-            </h4>
+            <h4 className="reels-group-title">{g.label}</h4>
             <ReelTrack reels={g.reels} label={g.label} />
           </section>
         ))}

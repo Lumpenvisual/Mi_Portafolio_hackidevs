@@ -9,7 +9,7 @@ import { useReveal } from '../hooks/useReveal'
 // order). `shape` picks the slot in the asymmetric grid (see App.css
 // .foto-item--*). `pos` is the object-position for the crop, since the
 // source files are square. Add `caption: { es, en }` (e.g. lugar · año) to
-// show a line under the plate number.
+// show it as a line at the foot of the frame.
 const PHOTOS = [
   { n: 7, shape: 'lead', pos: '40% 50%' },
   { n: 9, shape: 'wide', pos: '50% 35%' },
@@ -147,14 +147,11 @@ export default function Fotografia() {
                 style={{ objectPosition: p.pos }}
                 onLoad={handleThumbLoad}
               />
-              <span className="foto-plate" aria-hidden="true">
-                <span className="foto-plate-num">
-                  N.º {String(i + 1).padStart(2, '0')}
-                </span>
-                {p.caption && (
+              {p.caption && (
+                <span className="foto-plate" aria-hidden="true">
                   <span className="foto-plate-cap">{p.caption[lang]}</span>
-                )}
-              </span>
+                </span>
+              )}
             </button>
           </li>
         ))}

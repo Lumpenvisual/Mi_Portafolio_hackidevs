@@ -135,7 +135,6 @@ export default function ProjectList({
           {...spot}
         >
           <div className="project-meta">
-            <span className="project-num">{p.num}</span>
             <span className="project-year">{p.role}</span>
           </div>
 

@@ -1229,7 +1229,7 @@ main {
 .service {
   position: relative;
   display: grid;
-  grid-template-columns: 4.5rem minmax(0, 1.1fr) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
   column-gap: clamp(20px, 3vw, 48px);
   align-items: baseline;
   padding: clamp(26px, 3.2vw, 40px) 4px;
@@ -1323,11 +1323,8 @@ main {
 
 @media (max-width: 900px) {
   .service {
-    grid-template-columns: 3rem minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1fr);
     row-gap: 14px;
-  }
-  .service-body {
-    grid-column: 2;
   }
 }
 

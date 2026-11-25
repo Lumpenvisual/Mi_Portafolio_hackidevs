@@ -171,7 +171,6 @@ export default function Services() {
       <ol ref={gridRef} className="services-grid">
         {t.services.map((s) => (
           <li className="service" key={s.num}>
-            <span className="service-num">{s.num}</span>
             <h3 className="service-title">{s.title}</h3>
             <div className="service-body">
               <p className="service-desc">{s.description}</p>
